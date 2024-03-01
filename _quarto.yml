@@ -5,8 +5,14 @@ project:
 book:
   title: "Textbook English: A Multi-Dimensional Approach"
   subtitle: "Online Supplements"
-  author: "Elen Le Foll"
+  author: 
+  - name: Elen Le Foll
+    orcid: 0000-0002-5839-8010
+    email: elefoll@uni-koeln.de
+  original-date: 2021-11-01
   date: last-modified
+  downloads: pdf
+  license: "CC BY-SA"
   chapters:
     - index.qmd
     - intro.qmd
@@ -17,15 +23,19 @@ book:
 execute:
   message: false
   warning: false
+  cache: true
 
 bibliography: references.bib
 
 format:
   html:
     theme: cosmo
-    code-fold: true
+    code-fold: false
+    code-overflow: wrap
     code-tools: true
     code-link: true
+    link-external-newwindow: true
+    footnotes-hover: true
   pdf:
     documentclass: scrreprt
 

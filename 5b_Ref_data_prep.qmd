@@ -1,25 +1,10 @@
----
-title: "Data preparation"
-author: "Elen Le Foll"
-date: "2024-02-13"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 3
-    toc_float:
-      collapsed: false
-  editor_options: 
-    markdown: 
-      wrap: sentence
-bibliography: "packages.bib"
-nocite: '@*'
-      
----
+# A Comparative Model of Textbook English vs. ‘real-world’ English: Data Preparation
 
-Please note that the plot dimensions in this notebook have been optimised for the print version of the thesis.
+This script documents the steps taken to pre-process the data extracted from the Textbook English Corpus (TEC) and the three reference corpora that were ultimately entered in the comparative multi-dimensional model of Textbook English as compared to English outside the EFL classroom (Chapter 7).
 
-*Built with R `r getRversion()`*  
-*Last saved on `r format(Sys.Date(), "%d %B %Y")` at `r format(Sys.time(), "%H:%M")`*
+## Packages required
+
+The following packages must be installed and loaded to process the data.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, paged.print=TRUE, fig.width = 10, warning=FALSE, message=FALSE)
@@ -63,7 +48,7 @@ scales::show_col(colours)
 
 ## Spoken BNC2014
 
-The original corpus files of the Spoken BNC2014 can be downloaded for free for research purposes from: http://corpora.lancs.ac.uk/bnc2014/signup.php These counts were computed on the basis of the "John and Jill in Ivybridge" version of the Spoken BNC2014 with added full stops at speaker turns. The R script used to pre-process the untagged XML version of the Spoken BNC2014 into the format used in this study can be found at: https://github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R 
+The original corpus files of the Spoken BNC2014 can be downloaded for free for research purposes from: http://corpora.lancs.ac.uk/bnc2014/signup.php These counts were computed on the basis of the "John and Jill in Ivybridge" version of the Spoken BNC2014 with added full stops at speaker turns. The R script used to pre-process the untagged XML version of the Spoken BNC2014 into the format used in this study can be found at: https://github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R
 
 ```{r SpokenBNC2014}
 
@@ -105,7 +90,6 @@ InfoTeen$Country <- "Info Teens"
 InfoTeen$Register <- "Info Teens"
 
 ```
-
 
 ## Merging TEC and reference corpora data
 
@@ -154,6 +138,7 @@ ncounts <- ncounts %>%
 # Data preparation for PCA
 
 ## Feature distributions
+
 ```{r distribution-viz, fig.height=40, warning=FALSE}
 
 #ncounts <- readRDS(here("processed_data", "counts3Reg.rds"))
@@ -189,6 +174,7 @@ ncounts %>%
 ```
 
 ## Feature removal due to low text frequency
+
 ```{r feature-removal-low-frequency}
 
 # Removal of meaningless feature: CD because numbers as digits were mostly removed from the textbooks, LIKE and SO because they are dustbin categories
@@ -316,7 +302,6 @@ zlogcounts %>%
 
 ```
 
-
 ### Merging of data for MDA
 
 ```{r import-final-ncounts-data}
@@ -338,7 +323,9 @@ colnames(data)
 ```
 
 ## Performing the PCA of Textbook English vs. Reference corpora
+
 ### Quick import
+
 ```{r prepare-data}
 
 data <- readRDS(here("processed_data", "datazlogcounts_3Reg.rds"))
@@ -353,6 +340,7 @@ data <- data %>%
 ## Testing factorability of data
 
 ### Correlation matrix
+
 ```{r corrsimple-function, eval=TRUE}
 
 # From: https://towardsdatascience.com/how-to-create-a-correlation-matrix-with-too-many-variables-309cc0c0a57
@@ -399,6 +387,7 @@ corrplot(mtx_corr, is.corr=FALSE, tl.col="black", na.label=" ", tl.cex = 0.5)
 ```
 
 ### Visualisation of feature correlations
+
 ```{r heatmap}
 
 # Simple heatmap in base R (inspired by Stephanie Evert's SIGIL code)
@@ -418,6 +407,7 @@ heatmap(cor(zlogcounts),
 ```
 
 ### MSA, communalities and scree plot
+
 ```{r factorability-screeplot}
 
 # Eliminate highly collinear variable
@@ -457,3 +447,6 @@ nrow(data)
 ```{r sessionInfo}
 sessionInfo()
 ```
+
+*Built with R `r getRversion()`*\
+*Last saved on `r format(Sys.Date(), "%d %B %Y")` at `r format(Sys.time(), "%H:%M")`*
