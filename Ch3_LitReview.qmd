@@ -1,0 +1,15 @@
+---
+bibliography: references.bib
+engine: knitr
+---
+
+```{css}
+#| echo: false
+p {
+  text-align: justify
+}
+```
+
+# Literature review
+
+This is a [tabular overview](https://elenlefoll.github.io/TextbookEnglish/LitReviewTable.html) of the Textbook English studies that I examined as part of my literature review. It presents the results of a non-exhaustive survey of Textbook English studies published over the past four decades, summarising some of the key information on each study, including its main language focus, methodological approach, information on the textbooks investigated, and, if applicable, on any reference corpora used. Empty cells represent fields that are either not applicable to this particular study or for which no information could be found. Intended as a dynamic resource, this interactive, searchable, and filterable table currently lists over 80 studies on the language content of English L2 textbooks, thereby demonstrating the breadth of Textbook English studies published as of early 2022.

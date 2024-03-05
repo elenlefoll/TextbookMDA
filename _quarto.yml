@@ -16,7 +16,10 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - 5a_TEC_data_prep.qmd
+    - Ch3_LitReview.qmd
+    - Ch4_CorpusData.qmd
+    - Ch4_OpenScience.qmd
+    - Ch6_data_prep.qmd
     - summary.qmd
     - references.qmd
    
@@ -38,6 +41,12 @@ format:
     footnotes-hover: true
   pdf:
     documentclass: scrreprt
+    keep-tex: true
+    include-in-header: 
+       text: |
+         \usepackage{fvextra}
+         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+         \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
 
 editor: visual
 
