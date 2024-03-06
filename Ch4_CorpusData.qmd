@@ -10,7 +10,7 @@ p {
 }
 ```
 
-# Corpus data
+# Appendix B: Corpus data {.unnumbered}
 
 ## Textbook English Corpus (TEC)
 

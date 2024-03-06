@@ -13,16 +13,28 @@ book:
   date: last-modified
   downloads: pdf
   license: "CC BY-SA"
+  page-footer:
+    background: light
+    left: |
+      <a href="https://www.elenlefoll.eu">Elen Le Foll"</a>
+    center: |
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+    right: |
+      Online supplement to <a href="https://benjamins.com/catalog/scl">Textbook English (Le Foll, forthcoming)</a>
+  site-url: https://elenlefoll.github.io/TextbookMDA/
+  repo-url: https://github.com/elenlefoll/TextbookMDA/
+  repo-branch: main
   chapters:
     - index.qmd
     - intro.qmd
+    - Ch4_OpenScience.qmd
     - Ch3_LitReview.qmd
     - Ch4_CorpusData.qmd
-    - Ch4_OpenScience.qmd
-    - Ch6_data_prep.qmd
+    - Ch6_DataPrep.qmd
+    - Ch6_Analysis.qmd
     - summary.qmd
     - references.qmd
-   
+
 execute:
   message: false
   warning: false
@@ -39,6 +51,7 @@ format:
     code-link: true
     link-external-newwindow: true
     footnotes-hover: true
+    author-meta: "Elen Le Foll"
   pdf:
     documentclass: scrreprt
     keep-tex: true
