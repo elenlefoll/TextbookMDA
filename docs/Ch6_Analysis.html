@@ -81,7 +81,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
+<link href="./Ch7_DataPrep.html" rel="next">
 <link href="./Ch6_DataPrep.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -154,7 +154,7 @@ div.csl-indent {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+ <span class="menu-text">About</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -172,7 +172,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch3_LitReview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Appendix A: Literature review{.unnumbered}</span></span></a>
+ <span class="menu-text">Appendix A: Literature review</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -195,8 +195,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./Ch7_DataPrep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix F: Data Preparation for the Model of Textbook English vs.&nbsp;‘real-world’ English</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -323,7 +329,7 @@ div.csl-indent {
 <span><span class="co"># str(TxBdata)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>First, the TEC data as processed in Appendix D is imported. It consists of 1,961 texts/files, each with logged standardised normalised frequencies for 66 linguistic features.</p>
+<p>First, the TEC data as processed in Appendix D is imported. It comprises 1,961 texts/files, each with logged standardised normalised frequencies for 66 linguistic features.</p>
 </section></section><section id="checking-the-factorability-of-data" class="level2"><h2 class="anchored" data-anchor-id="checking-the-factorability-of-data">Checking the factorability of data</h2>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kmo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/KMO.html">KMO</a></span><span class="op">(</span><span class="va">TxBdata</span><span class="op">[</span>,<span class="fl">7</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">TxBdata</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3562,8 +3568,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>Summary</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Ch7_DataPrep.html" class="pagination-link" aria-label="Appendix F: Data Preparation for the Model of Textbook English vs. ‘real-world’ English">
+        <span class="nav-page-text">Appendix F: Data Preparation for the Model of Textbook English vs.&nbsp;‘real-world’ English</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -3639,7 +3645,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb89-74"><a href="#cb89-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb89-75"><a href="#cb89-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb89-76"><a href="#cb89-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-77"><a href="#cb89-77" aria-hidden="true" tabindex="-1"></a>First, the TEC data as processed in Appendix D is imported. It consists of <span class="in">`{r} nrow(TxBdata)  |&gt; format(big.mark=",")`</span> texts/files, each with logged standardised normalised frequencies for <span class="in">`{r} ncol(TxBdata)-6`</span> linguistic features.</span>
+<span id="cb89-77"><a href="#cb89-77" aria-hidden="true" tabindex="-1"></a>First, the TEC data as processed in Appendix D is imported. It comprises <span class="in">`{r} nrow(TxBdata)  |&gt; format(big.mark=",")`</span> texts/files, each with logged standardised normalised frequencies for <span class="in">`{r} ncol(TxBdata)-6`</span> linguistic features.</span>
 <span id="cb89-78"><a href="#cb89-78" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb89-79"><a href="#cb89-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking the factorability of data</span></span>
 <span id="cb89-80"><a href="#cb89-80" aria-hidden="true" tabindex="-1"></a></span>
@@ -3769,7 +3775,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb89-222"><a href="#cb89-222" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb89-223"><a href="#cb89-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principal Component Analysis (PCA)</span></span>
 <span id="cb89-224"><a href="#cb89-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-225"><a href="#cb89-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using the full dataset </span></span>
+<span id="cb89-225"><a href="#cb89-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using the full dataset</span></span>
 <span id="cb89-226"><a href="#cb89-226" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb89-227"><a href="#cb89-227" aria-hidden="true" tabindex="-1"></a>Except outliers removed as part of the data preparation (see Appendix D).</span>
 <span id="cb89-228"><a href="#cb89-228" aria-hidden="true" tabindex="-1"></a></span>
@@ -4426,144 +4432,141 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb89-911"><a href="#cb89-911" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "TxB_PCA3_lmer_fixedeffects.svg"), height = 8, width = 8)</span></span>
 <span id="cb89-912"><a href="#cb89-912" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb89-913"><a href="#cb89-913" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-914"><a href="#cb89-914" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-917"><a href="#cb89-917" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb89-918"><a href="#cb89-918" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of random effects:</span></span>
-<span id="cb89-919"><a href="#cb89-919" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(md3, </span>
-<span id="cb89-920"><a href="#cb89-920" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"re"</span>, <span class="co"># Option to visualise random effects</span></span>
-<span id="cb89-921"><a href="#cb89-921" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.values=</span><span class="cn">TRUE</span>, </span>
-<span id="cb89-922"><a href="#cb89-922" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.p=</span><span class="cn">TRUE</span>,</span>
-<span id="cb89-923"><a href="#cb89-923" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.offset =</span> .<span class="dv">4</span>,</span>
-<span id="cb89-924"><a href="#cb89-924" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.size =</span> <span class="fl">3.5</span>,</span>
-<span id="cb89-925"><a href="#cb89-925" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"bw"</span>,</span>
-<span id="cb89-926"><a href="#cb89-926" aria-hidden="true" tabindex="-1"></a>           <span class="at">wrap.labels =</span> <span class="dv">40</span>,</span>
-<span id="cb89-927"><a href="#cb89-927" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.title =</span> <span class="st">"PC3 estimated coefficients"</span>) <span class="sc">+</span></span>
-<span id="cb89-928"><a href="#cb89-928" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_sjplot2</span>()</span>
-<span id="cb89-929"><a href="#cb89-929" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "TxB_PCA3_lmer_randomeffects.svg"), height = 3, width = 8)</span></span>
-<span id="cb89-930"><a href="#cb89-930" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-931"><a href="#cb89-931" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb89-932"><a href="#cb89-932" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-935"><a href="#cb89-935" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb89-936"><a href="#cb89-936" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: Dim3comparisons</span></span>
-<span id="cb89-937"><a href="#cb89-937" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb89-938"><a href="#cb89-938" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb89-939"><a href="#cb89-939" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb89-940"><a href="#cb89-940" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-941"><a href="#cb89-941" aria-hidden="true" tabindex="-1"></a><span class="co"># svg(here("plots", "TxB_predicted_PC3_scores_interactions.svg"), height = 5, width = 8)</span></span>
-<span id="cb89-942"><a href="#cb89-942" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(md3, <span class="at">xvar =</span> <span class="st">"Level"</span>, <span class="at">by=</span><span class="st">"Register"</span>, <span class="at">type =</span> <span class="st">"conditional"</span>,</span>
-<span id="cb89-943"><a href="#cb89-943" aria-hidden="true" tabindex="-1"></a>       <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>), </span>
-<span id="cb89-944"><a href="#cb89-944" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Textbook Level"</span>, <span class="at">ylab =</span> <span class="st">"PC3"</span></span>
-<span id="cb89-945"><a href="#cb89-945" aria-hidden="true" tabindex="-1"></a>       <span class="co">#,gg = TRUE</span></span>
-<span id="cb89-946"><a href="#cb89-946" aria-hidden="true" tabindex="-1"></a>       ,<span class="at">layout=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>)</span>
-<span id="cb89-947"><a href="#cb89-947" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb89-948"><a href="#cb89-948" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span>
-<span id="cb89-949"><a href="#cb89-949" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-950"><a href="#cb89-950" aria-hidden="true" tabindex="-1"></a><span class="co"># Textbook Series-Register interactions</span></span>
-<span id="cb89-951"><a href="#cb89-951" aria-hidden="true" tabindex="-1"></a>visreg<span class="sc">::</span><span class="fu">visreg</span>(md3, <span class="st">"Series"</span>, <span class="at">by=</span><span class="st">"Register"</span>, <span class="at">re.form=</span><span class="sc">~</span>(<span class="dv">1</span><span class="sc">|</span>Series),</span>
-<span id="cb89-952"><a href="#cb89-952" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab=</span><span class="st">"PC3"</span>, <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>))</span>
-<span id="cb89-953"><a href="#cb89-953" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-954"><a href="#cb89-954" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(md3, <span class="at">xvar =</span> <span class="st">"Level"</span>, <span class="at">by=</span><span class="st">"Series"</span>, <span class="at">type =</span> <span class="st">"conditional"</span>, <span class="at">re.form=</span><span class="sc">~</span>(<span class="dv">1</span><span class="sc">|</span>Series), </span>
-<span id="cb89-955"><a href="#cb89-955" aria-hidden="true" tabindex="-1"></a>       <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>), <span class="at">xlab =</span> <span class="st">"Textbook Series"</span>, <span class="at">ylab =</span> <span class="st">"PC3"</span>)</span>
-<span id="cb89-956"><a href="#cb89-956" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-957"><a href="#cb89-957" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb89-958"><a href="#cb89-958" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-959"><a href="#cb89-959" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dimension 4: ‘Informational compression vs. elaboration’</span></span>
-<span id="cb89-960"><a href="#cb89-960" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-963"><a href="#cb89-963" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb89-964"><a href="#cb89-964" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: Dim4model</span></span>
-<span id="cb89-965"><a href="#cb89-965" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb89-966"><a href="#cb89-966" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
-<span id="cb89-967"><a href="#cb89-967" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-968"><a href="#cb89-968" aria-hidden="true" tabindex="-1"></a>md4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(PC4 <span class="sc">~</span> Register<span class="sc">*</span>Level <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Series), <span class="at">data =</span> res.ind, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb89-969"><a href="#cb89-969" aria-hidden="true" tabindex="-1"></a>md4Register <span class="ot">&lt;-</span> <span class="fu">lmer</span>(PC4 <span class="sc">~</span> Register <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Series), <span class="at">data =</span> res.ind, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb89-970"><a href="#cb89-970" aria-hidden="true" tabindex="-1"></a>md4Level <span class="ot">&lt;-</span> <span class="fu">lmer</span>(PC4 <span class="sc">~</span> Level <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Series), <span class="at">data =</span> res.ind, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb89-971"><a href="#cb89-971" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-972"><a href="#cb89-972" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md4, md4Register, md4Level)</span>
-<span id="cb89-973"><a href="#cb89-973" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-974"><a href="#cb89-974" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(md4) <span class="co"># Marginal R2 = 0.426</span></span>
-<span id="cb89-975"><a href="#cb89-975" aria-hidden="true" tabindex="-1"></a><span class="co"># tab_model(md4Register) # Marginal R2 = 0.203</span></span>
-<span id="cb89-976"><a href="#cb89-976" aria-hidden="true" tabindex="-1"></a><span class="co"># tab_model(md4Level) # Marginal R2 = 0.187</span></span>
-<span id="cb89-977"><a href="#cb89-977" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-978"><a href="#cb89-978" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of fixed effects:</span></span>
-<span id="cb89-979"><a href="#cb89-979" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(md4, </span>
-<span id="cb89-980"><a href="#cb89-980" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"est"</span>,</span>
-<span id="cb89-981"><a href="#cb89-981" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.intercept =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb89-982"><a href="#cb89-982" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.values=</span><span class="cn">TRUE</span>, </span>
-<span id="cb89-983"><a href="#cb89-983" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.p=</span><span class="cn">TRUE</span>,</span>
-<span id="cb89-984"><a href="#cb89-984" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.offset =</span> .<span class="dv">4</span>,</span>
-<span id="cb89-985"><a href="#cb89-985" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.size =</span> <span class="fl">3.5</span>,</span>
-<span id="cb89-986"><a href="#cb89-986" aria-hidden="true" tabindex="-1"></a>           <span class="at">colors =</span> palette[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">7</span>)],</span>
-<span id="cb89-987"><a href="#cb89-987" aria-hidden="true" tabindex="-1"></a>           <span class="at">group.terms =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>), </span>
-<span id="cb89-988"><a href="#cb89-988" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">""</span>,</span>
-<span id="cb89-989"><a href="#cb89-989" aria-hidden="true" tabindex="-1"></a>           <span class="at">wrap.labels =</span> <span class="dv">40</span>,</span>
-<span id="cb89-990"><a href="#cb89-990" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.title =</span> <span class="st">"PC4 estimated coefficients"</span>) <span class="sc">+</span></span>
-<span id="cb89-991"><a href="#cb89-991" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_sjplot2</span>() </span>
-<span id="cb89-992"><a href="#cb89-992" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "TxB_PCA4_lmer_fixedeffects.svg"), height = 8, width = 8)</span></span>
-<span id="cb89-993"><a href="#cb89-993" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb89-994"><a href="#cb89-994" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-995"><a href="#cb89-995" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-998"><a href="#cb89-998" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb89-999"><a href="#cb89-999" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of random effects:</span></span>
-<span id="cb89-1000"><a href="#cb89-1000" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(md4, </span>
-<span id="cb89-1001"><a href="#cb89-1001" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"re"</span>, <span class="co"># Option to visualise random effects</span></span>
-<span id="cb89-1002"><a href="#cb89-1002" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.values=</span><span class="cn">TRUE</span>, </span>
-<span id="cb89-1003"><a href="#cb89-1003" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.p=</span><span class="cn">TRUE</span>,</span>
-<span id="cb89-1004"><a href="#cb89-1004" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.offset =</span> .<span class="dv">4</span>,</span>
-<span id="cb89-1005"><a href="#cb89-1005" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.size =</span> <span class="fl">3.5</span>,</span>
-<span id="cb89-1006"><a href="#cb89-1006" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"bw"</span>,</span>
-<span id="cb89-1007"><a href="#cb89-1007" aria-hidden="true" tabindex="-1"></a>           <span class="at">wrap.labels =</span> <span class="dv">40</span>,</span>
-<span id="cb89-1008"><a href="#cb89-1008" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.title =</span> <span class="st">"PC4 estimated coefficients"</span>) <span class="sc">+</span></span>
-<span id="cb89-1009"><a href="#cb89-1009" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_sjplot2</span>()</span>
-<span id="cb89-1010"><a href="#cb89-1010" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "TxB_PCA4_lmer_randomeffects.svg"), height = 3, width = 8)</span></span>
-<span id="cb89-1011"><a href="#cb89-1011" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb89-1012"><a href="#cb89-1012" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1013"><a href="#cb89-1013" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1016"><a href="#cb89-1016" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb89-1017"><a href="#cb89-1017" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
-<span id="cb89-1018"><a href="#cb89-1018" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1019"><a href="#cb89-1019" aria-hidden="true" tabindex="-1"></a><span class="co"># svg(here("plots", "TxB_predicted_PC4_scores_interactions.svg"), height = 5, width = 8)</span></span>
-<span id="cb89-1020"><a href="#cb89-1020" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(md4, <span class="at">xvar =</span> <span class="st">"Level"</span>, <span class="at">by=</span><span class="st">"Register"</span>, <span class="at">type =</span> <span class="st">"conditional"</span>,</span>
-<span id="cb89-1021"><a href="#cb89-1021" aria-hidden="true" tabindex="-1"></a>       <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>), </span>
-<span id="cb89-1022"><a href="#cb89-1022" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Textbook Level"</span>, <span class="at">ylab =</span> <span class="st">"PC4"</span></span>
-<span id="cb89-1023"><a href="#cb89-1023" aria-hidden="true" tabindex="-1"></a>       <span class="co">#,gg = TRUE</span></span>
-<span id="cb89-1024"><a href="#cb89-1024" aria-hidden="true" tabindex="-1"></a>       ,<span class="at">layout=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>)</span>
-<span id="cb89-1025"><a href="#cb89-1025" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb89-1026"><a href="#cb89-1026" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span>
-<span id="cb89-1027"><a href="#cb89-1027" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1028"><a href="#cb89-1028" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb89-1029"><a href="#cb89-1029" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1030"><a href="#cb89-1030" aria-hidden="true" tabindex="-1"></a><span class="fu">### Testing model assumptions</span></span>
-<span id="cb89-1031"><a href="#cb89-1031" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1032"><a href="#cb89-1032" aria-hidden="true" tabindex="-1"></a>This chunk can be used to check the assumptions of all of the models computed above. In the following example, we examine the final model selected to predict Dim2 scores.</span>
-<span id="cb89-1033"><a href="#cb89-1033" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1034"><a href="#cb89-1034" aria-hidden="true" tabindex="-1"></a><span class="in">```{r lmer-diagnostics}</span></span>
-<span id="cb89-1035"><a href="#cb89-1035" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1036"><a href="#cb89-1036" aria-hidden="true" tabindex="-1"></a><span class="in">model2test &lt;- md2</span></span>
+<span id="cb89-916"><a href="#cb89-916" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb89-917"><a href="#cb89-917" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of random effects:</span></span>
+<span id="cb89-918"><a href="#cb89-918" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(md3, </span>
+<span id="cb89-919"><a href="#cb89-919" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"re"</span>, <span class="co"># Option to visualise random effects</span></span>
+<span id="cb89-920"><a href="#cb89-920" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.values=</span><span class="cn">TRUE</span>, </span>
+<span id="cb89-921"><a href="#cb89-921" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.p=</span><span class="cn">TRUE</span>,</span>
+<span id="cb89-922"><a href="#cb89-922" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.offset =</span> .<span class="dv">4</span>,</span>
+<span id="cb89-923"><a href="#cb89-923" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.size =</span> <span class="fl">3.5</span>,</span>
+<span id="cb89-924"><a href="#cb89-924" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"bw"</span>,</span>
+<span id="cb89-925"><a href="#cb89-925" aria-hidden="true" tabindex="-1"></a>           <span class="at">wrap.labels =</span> <span class="dv">40</span>,</span>
+<span id="cb89-926"><a href="#cb89-926" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.title =</span> <span class="st">"PC3 estimated coefficients"</span>) <span class="sc">+</span></span>
+<span id="cb89-927"><a href="#cb89-927" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_sjplot2</span>()</span>
+<span id="cb89-928"><a href="#cb89-928" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "TxB_PCA3_lmer_randomeffects.svg"), height = 3, width = 8)</span></span>
+<span id="cb89-929"><a href="#cb89-929" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-930"><a href="#cb89-930" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb89-931"><a href="#cb89-931" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-934"><a href="#cb89-934" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb89-935"><a href="#cb89-935" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: Dim3comparisons</span></span>
+<span id="cb89-936"><a href="#cb89-936" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb89-937"><a href="#cb89-937" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb89-938"><a href="#cb89-938" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb89-939"><a href="#cb89-939" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-940"><a href="#cb89-940" aria-hidden="true" tabindex="-1"></a><span class="co"># svg(here("plots", "TxB_predicted_PC3_scores_interactions.svg"), height = 5, width = 8)</span></span>
+<span id="cb89-941"><a href="#cb89-941" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(md3, <span class="at">xvar =</span> <span class="st">"Level"</span>, <span class="at">by=</span><span class="st">"Register"</span>, <span class="at">type =</span> <span class="st">"conditional"</span>,</span>
+<span id="cb89-942"><a href="#cb89-942" aria-hidden="true" tabindex="-1"></a>       <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>), </span>
+<span id="cb89-943"><a href="#cb89-943" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Textbook Level"</span>, <span class="at">ylab =</span> <span class="st">"PC3"</span></span>
+<span id="cb89-944"><a href="#cb89-944" aria-hidden="true" tabindex="-1"></a>       <span class="co">#,gg = TRUE</span></span>
+<span id="cb89-945"><a href="#cb89-945" aria-hidden="true" tabindex="-1"></a>       ,<span class="at">layout=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>)</span>
+<span id="cb89-946"><a href="#cb89-946" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb89-947"><a href="#cb89-947" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span>
+<span id="cb89-948"><a href="#cb89-948" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-949"><a href="#cb89-949" aria-hidden="true" tabindex="-1"></a><span class="co"># Textbook Series-Register interactions</span></span>
+<span id="cb89-950"><a href="#cb89-950" aria-hidden="true" tabindex="-1"></a>visreg<span class="sc">::</span><span class="fu">visreg</span>(md3, <span class="st">"Series"</span>, <span class="at">by=</span><span class="st">"Register"</span>, <span class="at">re.form=</span><span class="sc">~</span>(<span class="dv">1</span><span class="sc">|</span>Series),</span>
+<span id="cb89-951"><a href="#cb89-951" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab=</span><span class="st">"PC3"</span>, <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>))</span>
+<span id="cb89-952"><a href="#cb89-952" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-953"><a href="#cb89-953" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(md3, <span class="at">xvar =</span> <span class="st">"Level"</span>, <span class="at">by=</span><span class="st">"Series"</span>, <span class="at">type =</span> <span class="st">"conditional"</span>, <span class="at">re.form=</span><span class="sc">~</span>(<span class="dv">1</span><span class="sc">|</span>Series), </span>
+<span id="cb89-954"><a href="#cb89-954" aria-hidden="true" tabindex="-1"></a>       <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>), <span class="at">xlab =</span> <span class="st">"Textbook Series"</span>, <span class="at">ylab =</span> <span class="st">"PC3"</span>)</span>
+<span id="cb89-955"><a href="#cb89-955" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-956"><a href="#cb89-956" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb89-957"><a href="#cb89-957" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-958"><a href="#cb89-958" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dimension 4: ‘Informational compression vs. elaboration’</span></span>
+<span id="cb89-959"><a href="#cb89-959" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-962"><a href="#cb89-962" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb89-963"><a href="#cb89-963" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: Dim4model</span></span>
+<span id="cb89-964"><a href="#cb89-964" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb89-965"><a href="#cb89-965" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
+<span id="cb89-966"><a href="#cb89-966" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-967"><a href="#cb89-967" aria-hidden="true" tabindex="-1"></a>md4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(PC4 <span class="sc">~</span> Register<span class="sc">*</span>Level <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Series), <span class="at">data =</span> res.ind, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb89-968"><a href="#cb89-968" aria-hidden="true" tabindex="-1"></a>md4Register <span class="ot">&lt;-</span> <span class="fu">lmer</span>(PC4 <span class="sc">~</span> Register <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Series), <span class="at">data =</span> res.ind, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb89-969"><a href="#cb89-969" aria-hidden="true" tabindex="-1"></a>md4Level <span class="ot">&lt;-</span> <span class="fu">lmer</span>(PC4 <span class="sc">~</span> Level <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Series), <span class="at">data =</span> res.ind, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb89-970"><a href="#cb89-970" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-971"><a href="#cb89-971" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md4, md4Register, md4Level)</span>
+<span id="cb89-972"><a href="#cb89-972" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-973"><a href="#cb89-973" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(md4) <span class="co"># Marginal R2 = 0.426</span></span>
+<span id="cb89-974"><a href="#cb89-974" aria-hidden="true" tabindex="-1"></a><span class="co"># tab_model(md4Register) # Marginal R2 = 0.203</span></span>
+<span id="cb89-975"><a href="#cb89-975" aria-hidden="true" tabindex="-1"></a><span class="co"># tab_model(md4Level) # Marginal R2 = 0.187</span></span>
+<span id="cb89-976"><a href="#cb89-976" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-977"><a href="#cb89-977" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of fixed effects:</span></span>
+<span id="cb89-978"><a href="#cb89-978" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(md4, </span>
+<span id="cb89-979"><a href="#cb89-979" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"est"</span>,</span>
+<span id="cb89-980"><a href="#cb89-980" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.intercept =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb89-981"><a href="#cb89-981" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.values=</span><span class="cn">TRUE</span>, </span>
+<span id="cb89-982"><a href="#cb89-982" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.p=</span><span class="cn">TRUE</span>,</span>
+<span id="cb89-983"><a href="#cb89-983" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.offset =</span> .<span class="dv">4</span>,</span>
+<span id="cb89-984"><a href="#cb89-984" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.size =</span> <span class="fl">3.5</span>,</span>
+<span id="cb89-985"><a href="#cb89-985" aria-hidden="true" tabindex="-1"></a>           <span class="at">colors =</span> palette[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">7</span>)],</span>
+<span id="cb89-986"><a href="#cb89-986" aria-hidden="true" tabindex="-1"></a>           <span class="at">group.terms =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>), </span>
+<span id="cb89-987"><a href="#cb89-987" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">""</span>,</span>
+<span id="cb89-988"><a href="#cb89-988" aria-hidden="true" tabindex="-1"></a>           <span class="at">wrap.labels =</span> <span class="dv">40</span>,</span>
+<span id="cb89-989"><a href="#cb89-989" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.title =</span> <span class="st">"PC4 estimated coefficients"</span>) <span class="sc">+</span></span>
+<span id="cb89-990"><a href="#cb89-990" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_sjplot2</span>() </span>
+<span id="cb89-991"><a href="#cb89-991" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "TxB_PCA4_lmer_fixedeffects.svg"), height = 8, width = 8)</span></span>
+<span id="cb89-992"><a href="#cb89-992" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb89-993"><a href="#cb89-993" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-996"><a href="#cb89-996" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb89-997"><a href="#cb89-997" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of random effects:</span></span>
+<span id="cb89-998"><a href="#cb89-998" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_model</span>(md4, </span>
+<span id="cb89-999"><a href="#cb89-999" aria-hidden="true" tabindex="-1"></a>           <span class="at">type =</span> <span class="st">"re"</span>, <span class="co"># Option to visualise random effects</span></span>
+<span id="cb89-1000"><a href="#cb89-1000" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.values=</span><span class="cn">TRUE</span>, </span>
+<span id="cb89-1001"><a href="#cb89-1001" aria-hidden="true" tabindex="-1"></a>           <span class="at">show.p=</span><span class="cn">TRUE</span>,</span>
+<span id="cb89-1002"><a href="#cb89-1002" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.offset =</span> .<span class="dv">4</span>,</span>
+<span id="cb89-1003"><a href="#cb89-1003" aria-hidden="true" tabindex="-1"></a>           <span class="at">value.size =</span> <span class="fl">3.5</span>,</span>
+<span id="cb89-1004"><a href="#cb89-1004" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"bw"</span>,</span>
+<span id="cb89-1005"><a href="#cb89-1005" aria-hidden="true" tabindex="-1"></a>           <span class="at">wrap.labels =</span> <span class="dv">40</span>,</span>
+<span id="cb89-1006"><a href="#cb89-1006" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.title =</span> <span class="st">"PC4 estimated coefficients"</span>) <span class="sc">+</span></span>
+<span id="cb89-1007"><a href="#cb89-1007" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_sjplot2</span>()</span>
+<span id="cb89-1008"><a href="#cb89-1008" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "TxB_PCA4_lmer_randomeffects.svg"), height = 3, width = 8)</span></span>
+<span id="cb89-1009"><a href="#cb89-1009" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb89-1010"><a href="#cb89-1010" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1013"><a href="#cb89-1013" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb89-1014"><a href="#cb89-1014" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
+<span id="cb89-1015"><a href="#cb89-1015" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1016"><a href="#cb89-1016" aria-hidden="true" tabindex="-1"></a><span class="co"># svg(here("plots", "TxB_predicted_PC4_scores_interactions.svg"), height = 5, width = 8)</span></span>
+<span id="cb89-1017"><a href="#cb89-1017" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(md4, <span class="at">xvar =</span> <span class="st">"Level"</span>, <span class="at">by=</span><span class="st">"Register"</span>, <span class="at">type =</span> <span class="st">"conditional"</span>,</span>
+<span id="cb89-1018"><a href="#cb89-1018" aria-hidden="true" tabindex="-1"></a>       <span class="at">line=</span><span class="fu">list</span>(<span class="at">col=</span><span class="st">"darkred"</span>), </span>
+<span id="cb89-1019"><a href="#cb89-1019" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Textbook Level"</span>, <span class="at">ylab =</span> <span class="st">"PC4"</span></span>
+<span id="cb89-1020"><a href="#cb89-1020" aria-hidden="true" tabindex="-1"></a>       <span class="co">#,gg = TRUE</span></span>
+<span id="cb89-1021"><a href="#cb89-1021" aria-hidden="true" tabindex="-1"></a>       ,<span class="at">layout=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>)</span>
+<span id="cb89-1022"><a href="#cb89-1022" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb89-1023"><a href="#cb89-1023" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span>
+<span id="cb89-1024"><a href="#cb89-1024" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1025"><a href="#cb89-1025" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb89-1026"><a href="#cb89-1026" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1027"><a href="#cb89-1027" aria-hidden="true" tabindex="-1"></a><span class="fu">### Testing model assumptions</span></span>
+<span id="cb89-1028"><a href="#cb89-1028" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1029"><a href="#cb89-1029" aria-hidden="true" tabindex="-1"></a>This chunk can be used to check the assumptions of all of the models computed above. In the following example, we examine the final model selected to predict Dim2 scores.</span>
+<span id="cb89-1030"><a href="#cb89-1030" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1031"><a href="#cb89-1031" aria-hidden="true" tabindex="-1"></a><span class="in">```{r lmer-diagnostics}</span></span>
+<span id="cb89-1032"><a href="#cb89-1032" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1033"><a href="#cb89-1033" aria-hidden="true" tabindex="-1"></a><span class="in">model2test &lt;- md2</span></span>
+<span id="cb89-1034"><a href="#cb89-1034" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1035"><a href="#cb89-1035" aria-hidden="true" tabindex="-1"></a><span class="in"># check distribution of residuals</span></span>
+<span id="cb89-1036"><a href="#cb89-1036" aria-hidden="true" tabindex="-1"></a><span class="in">plot(model2test)</span></span>
 <span id="cb89-1037"><a href="#cb89-1037" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1038"><a href="#cb89-1038" aria-hidden="true" tabindex="-1"></a><span class="in"># check distribution of residuals</span></span>
-<span id="cb89-1039"><a href="#cb89-1039" aria-hidden="true" tabindex="-1"></a><span class="in">plot(model2test)</span></span>
-<span id="cb89-1040"><a href="#cb89-1040" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1041"><a href="#cb89-1041" aria-hidden="true" tabindex="-1"></a><span class="in"># scale-location plot</span></span>
-<span id="cb89-1042"><a href="#cb89-1042" aria-hidden="true" tabindex="-1"></a><span class="in">plot(model2test,</span></span>
-<span id="cb89-1043"><a href="#cb89-1043" aria-hidden="true" tabindex="-1"></a><span class="in">     sqrt(abs(resid(.)))~fitted(.),</span></span>
-<span id="cb89-1044"><a href="#cb89-1044" aria-hidden="true" tabindex="-1"></a><span class="in">     type=c("p","smooth"), col.line=1)</span></span>
+<span id="cb89-1038"><a href="#cb89-1038" aria-hidden="true" tabindex="-1"></a><span class="in"># scale-location plot</span></span>
+<span id="cb89-1039"><a href="#cb89-1039" aria-hidden="true" tabindex="-1"></a><span class="in">plot(model2test,</span></span>
+<span id="cb89-1040"><a href="#cb89-1040" aria-hidden="true" tabindex="-1"></a><span class="in">     sqrt(abs(resid(.)))~fitted(.),</span></span>
+<span id="cb89-1041"><a href="#cb89-1041" aria-hidden="true" tabindex="-1"></a><span class="in">     type=c("p","smooth"), col.line=1)</span></span>
+<span id="cb89-1042"><a href="#cb89-1042" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-1043"><a href="#cb89-1043" aria-hidden="true" tabindex="-1"></a><span class="in"># Q-Q plot</span></span>
+<span id="cb89-1044"><a href="#cb89-1044" aria-hidden="true" tabindex="-1"></a><span class="in">lattice::qqmath(model2test)</span></span>
 <span id="cb89-1045"><a href="#cb89-1045" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1046"><a href="#cb89-1046" aria-hidden="true" tabindex="-1"></a><span class="in"># Q-Q plot</span></span>
-<span id="cb89-1047"><a href="#cb89-1047" aria-hidden="true" tabindex="-1"></a><span class="in">lattice::qqmath(model2test)</span></span>
-<span id="cb89-1048"><a href="#cb89-1048" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-1049"><a href="#cb89-1049" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb89-1046"><a href="#cb89-1046" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-<p><a href="https://www.elenlefoll.eu">Elen Le Foll”</a></p>
+<p><a href="https://www.elenlefoll.eu">Elen Le Foll</a></p>
 </div>   
     <div class="nav-footer-center">
-<p><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></p>
+<p><a href="https://benjamins.com/catalog/scl">Textbook English</a></p>
 </div>
     <div class="nav-footer-right">
-<p>Online supplement to <a href="https://benjamins.com/catalog/scl">Textbook English (Le Foll, forthcoming)</a></p>
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></p>
 </div>
   </div>
 </footer>

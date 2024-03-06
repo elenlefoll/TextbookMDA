@@ -1,4 +1,4 @@
-# Preface {.unnumbered}
+# About {.unnumbered}
 
 This Quarto book is **work in progress**. It will eventually contain the online supplements to:
 

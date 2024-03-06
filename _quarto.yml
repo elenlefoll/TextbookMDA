@@ -15,12 +15,9 @@ book:
   license: "CC BY-SA"
   page-footer:
     background: light
-    left: |
-      <a href="https://www.elenlefoll.eu">Elen Le Foll"</a>
-    center: |
-      <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
-    right: |
-      Online supplement to <a href="https://benjamins.com/catalog/scl">Textbook English (Le Foll, forthcoming)</a>
+    left: <a href="https://www.elenlefoll.eu">Elen Le Foll</a>
+    center: <a href="https://benjamins.com/catalog/scl">Textbook English</a>
+    right: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
   site-url: https://elenlefoll.github.io/TextbookMDA/
   repo-url: https://github.com/elenlefoll/TextbookMDA/
   repo-branch: main
@@ -32,6 +29,7 @@ book:
     - Ch4_CorpusData.qmd
     - Ch6_DataPrep.qmd
     - Ch6_Analysis.qmd
+    - Ch7_DataPrep.qmd
     - summary.qmd
     - references.qmd
 

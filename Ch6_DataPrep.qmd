@@ -165,7 +165,7 @@ TxBcounts |>
 
 ### Feature removal
 
-A number of features were removed from the dataset as they are not linguistically interpretable. In the case of the TEC, this included the variable CD because numbers spellt out as digits were removed from the textbooks before these were tagged with the MFTE. In addition, the variables LIKE and SO because these are "bin" features included in the output of the MFTE to ensure that the counts for these polysemous words do not inflate other categories due to mistags [@lefoll2021a].
+A number of features were removed from the dataset as they are not linguistically interpretable. In the case of the TEC, this included the variable CD because numbers spelt out as digits were removed from the textbooks before these were tagged with the MFTE. In addition, the variables LIKE and SO because these are "bin" features included in the output of the MFTE to ensure that the counts for these polysemous words do not inflate other categories due to mistags [@lefoll2021a].
 
 Whenever linguistically meaningful, very low-frequency features were merged. Finally, features absent from more than third of texts were also excluded. For the analysis intra-textbook register variation, the following linguistic features were excluded from the analysis due to low dispersion:
 
@@ -266,7 +266,7 @@ TxBzcounts <- TxBcounts |>
 
 ```
 
-This resulted in `{r} nrow(TxBcounts) |> format(big.mark=",")` TEC texts being included in the model of intra-textbook linguistic variation with the following normalised feature distributions.
+This resulted in `{r} nrow(TxBcounts) |> format(big.mark=",")` TEC texts being included in the model of intra-textbook linguistic variation with the following standardised feature distributions.
 
 ```{r}
 #| label: z-transformed-distributions

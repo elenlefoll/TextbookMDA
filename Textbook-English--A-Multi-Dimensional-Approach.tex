@@ -238,10 +238,10 @@
 }
 \bookmarksetup{startatroot}
 
-\chapter*{Preface}\label{preface}
-\addcontentsline{toc}{chapter}{Preface}
+\chapter*{About}\label{about}
+\addcontentsline{toc}{chapter}{About}
 
-\markboth{Preface}{Preface}
+\markboth{About}{About}
 
 This Quarto book is \textbf{work in progress}. It will eventually
 contain the online supplements to:
@@ -550,8 +550,10 @@ research purposes from:
 \url{http://corpora.lancs.ac.uk/bnc2014/signup.php}. I used the untagged
 XML version.
 
-The R script used to pre-process the untagged XML files as explained in
-Section 4.3.2.2 of the book can be found here:
+The R script used to pre-process the untagged XML files into the format
+used in this study (the ``John and Jill in Ivybridge'' version with
+added full stops at speaker turns, as explained in Section 4.3.2.2 of
+the book) can be found here:
 \url{https://github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R}
 
 \subsection*{Informative Texts for Teens Corpus (Info
@@ -924,7 +926,7 @@ features displayed highly skewed distributions.
 
 A number of features were removed from the dataset as they are not
 linguistically interpretable. In the case of the TEC, this included the
-variable CD because numbers spellt out as digits were removed from the
+variable CD because numbers spelt out as digits were removed from the
 textbooks before these were tagged with the MFTE. In addition, the
 variables LIKE and SO because these are ``bin'' features included in the
 output of the MFTE to ensure that the counts for these polysemous words
@@ -1087,7 +1089,7 @@ analyses.
 \end{Shaded}
 
 This resulted in 1,961 TEC texts being included in the model of
-intra-textbook linguistic variation with the following normalised
+intra-textbook linguistic variation with the following standardised
 feature distributions.
 
 \begin{Shaded}
@@ -1509,9 +1511,9 @@ following analyses.
 \end{Highlighting}
 \end{Shaded}
 
-First, the TEC data as processed in Appendix D is imported. It consists
-of 1,961 texts/files, each with logged standardised normalised
-frequencies for 66 linguistic features.
+First, the TEC data as processed in Appendix D is imported. It comprises
+1,961 texts/files, each with logged standardised normalised frequencies
+for 66 linguistic features.
 
 \section*{Checking the factorability of
 data}\label{checking-the-factorability-of-data}
@@ -3040,6 +3042,904 @@ selected to predict Dim2 scores.
 \end{Shaded}
 
 \includegraphics{Ch6_Analysis_files/figure-pdf/lmer-diagnostics-3.pdf}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Appendix F: Data Preparation for the Model of Textbook English
+vs.~`real-world'
+English}\label{appendix-f-data-preparation-for-the-model-of-textbook-english-vs.-real-world-english}
+\addcontentsline{toc}{chapter}{Appendix F: Data Preparation for the
+Model of Textbook English vs.~`real-world' English}
+
+\markboth{Appendix F: Data Preparation for the Model of Textbook English
+vs.~`real-world' English}{Appendix F: Data Preparation for the Model of
+Textbook English vs.~`real-world' English}
+
+This script documents the steps taken to pre-process the data extracted
+from the Textbook English Corpus (TEC) and the three reference corpora
+that were ultimately entered in the comparative multi-dimensional model
+of Textbook English as compared to English outside the EFL classroom
+(Chapter 7).
+
+\section*{Packages required}\label{packages-required-2}
+\addcontentsline{toc}{section}{Packages required}
+
+\markright{Packages required}
+
+The following packages must be installed and loaded to process the data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#renv::restore() \# Restore the project\textquotesingle{}s dependencies from the lockfile to ensure that same package versions are used as in the original thesis.}
+
+\FunctionTok{library}\NormalTok{(broom.mixed) }\CommentTok{\# For checking singularity issues }
+\FunctionTok{library}\NormalTok{(car) }\CommentTok{\# For recoding data}
+\FunctionTok{library}\NormalTok{(corrplot) }\CommentTok{\# For the feature correlation matrix}
+\FunctionTok{library}\NormalTok{(cowplot) }\CommentTok{\# For nice plots}
+\FunctionTok{library}\NormalTok{(emmeans) }\CommentTok{\# Comparing group means of predicted values}
+\FunctionTok{library}\NormalTok{(GGally) }\CommentTok{\# For ggpairs}
+\FunctionTok{library}\NormalTok{(gridExtra) }\CommentTok{\# For making large faceted plots}
+\FunctionTok{library}\NormalTok{(here) }\CommentTok{\# For ease of sharing}
+\FunctionTok{library}\NormalTok{(knitr) }\CommentTok{\# Loaded to display the tables using the kable() function}
+\FunctionTok{library}\NormalTok{(lme4) }\CommentTok{\# For mixed effects modelling}
+\FunctionTok{library}\NormalTok{(psych) }\CommentTok{\# For various useful stats function, including KMO()}
+\FunctionTok{library}\NormalTok{(scales) }\CommentTok{\# For working with colours}
+\FunctionTok{library}\NormalTok{(sjPlot) }\CommentTok{\# For nice tabular display of regression models}
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# For data wrangling and plotting}
+\FunctionTok{library}\NormalTok{(visreg) }\CommentTok{\# For nice visualisations of model results}
+\NormalTok{select }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\NormalTok{select}
+\NormalTok{filter }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\NormalTok{filter}
+
+\FunctionTok{source}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"R\_rainclouds.R"}\NormalTok{)) }\CommentTok{\# For geom\_flat\_violin rainplots}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Colours used in Register Studies paper and included in Open Access plots published on Zenodo:}
+\CommentTok{\#colours \textless{}{-} suf\_palette(name = "london", n = 6, type = "continuous") \# Very nice, similar to OrRd palette}
+\CommentTok{\#scales::show\_col(colours)}
+\CommentTok{\#colours \textless{}{-} colours[6:1] }
+
+\CommentTok{\# Colour scheme used in PhD thesis:}
+\NormalTok{colours }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"\#F9B921"}\NormalTok{, }\StringTok{"\#A18A33"}\NormalTok{,  }\StringTok{"\#722672"}\NormalTok{, }\StringTok{"\#BD241E"}\NormalTok{, }\StringTok{"\#15274D"}\NormalTok{, }\StringTok{"\#D54E1E"}\NormalTok{) }
+\CommentTok{\# scales::show\_col(colours)}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{Data import from MFTE
+outputs}\label{data-import-from-mfte-outputs}
+\addcontentsline{toc}{section}{Data import from MFTE outputs}
+
+\markright{Data import from MFTE outputs}
+
+The raw data used in this script comes from the matrices of mixed
+normalised frequencies as output by the
+\href{https://github.com/mshakirDr/MultiFeatureTaggerEnglish}{MFTE Perl
+v. 3.1} (Le Foll 2021a).
+
+\subsection*{Spoken BNC2014}\label{spoken-bnc2014-1}
+\addcontentsline{toc}{subsection}{Spoken BNC2014}
+
+These normalised frequencies were computed on the basis of my own ``John
+and Jill in Ivybridge'' version of the Spoken BNC2014 with added full
+stops at speaker turns (see Appendix B for details).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SpokenBNC2014 }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"SpokenBNC2014\_3.1\_normed\_complex\_counts.tsv"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{SpokenBNC2014}\SpecialCharTok{$}\NormalTok{Series }\OtherTok{\textless{}{-}} \StringTok{"Spoken BNC2014"}
+\NormalTok{SpokenBNC2014}\SpecialCharTok{$}\NormalTok{Level }\OtherTok{\textless{}{-}} \StringTok{"Ref."}
+\NormalTok{SpokenBNC2014}\SpecialCharTok{$}\NormalTok{Country }\OtherTok{\textless{}{-}} \StringTok{"Spoken BNC2014"}
+\NormalTok{SpokenBNC2014}\SpecialCharTok{$}\NormalTok{Register }\OtherTok{\textless{}{-}} \StringTok{"Spoken BNC2014"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection*{Youth Fiction corpus}\label{youth-fiction-corpus-1}
+\addcontentsline{toc}{subsection}{Youth Fiction corpus}
+
+These normalised frequencies were computed on the basis of the random
+samples of approximately 5,000 words of the books of the Youth Fiction
+corpus (for details of the works included in this corpus, see Appendix
+B).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{YouthFiction }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"YF\_sampled\_500\_3.1\_normed\_complex\_counts.tsv"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{YouthFiction}\SpecialCharTok{$}\NormalTok{Series }\OtherTok{\textless{}{-}} \StringTok{"Youth Fiction"}
+\NormalTok{YouthFiction}\SpecialCharTok{$}\NormalTok{Level }\OtherTok{\textless{}{-}} \StringTok{"Ref."}
+\NormalTok{YouthFiction}\SpecialCharTok{$}\NormalTok{Country }\OtherTok{\textless{}{-}} \StringTok{"Youth Fiction"}
+\NormalTok{YouthFiction}\SpecialCharTok{$}\NormalTok{Register }\OtherTok{\textless{}{-}} \StringTok{"Youth Fiction"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection*{Informative Texts for Teens (InfoTeens)
+corpus}\label{informative-texts-for-teens-infoteens-corpus}
+\addcontentsline{toc}{subsection}{Informative Texts for Teens
+(InfoTeens) corpus}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{InfoTeen }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"InfoTeen\_3.1\_normed\_complex\_counts.tsv"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Removes three outlier files which should not have been included in the corpus as they contain exam papers only}
+\NormalTok{InfoTeen }\OtherTok{\textless{}{-}}\NormalTok{ InfoTeen }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Filename}\SpecialCharTok{!=}\StringTok{".DS\_Store"} \SpecialCharTok{\&}\NormalTok{ Filename}\SpecialCharTok{!=}\StringTok{"Revision\_World\_GCSE\_10529068\_wjec{-}level{-}law{-}past{-}papers.txt"} \SpecialCharTok{\&}\NormalTok{ Filename}\SpecialCharTok{!=}\StringTok{"Revision\_World\_GCSE\_10528474\_wjec{-}level{-}history{-}past{-}papers.txt"} \SpecialCharTok{\&}\NormalTok{ Filename}\SpecialCharTok{!=}\StringTok{"Revision\_World\_GCSE\_10528472\_edexcel{-}level{-}history{-}past{-}papers.txt"}\NormalTok{)}
+
+\NormalTok{InfoTeen}\SpecialCharTok{$}\NormalTok{Series }\OtherTok{\textless{}{-}} \StringTok{"Info Teens"}
+\NormalTok{InfoTeen}\SpecialCharTok{$}\NormalTok{Level }\OtherTok{\textless{}{-}} \StringTok{"Ref."}
+\NormalTok{InfoTeen}\SpecialCharTok{$}\NormalTok{Country }\OtherTok{\textless{}{-}} \StringTok{"Info Teens"}
+\NormalTok{InfoTeen}\SpecialCharTok{$}\NormalTok{Register }\OtherTok{\textless{}{-}} \StringTok{"Info Teens"}
+\end{Highlighting}
+\end{Shaded}
+
+Details of the composition of the Info Teens corpus can be found in
+Section 4.3.2.5 of the book. The version used in the present study
+comprises 1,411 texts.
+
+\section*{Merging TEC and reference corpora
+data}\label{merging-tec-and-reference-corpora-data}
+\addcontentsline{toc}{section}{Merging TEC and reference corpora data}
+
+\markright{Merging TEC and reference corpora data}
+
+\begin{verbatim}
+[1] "Conversation"   "Fiction"        "Info Teens"     "Informative"   
+[5] "Spoken BNC2014" "Youth Fiction" 
+\end{verbatim}
+
+\subsection*{Corpus size}\label{corpus-size-1}
+\addcontentsline{toc}{subsection}{Corpus size}
+
+These tables provide some summary statistics about the texts/files whose
+normalised feature frequencies were entered in the model of Textbook
+English vs.~real-life English.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(ncounts}\SpecialCharTok{$}\NormalTok{Subcorpus) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"(Sub)corpus"}\NormalTok{, }\StringTok{"\# texts"}\NormalTok{),}
+        \AttributeTok{format.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{big.mark =} \StringTok{","}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+(Sub)corpus & \# texts \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Textbook Conversation & 593 \\
+Textbook Fiction & 285 \\
+Info Teens Ref. & 1,411 \\
+Textbook Informative & 364 \\
+Spoken BNC2014 Ref. & 1,251 \\
+Youth Fiction Ref. & 1,191 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ncounts  }\SpecialCharTok{|\textgreater{}}  
+  \FunctionTok{group\_by}\NormalTok{(Register) }\SpecialCharTok{|\textgreater{}}  
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{totaltexts =} \FunctionTok{n}\NormalTok{(), }
+            \AttributeTok{totalwords =} \FunctionTok{sum}\NormalTok{(Words), }
+            \AttributeTok{mean =} \FunctionTok{as.integer}\NormalTok{(}\FunctionTok{mean}\NormalTok{(Words)), }
+            \AttributeTok{sd =} \FunctionTok{as.integer}\NormalTok{(}\FunctionTok{sd}\NormalTok{(Words)), }
+            \AttributeTok{TTRmean =} \FunctionTok{mean}\NormalTok{(TTR)) }\SpecialCharTok{|\textgreater{}}  
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{, }
+        \AttributeTok{format.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{big.mark =} \StringTok{","}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule\noalign{}
+Register & totaltexts & totalwords & mean & sd & TTRmean \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Conversation & 1,844 & 13,804,196 & 7,486 & 8,690 & 0.40 \\
+Fiction & 1,476 & 7,321,747 & 4,960 & 2,022 & 0.49 \\
+Informative & 1,775 & 1,436,732 & 809 & 188 & 0.51 \\
+\end{longtable}
+
+\section*{Data preparation for PCA}\label{data-preparation-for-pca-1}
+\addcontentsline{toc}{section}{Data preparation for PCA}
+
+\markright{Data preparation for PCA}
+
+\subsection*{Feature distributions}\label{feature-distributions-1}
+\addcontentsline{toc}{subsection}{Feature distributions}
+
+The distributions of each linguistic features were examined by means of
+visualisation. As shown below, before transformation, many of the
+features displayed highly skewed distributions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ncounts \textless{}{-} readRDS(here("data", "processed", "counts3Reg.rds"))}
+
+\NormalTok{ncounts }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Words) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{keep}\NormalTok{(is.numeric) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{gather}\NormalTok{() }\SpecialCharTok{|\textgreater{}} \CommentTok{\# This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet\_wrap function from ggplot2}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(value, }\FunctionTok{after\_stat}\NormalTok{(density))) }\SpecialCharTok{+}
+    \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ key, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\ConstantTok{NA}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{, }\AttributeTok{colour=} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"grey"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour =} \StringTok{"darkred"}\NormalTok{, }\AttributeTok{weight =} \DecValTok{2}\NormalTok{, }\AttributeTok{fill=}\StringTok{"darkred"}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ch7_DataPrep_files/figure-pdf/distribution-viz-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ggsave(here("plots", "DensityPlotsAllVariables.svg"), width = 15, height = 49)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection*{Feature removal}\label{feature-removal-1}
+\addcontentsline{toc}{subsection}{Feature removal}
+
+A number of features were removed from the dataset as they are not
+linguistically interpretable. In the case of the TEC, this included the
+variable CD because numbers spelt out as digits were removed from the
+textbooks before these were tagged with the MFTE. In addition, the
+variables LIKE and SO because these are ``bin'' features included in the
+output of the MFTE to ensure that the counts for these polysemous words
+do not inflate other categories due to mistags (Le Foll 2021b).
+
+Whenever linguistically meaningful, very low-frequency features,
+features with low MSA or communalities (see chunks below) were merged.
+Finally, features absent from more than third of texts were also
+excluded. For the comparative analysis of TEC and the reference corpora,
+the following linguistic features were excluded from the analysis due to
+low dispersion:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Removal of meaningless feature: CD because numbers as digits were mostly removed from the textbooks, LIKE and SO because they are dustbin categories}
+\NormalTok{ncounts }\OtherTok{\textless{}{-}}\NormalTok{ ncounts }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(CD, LIKE, SO))}
+
+\CommentTok{\# Combine problematic features into meaningful groups whenever this makes linguistic sense}
+\NormalTok{ncounts }\OtherTok{\textless{}{-}}\NormalTok{ ncounts }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{JJPR =}\NormalTok{ JJPR }\SpecialCharTok{+}\NormalTok{ ABLE, }\AttributeTok{ABLE =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{PASS =}\NormalTok{ PGET }\SpecialCharTok{+}\NormalTok{ PASS, }\AttributeTok{PGET =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TPP3 =}\NormalTok{ TPP3S }\SpecialCharTok{+}\NormalTok{ TPP3P, }\AttributeTok{TPP3P =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{TPP3S =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Merged due to TTP3P having an individual MSA \textless{} 0.5}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{FQTI =}\NormalTok{ FREQ }\SpecialCharTok{+}\NormalTok{ TIME, }\AttributeTok{FREQ =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{TIME =} \ConstantTok{NULL}\NormalTok{) }\CommentTok{\# Merged due to TIME communality \textless{} 0.2 (see below)}
+
+\CommentTok{\# Function to compute percentage of texts with occurrences meeting a condition}
+\NormalTok{compute\_percentage }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, condition, threshold) \{}
+\NormalTok{  numeric\_data }\OtherTok{\textless{}{-}} \FunctionTok{Filter}\NormalTok{(is.numeric, data)}
+\NormalTok{  percentage }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{colSums}\NormalTok{(condition[, }\FunctionTok{sapply}\NormalTok{(numeric\_data, is.numeric)])}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(data) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{  percentage }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(percentage)}
+  \FunctionTok{colnames}\NormalTok{(percentage) }\OtherTok{\textless{}{-}} \StringTok{"Percentage"}
+\NormalTok{  percentage }\OtherTok{\textless{}{-}}\NormalTok{ percentage }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Percentage)) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{rownames\_to\_column}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{arrange}\NormalTok{(Percentage)}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{missing}\NormalTok{(threshold)) \{}
+\NormalTok{    percentage }\OtherTok{\textless{}{-}}\NormalTok{ percentage }\SpecialCharTok{|\textgreater{}} 
+      \FunctionTok{filter}\NormalTok{(Percentage }\SpecialCharTok{\textgreater{}}\NormalTok{ threshold)}
+\NormalTok{  \}}
+  \FunctionTok{return}\NormalTok{(percentage)}
+\NormalTok{\}}
+
+\CommentTok{\# Calculate percentage of texts with 0 occurrences of each feature}
+\NormalTok{zero\_features }\OtherTok{\textless{}{-}} \FunctionTok{compute\_percentage}\NormalTok{(ncounts, ncounts }\SpecialCharTok{==} \DecValTok{0}\NormalTok{, }\FloatTok{66.6}\NormalTok{)}
+\NormalTok{zero\_features }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Feature"}\NormalTok{, }\StringTok{"\% texts with zero occurrences"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Feature & \% texts with zero occurrences \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+PRP & 85.34 \\
+URL & 93.03 \\
+EMO & 98.98 \\
+HST & 99.55 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Drop variables with low document frequency}
+\NormalTok{ncounts2 }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(ncounts, }\SpecialCharTok{{-}}\FunctionTok{one\_of}\NormalTok{(zero\_features}\SpecialCharTok{$}\NormalTok{rowname))}
+\end{Highlighting}
+\end{Shaded}
+
+These feature removal operations resulted in a feature set of 71
+linguistic variables.
+
+\subsection*{Identifying potential outlier
+texts}\label{identifying-potential-outlier-texts-1}
+\addcontentsline{toc}{subsection}{Identifying potential outlier texts}
+
+All normalised frequencies were normalised to identify any potential
+outlier texts.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# First scale the normalised counts (z{-}standardisation) to be able to compare the various features}
+\NormalTok{zcounts }\OtherTok{\textless{}{-}}\NormalTok{ ncounts2 }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Words) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{keep}\NormalTok{(is.numeric) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{scale}\NormalTok{()}
+
+\CommentTok{\# If necessary, remove any outliers at this stage.}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(ncounts2[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{], }\FunctionTok{as.data.frame}\NormalTok{(zcounts))}
+\NormalTok{outliers }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}} 
+ \FunctionTok{filter}\NormalTok{(}\FunctionTok{if\_any}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric) }\SpecialCharTok{\&} \SpecialCharTok{!}\NormalTok{Words,  }\AttributeTok{.fns =} \ControlFlowTok{function}\NormalTok{(x)\{x }\SpecialCharTok{\textgreater{}} \DecValTok{8}\NormalTok{\}))  }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(Filename, Corpus, Series, Register, Level, Words)}
+\end{Highlighting}
+\end{Shaded}
+
+The following outlier texts were identified according to the above
+conditions and excluded in subsequent analyses.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# These are potential outlier texts :}
+\NormalTok{outliers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+                                                                                        Filename
+1                                                                         POC_4e_Spoken_0007.txt
+2                                                       Solutions_Elementary_ELF_Spoken_0013.txt
+3                                                               EIM_Starter_Informative_0004.txt
+4                                                                    GreenLine_1_Spoken_0003.txt
+5                                                                       Access_1_Spoken_0011.txt
+6                                                              Achievers_B1_Informative_0003.txt
+7                                                                    EIM_Starter_Spoken_0002.txt
+8                                                                    GreenLine_1_Spoken_0008.txt
+9                                                                     JTT_3_Informative_0003.txt
+10                                                                   GreenLine_1_Spoken_0010.txt
+11                                                                         EIM_1_Spoken_0012.txt
+12                                                                         NGL_1_Spoken_0013.txt
+13                                                                         NGL_3_Spoken_0018.txt
+14                                                        Solutions_Intermediate_Spoken_0029.txt
+15                                                                         NGL_1_Spoken_0012.txt
+16                                                                   GreenLine_1_Spoken_0006.txt
+17                                                                   GreenLine_2_Spoken_0004.txt
+18                                                                      Access_2_Spoken_0023.txt
+19                                                                     HT_4_Informative_0006.txt
+20                                                   Solutions_Intermediate_Informative_0017.txt
+21                                                                         EIM_1_Spoken_0013.txt
+22                                                      Solutions_Elementary_ELF_Spoken_0021.txt
+23                                                   Solutions_Intermediate_Plus_Spoken_0022.txt
+24                                                                      Access_2_Spoken_0028.txt
+25                                                                         NGL_1_Spoken_0005.txt
+26                                                      Solutions_Elementary_ELF_Spoken_0016.txt
+27                                                Solutions_Pre-Intermediate_ELF_Spoken_0007.txt
+28                                                   Solutions_Intermediate_Informative_0013.txt
+29                                                                   GreenLine_2_Spoken_0003.txt
+30                                                                          HT_4_Spoken_0010.txt
+31                                                     Solutions_Elementary_Informative_0003.txt
+32                                                                 Access_2_Informative_0001.txt
+33                                                     Solutions_Elementary_Informative_0010.txt
+34                                                              GreenLine_1_Informative_0001.txt
+35                                                                      Access_2_Spoken_0002.txt
+36                                                        Solutions_Intermediate_Spoken_0019.txt
+37                                                                 Access_3_Informative_0003.txt
+38                                                                      Access_1_Spoken_0019.txt
+39                                                                      Access_2_Spoken_0013.txt
+40                                              Solutions_Intermediate_Plus_Informative_0014.txt
+41                                               Revision_World_GCSE_10525362_literary-terms.txt
+42                             Revision_World_GCSE_10528697_p6-physics-radioactive-materials.txt
+43                                                       Science_Tech_Kinds_NZ_10382383_math.txt
+44                                   Science_for_students_10064820_scientists-say-metabolism.txt
+45                                                  Science_Tech_Kinds_NZ_10382388_recycling.txt
+46                                                     History_Kids_BBC_10404337_go_furthers.txt
+47                                                     Science_Tech_Kinds_NZ_10382391_sports.txt
+48                                    Teen_Kids_News_10402607_so-you-want-to-be-an-archivist.txt
+49                                                    Science_Tech_Kinds_NZ_10382234_biology.txt
+50                                                  Science_Tech_Kinds_NZ_10382372_astronomy.txt
+51    Dogo_News_file10060404_banana-plant-extract-may-be-the-key-to-slower-melting-ice-cream.txt
+52                                                  Science_Tech_Kinds_NZ_10382667_countries.txt
+53                                    Quatr_us_file10390777_quick-summary-geological-erashtm.txt
+54                                                    Science_Tech_Kinds_NZ_10382873_physics.txt
+55                                                      Science_Tech_Kinds_NZ_10382382_light.txt
+56                                                            Factmonster_10053687_august-13.txt
+57                                            Revision_World_GCSE_10526703_limited-companies.txt
+58                                            Revision_World_GCSE_10529637_transition-metals.txt
+59                                                Quatr_us_10390856_early-african-historyhtm.txt
+60                                             History_Kids_BBC_10401873_ff6_sicilylandingss.txt
+61                                                                Quatr_us_10394250_harappan.txt
+62                                                                Ducksters_10398301_iraqphp.txt
+63                                       History_Kids_BBC_10403171_death_sakkara_gallery_04s.txt
+64                                          Revision_World_GCSE_10528246_agricultural-change.txt
+65                                      Revision_World_GCSE_10528086_uk-government-judiciary.txt
+66                                                  Revision_World_GCSE_10529794_definitions.txt
+67                                   Encyclopedia_Kinds_au_10085347_Nobel_Prize_in_Chemistry.txt
+68       Science_for_students_10064875_questions-big-melt-earths-ice-sheets-are-under-attack.txt
+69                       Teen_Kids_News_10403301_golden-globe-winners-2019-the-complete-list.txt
+70                                                   Science_Tech_Kinds_NZ_10382201_projects.txt
+71                                                  Revision_World_GCSE_10529753_probability.txt
+72                                           Encyclopedia_Kinds_au_10085531_Complex_analysis.txt
+73                                                       History_Kids_BBC_10401890_ff7_ddays.txt
+74                                                                History_Kids_BBC_10403434s.txt
+75                                                      History_Kids_BBC_10401872_ff6_italys.txt
+76                                                    Science_Tech_Kinds_NZ_10382371_amazing.txt
+77                                                              Quatr_us_10391129_athabascan.txt
+78                                               Encyclopedia_Kinds_au_10085355_20th_century.txt
+79  Dogo_News_10060755_luxury-space-hotel-promises-guests-a-truly-out-of-this-world-vacation.txt
+80                                         Revision_World_GCSE_10528072_nationalism-practice.txt
+81                                              Quatr_us_10390861_quatr-us-privacy-policyhtm.txt
+82                                                      History_Kids_BBC_10401909_ff7_bulges.txt
+83                                             History_kids_10381259_timeline-of-mesopotamia.txt
+84                    Revision_World_GCSE_10528123_gender-written-textual-analysis-framework.txt
+85                                                     Science_Tech_Kinds_NZ_10386406_floods.txt
+86                                                   Revision_World_GCSE_10529693_advantages.txt
+87                                                  Science_Tech_Kinds_NZ_10382378_geography.txt
+88                                                      Science_Tech_Kinds_NZ_10382374_earth.txt
+89                 Science_for_students_10066286_watering-plants-wastewater-can-spread-germs.txt
+90                                                      Science_Tech_Kinds_NZ_10382393_water.txt
+91                                                     World_Dteen_10406069_website_policies.txt
+92                                                     Science_Tech_Kinds_NZ_10382384_metals.txt
+93    Dogo_News_10062028_puppy-bowl-14-promises-viewers-a-paw-some-time-on-super-bowl-sunday.txt
+94                                                     History_Kids_BBC_10404730_go_furthers.txt
+95                                                     Science_Tech_Kinds_NZ_10382385_nature.txt
+96                               Science_for_students_10065015_scientists-say-dna-sequencing.txt
+97                                  Quatr_us_file10390817_conifers-pine-trees-gymnospermshtm.txt
+98                                         TweenTribute_10051509_it-true-elephants-cant-jump.txt
+99                                         Revision_World_GCSE_10528494_application-software.txt
+100                      Revision_World_GCSE_10529581_different-types-questions-examinations.txt
+101        Dogo_News_10061669_the-chinese-city-of-chengdu-may-soon-be-home-to-multiple-moons.txt
+102                                         Ducksters_10398306_geography_of_ancient_chinaphp.txt
+103                                  Science_for_students_10065144_scientists-say-multiverse.txt
+104                                                    Science_Tech_Kinds_NZ_10382211_images.txt
+105                                                              Factmonster_10053754_may-18.txt
+106                                                      World_Dteen_10406047_AboutWORLDteen.txt
+107                                                     Ducksters_10398078_first_new_dealphp.txt
+108                                             Revision_World_GCSE_10526926_economies-scale.txt
+109                                                        Factmonster_10053201_september-03.txt
+110                                         Science_Tech_Kinds_NZ_10387183_calciumcarbonates.txt
+111                                                    Science_Tech_Kinds_NZ_10382380_health.txt
+112                                             Revision_World_GCSE_10529587_sources-finance.txt
+113                                                                Quatr_us_10393444_fishing.txt
+114                                                 Ducksters_10398315_glossary_and_termsphp.txt
+115                                                                                     S5AA.txt
+               Corpus         Series     Register Level Words
+1    Textbook.English            POC Conversation     C   750
+2    Textbook.English      Solutions Conversation     A   931
+3    Textbook.English            EIM  Informative     A   534
+4    Textbook.English      GreenLine Conversation     A   970
+5    Textbook.English         Access Conversation     A   784
+6    Textbook.English      Achievers  Informative     C   926
+7    Textbook.English            EIM Conversation     A   824
+8    Textbook.English      GreenLine Conversation     A   876
+9    Textbook.English            JTT  Informative     D   699
+10   Textbook.English      GreenLine Conversation     A   701
+11   Textbook.English            EIM Conversation     B   640
+12   Textbook.English            NGL Conversation     A   940
+13   Textbook.English            NGL Conversation     C   751
+14   Textbook.English      Solutions Conversation     C   672
+15   Textbook.English            NGL Conversation     A   910
+16   Textbook.English      GreenLine Conversation     A   622
+17   Textbook.English      GreenLine Conversation     B  1102
+18   Textbook.English         Access Conversation     B   875
+19   Textbook.English             HT  Informative     C   513
+20   Textbook.English      Solutions  Informative     C   816
+21   Textbook.English            EIM Conversation     B   967
+22   Textbook.English      Solutions Conversation     A   846
+23   Textbook.English      Solutions Conversation     D   596
+24   Textbook.English         Access Conversation     B   813
+25   Textbook.English            NGL Conversation     A  1020
+26   Textbook.English      Solutions Conversation     A   871
+27   Textbook.English      Solutions Conversation     B   630
+28   Textbook.English      Solutions  Informative     C   770
+29   Textbook.English      GreenLine Conversation     B   850
+30   Textbook.English             HT Conversation     C   727
+31   Textbook.English      Solutions  Informative     A  1051
+32   Textbook.English         Access  Informative     B   655
+33   Textbook.English      Solutions  Informative     A   708
+34   Textbook.English      GreenLine  Informative     A   731
+35   Textbook.English         Access Conversation     B   572
+36   Textbook.English      Solutions Conversation     C  1024
+37   Textbook.English         Access  Informative     C  1000
+38   Textbook.English         Access Conversation     A   701
+39   Textbook.English         Access Conversation     B   981
+40   Textbook.English      Solutions  Informative     D   537
+41  Informative.Teens     Info Teens  Informative  Ref.   790
+42  Informative.Teens     Info Teens  Informative  Ref.  1015
+43  Informative.Teens     Info Teens  Informative  Ref.   522
+44  Informative.Teens     Info Teens  Informative  Ref.   895
+45  Informative.Teens     Info Teens  Informative  Ref.   666
+46  Informative.Teens     Info Teens  Informative  Ref.   620
+47  Informative.Teens     Info Teens  Informative  Ref.   657
+48  Informative.Teens     Info Teens  Informative  Ref.   763
+49  Informative.Teens     Info Teens  Informative  Ref.   843
+50  Informative.Teens     Info Teens  Informative  Ref.   900
+51  Informative.Teens     Info Teens  Informative  Ref.   611
+52  Informative.Teens     Info Teens  Informative  Ref.   717
+53  Informative.Teens     Info Teens  Informative  Ref.   643
+54  Informative.Teens     Info Teens  Informative  Ref.   722
+55  Informative.Teens     Info Teens  Informative  Ref.   639
+56  Informative.Teens     Info Teens  Informative  Ref.   523
+57  Informative.Teens     Info Teens  Informative  Ref.   714
+58  Informative.Teens     Info Teens  Informative  Ref.   787
+59  Informative.Teens     Info Teens  Informative  Ref.  1136
+60  Informative.Teens     Info Teens  Informative  Ref.   813
+61  Informative.Teens     Info Teens  Informative  Ref.   651
+62  Informative.Teens     Info Teens  Informative  Ref.   657
+63  Informative.Teens     Info Teens  Informative  Ref.   844
+64  Informative.Teens     Info Teens  Informative  Ref.   789
+65  Informative.Teens     Info Teens  Informative  Ref.  1019
+66  Informative.Teens     Info Teens  Informative  Ref.   904
+67  Informative.Teens     Info Teens  Informative  Ref.   598
+68  Informative.Teens     Info Teens  Informative  Ref.   685
+69  Informative.Teens     Info Teens  Informative  Ref.   800
+70  Informative.Teens     Info Teens  Informative  Ref.   947
+71  Informative.Teens     Info Teens  Informative  Ref.   816
+72  Informative.Teens     Info Teens  Informative  Ref.   735
+73  Informative.Teens     Info Teens  Informative  Ref.   759
+74  Informative.Teens     Info Teens  Informative  Ref.   732
+75  Informative.Teens     Info Teens  Informative  Ref.   786
+76  Informative.Teens     Info Teens  Informative  Ref.   629
+77  Informative.Teens     Info Teens  Informative  Ref.   637
+78  Informative.Teens     Info Teens  Informative  Ref.   864
+79  Informative.Teens     Info Teens  Informative  Ref.   722
+80  Informative.Teens     Info Teens  Informative  Ref.   776
+81  Informative.Teens     Info Teens  Informative  Ref.   960
+82  Informative.Teens     Info Teens  Informative  Ref.   732
+83  Informative.Teens     Info Teens  Informative  Ref.   768
+84  Informative.Teens     Info Teens  Informative  Ref.   905
+85  Informative.Teens     Info Teens  Informative  Ref.   580
+86  Informative.Teens     Info Teens  Informative  Ref.   782
+87  Informative.Teens     Info Teens  Informative  Ref.   761
+88  Informative.Teens     Info Teens  Informative  Ref.   726
+89  Informative.Teens     Info Teens  Informative  Ref.   836
+90  Informative.Teens     Info Teens  Informative  Ref.   856
+91  Informative.Teens     Info Teens  Informative  Ref.   995
+92  Informative.Teens     Info Teens  Informative  Ref.   669
+93  Informative.Teens     Info Teens  Informative  Ref.   581
+94  Informative.Teens     Info Teens  Informative  Ref.   611
+95  Informative.Teens     Info Teens  Informative  Ref.   722
+96  Informative.Teens     Info Teens  Informative  Ref.   953
+97  Informative.Teens     Info Teens  Informative  Ref.   533
+98  Informative.Teens     Info Teens  Informative  Ref.   790
+99  Informative.Teens     Info Teens  Informative  Ref.   855
+100 Informative.Teens     Info Teens  Informative  Ref.   742
+101 Informative.Teens     Info Teens  Informative  Ref.   614
+102 Informative.Teens     Info Teens  Informative  Ref.   638
+103 Informative.Teens     Info Teens  Informative  Ref.   712
+104 Informative.Teens     Info Teens  Informative  Ref.   793
+105 Informative.Teens     Info Teens  Informative  Ref.   497
+106 Informative.Teens     Info Teens  Informative  Ref.  1053
+107 Informative.Teens     Info Teens  Informative  Ref.   649
+108 Informative.Teens     Info Teens  Informative  Ref.   621
+109 Informative.Teens     Info Teens  Informative  Ref.   445
+110 Informative.Teens     Info Teens  Informative  Ref.   804
+111 Informative.Teens     Info Teens  Informative  Ref.   694
+112 Informative.Teens     Info Teens  Informative  Ref.   665
+113 Informative.Teens     Info Teens  Informative  Ref.   656
+114 Informative.Teens     Info Teens  Informative  Ref.   684
+115    Spoken.BNC2014 Spoken BNC2014 Conversation  Ref.  1869
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Checking that outlier texts are not particularly long or short texts}
+\FunctionTok{summary}\NormalTok{(outliers}\SpecialCharTok{$}\NormalTok{Words)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  445.0   655.5   751.0   773.6   860.0  1869.0 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(outliers}\SpecialCharTok{$}\NormalTok{Words, }\AttributeTok{breaks =} \DecValTok{30}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ch7_DataPrep_files/figure-pdf/list-outliers-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Distribution of outlier texts across the four corpora}
+\FunctionTok{summary}\NormalTok{(outliers}\SpecialCharTok{$}\NormalTok{Corpus)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ Textbook.English Informative.Teens    Spoken.BNC2014     Youth.Fiction 
+               40                74                 1                 0 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Report on the manual check of a sample of these outliers:}
+
+\CommentTok{\# Encyclopedia\_Kinds\_au\_10085347\_Nobel\_Prize\_in\_Chemistry.txt is essentially a list of Nobel prize winners but with some additional information. In other words, not a bad representative of the type of texts of the Info Teen corpus.}
+\CommentTok{\# Solutions\_Elementary\_ELF\_Spoken\_0013 {-}{-}\textgreater{} Has a lot of "going to" constructions because they are learnt in this chapter but is otherwise a well{-}formed text.}
+\CommentTok{\# Teen\_Kids\_News\_10403972\_a{-}brief{-}history{-}of{-}white{-}house{-}weddings {-}{-}\textgreater{} No issues}
+\CommentTok{\# Teen\_Kids\_News\_10403301\_golden{-}globe{-}winners{-}2019{-}the{-}complete{-}list {-}{-}\textgreater{} Similar to the Nobel prize laureates text.}
+\CommentTok{\# Revision\_World\_GCSE\_10528123\_gender{-}written{-}textual{-}analysis{-}framework {-}{-}\textgreater{} Text includes bullet points tokenised as the letter "o" but otherwise a fairly typical informative text.}
+
+\CommentTok{\# Removing the outliers at the request of the reviewers (but comparisons of models including the outliers showed that the results are very similar):}
+\NormalTok{ncounts3 }\OtherTok{\textless{}{-}}\NormalTok{ ncounts2 }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Filename }\SpecialCharTok{\%in\%}\NormalTok{ outliers}\SpecialCharTok{$}\NormalTok{Filename)}
+
+\CommentTok{\#saveRDS(ncounts3, here("data", "processed", "ncounts3\_3Reg.rds")) \# Last saved 6 March 2024}
+\end{Highlighting}
+\end{Shaded}
+
+This resulted in 4,980 texts/files being included in the comparative
+model of Textbook English vs.~`real-life' English. These standardised
+feature frequencies were distributed as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zcounts3 }\OtherTok{\textless{}{-}}\NormalTok{ ncounts3 }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Words) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{keep}\NormalTok{(is.numeric) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{scale}\NormalTok{()}
+
+\FunctionTok{boxplot}\NormalTok{(zcounts3, }\AttributeTok{las =} \DecValTok{3}\NormalTok{, }\AttributeTok{main =} \StringTok{"z{-}scores"}\NormalTok{) }\CommentTok{\# Slow}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ch7_DataPrep_files/figure-pdf/z-transformed-distributions-1.pdf}
+
+\subsection*{Signed log
+transformation}\label{signed-log-transformation-1}
+\addcontentsline{toc}{subsection}{Signed log transformation}
+
+A signed logarithmic transformation was applied to (further) deskew the
+feature distributions (Diwersy, Evert, and Neumann 2014; Neumann and
+Evert 2021).
+
+The signed log transformation function was inspired by the SignedLog
+function proposed in
+https://cran.r-project.org/web/packages/DataVisualizations/DataVisualizations.pdf
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{signed.log }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}\FunctionTok{sign}\NormalTok{(x)}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(}\FunctionTok{abs}\NormalTok{(x)}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)\}}
+
+\NormalTok{zlogcounts }\OtherTok{\textless{}{-}} \FunctionTok{signed.log}\NormalTok{(zcounts3) }\CommentTok{\# Standardise first, then sign log transform}
+
+\CommentTok{\#saveRDS(zlogcounts, here("data", "processed", "zlogcounts\_3Reg.rds")) \# Last saved 16 March 2024}
+\end{Highlighting}
+\end{Shaded}
+
+The new feature distributions are visualised below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zlogcounts }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{gather}\NormalTok{() }\SpecialCharTok{|\textgreater{}} \CommentTok{\# This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet\_wrap function from ggplot2}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(value, }\FunctionTok{after\_stat}\NormalTok{(density))) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ key, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\ConstantTok{NA}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{, }\AttributeTok{colour=} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"grey"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour =} \StringTok{"darkred"}\NormalTok{, }\AttributeTok{weight =} \DecValTok{2}\NormalTok{, }\AttributeTok{fill=}\StringTok{"darkred"}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ch7_DataPrep_files/figure-pdf/signed.log.transformation-distributions-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ggsave(here("plots", "DensityPlotsAllVariablesSignedLog.svg"), width = 15, height = 49)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection*{Merging of data for MDA}\label{merging-of-data-for-mda}
+\addcontentsline{toc}{subsection}{Merging of data for MDA}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{zlogcounts }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"processed"}\NormalTok{, }\StringTok{"zlogcounts\_3Reg.rds"}\NormalTok{)) }
+\CommentTok{\#nrow(zlogcounts)}
+\CommentTok{\#colnames(zlogcounts)}
+
+\NormalTok{ncounts3 }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"processed"}\NormalTok{, }\StringTok{"ncounts3\_3Reg.rds"}\NormalTok{))}
+\CommentTok{\#nrow(ncounts3)}
+\CommentTok{\#colnames(ncounts3)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(ncounts3[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{], }\FunctionTok{as.data.frame}\NormalTok{(zlogcounts))}
+\CommentTok{\#saveRDS(data, here("data", "processed", "datazlogcounts\_3Reg.rds")) \# Last saved 16 March 2024}
+\end{Highlighting}
+\end{Shaded}
+
+The final dataset comprises of 4,980 texts/files, divided as follows:
+
+\begin{verbatim}
+Textbook Conversation      Textbook Fiction       Info Teens Ref. 
+                  565                   285                  1337 
+ Textbook Informative   Spoken BNC2014 Ref.    Youth Fiction Ref. 
+                  352                  1250                  1191 
+\end{verbatim}
+
+\section*{Testing factorability of
+data}\label{testing-factorability-of-data}
+\addcontentsline{toc}{section}{Testing factorability of data}
+
+\markright{Testing factorability of data}
+
+\subsection*{Visualisation of feature
+correlations}\label{visualisation-of-feature-correlations}
+\addcontentsline{toc}{subsection}{Visualisation of feature correlations}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Simple heatmap in base R (inspired by Stephanie Evert\textquotesingle{}s SIGIL code)}
+\NormalTok{cor.colours }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \FunctionTok{hsv}\NormalTok{(}\AttributeTok{h=}\DecValTok{2}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\AttributeTok{v=}\DecValTok{1}\NormalTok{, }\AttributeTok{s=}\NormalTok{(}\DecValTok{10}\SpecialCharTok{:}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{), }\CommentTok{\# blue = negative correlation }
+  \FunctionTok{rgb}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\CommentTok{\# white = no correlation }
+  \FunctionTok{hsv}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{, }\AttributeTok{v=}\DecValTok{1}\NormalTok{, }\AttributeTok{s=}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\SpecialCharTok{/}\DecValTok{10}\NormalTok{))) }\CommentTok{\# red = positive correlation}
+
+\CommentTok{\#png(here("plots", "heatmapzlogcounts.png"), width = 30, height= 30, units = "cm", res = 300)}
+\FunctionTok{heatmap}\NormalTok{(}\FunctionTok{cor}\NormalTok{(zlogcounts), }
+        \AttributeTok{symm=}\ConstantTok{TRUE}\NormalTok{, }
+        \AttributeTok{zlim=}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }
+        \AttributeTok{col=}\NormalTok{cor.colours, }
+        \AttributeTok{margins=}\FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{,}\DecValTok{7}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ch7_DataPrep_files/figure-pdf/heatmap-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#dev.off()}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{Checking the factorability of
+data}\label{checking-the-factorability-of-data-1}
+\addcontentsline{toc}{section}{Checking the factorability of data}
+
+\markright{Checking the factorability of data}
+
+\subsection*{Collinearity}\label{collinearity}
+\addcontentsline{toc}{subsection}{Collinearity}
+
+As a result of the normalisation unit of finite verb phrases for
+verb-based features, the present tense (VPRT) and past tense (VBD)
+variables are highly correlated:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{VPRT, data}\SpecialCharTok{$}\NormalTok{VBD)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] -0.9731048
+\end{verbatim}
+
+We therefore remove the least marked of the pair of collinear variables:
+VPRT.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(VPRT))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection*{MSA}\label{msa}
+\addcontentsline{toc}{subsection}{MSA}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmo }\OtherTok{\textless{}{-}} \FunctionTok{KMO}\NormalTok{(data[,}\DecValTok{9}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(data)]) }
+\end{Highlighting}
+\end{Shaded}
+
+The overall MSA value of the dataset is 0.95. The features have the
+following individual MSA values (ordered from lowest to largest):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kmo}\SpecialCharTok{$}\NormalTok{MSAi[}\FunctionTok{order}\NormalTok{(kmo}\SpecialCharTok{$}\NormalTok{MSAi)] }\SpecialCharTok{|\textgreater{}}  \FunctionTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   AMP   COMM    POS   TPP3   JJPR  PLACE  SPLIT     DT   JJAT   VIMP   MDCO 
+  0.67   0.69   0.70   0.74   0.76   0.82   0.83   0.83   0.84   0.84   0.85 
+    RP     EX   THSC     LD  NCOMP   BEMA   MDWS   FQTI  FPP1P   MDCA    ACT 
+  0.85   0.85   0.86   0.87   0.88   0.88   0.89   0.89   0.89   0.89   0.89 
+MENTAL    VBD  FPP1S   MDMM   PEAS   CONC   MDWO   THRC     NN   COND   PROG 
+  0.91   0.91   0.91   0.91   0.91   0.93   0.93   0.94   0.94   0.95   0.95 
+    CC   SPP2     RB   DWNT   MDNE   WHSC   CONT   QUPR    XX0  CAUSE   WHQU 
+  0.95   0.95   0.95   0.95   0.95   0.96   0.96   0.96   0.96   0.96   0.96 
+   VBG    AWL POLITE   PASS    PIT  DOAUX   ELAB ASPECT    DMA   DEMO    HDG 
+  0.96   0.96   0.96   0.96   0.97   0.97   0.97   0.97   0.97   0.97   0.97 
+    IN   FPUH  OCCUR    CUZ   EMPH   YNQU   QUAN    TTR  QUTAG  THATD    VBN 
+  0.97   0.97   0.97   0.97   0.98   0.98   0.98   0.98   0.98   0.98   0.98 
+ EXIST   STPR    GTO   HGOT 
+  0.98   0.99   0.99   0.99 
+\end{verbatim}
+
+We aim to remove features with an individual MSA \textless{} 0.5. All
+features have individual MSAs of \textgreater{} 0.5 (but only because
+TPP3P was merged into a larger category earlier on).
+
+\subsection*{Scree plot}\label{scree-plot}
+\addcontentsline{toc}{subsection}{Scree plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# png(here("plots", "screeplot{-}TEC{-}Ref\_3Reg.png"), width = 20, height= 12, units = "cm", res = 300)}
+\FunctionTok{scree}\NormalTok{(data[,}\DecValTok{9}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(data)], }\AttributeTok{factors =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{pc =} \ConstantTok{TRUE}\NormalTok{) }\CommentTok{\# 6 components were originally retained on the basis of this screeplot (on the advice of an anonymous peer reviewer, only four were later retained).}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Ch7_DataPrep_files/figure-pdf/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# dev.off()}
+
+\CommentTok{\# Perform PCA}
+\NormalTok{pca1 }\OtherTok{\textless{}{-}}\NormalTok{ psych}\SpecialCharTok{::}\FunctionTok{principal}\NormalTok{(data[}\DecValTok{9}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(data)], }
+                         \AttributeTok{nfactors =} \DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection*{Communalities}\label{communalities}
+\addcontentsline{toc}{subsection}{Communalities}
+
+If features with final communalities of \textless{} 0.2 are removed, we
+would remove TIME. TIME was therefore merged with FREQ in an earlier
+chunk so that now all features have final communalities of
+\textgreater{} 0.2 (note: that this is a very generous threshold!).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca1}\SpecialCharTok{$}\NormalTok{communality }\SpecialCharTok{|\textgreater{}} \FunctionTok{sort}\NormalTok{() }\SpecialCharTok{|\textgreater{}} \FunctionTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  DWNT   STPR   CONC   FQTI    POS ASPECT   MDNE  FPP1P   PROG   MDCO   MDMM 
+  0.22   0.23   0.23   0.23   0.24   0.25   0.27   0.28   0.29   0.32   0.32 
+  MDWO  SPLIT   MDWS   PEAS   QUPR    AMP  PLACE    HDG   COMM  CAUSE     EX 
+  0.32   0.33   0.34   0.35   0.35   0.35   0.37   0.38   0.38   0.38   0.38 
+  THSC  OCCUR   WHSC   THRC   JJAT   COND MENTAL    ACT   VIMP   ELAB  EXIST 
+  0.40   0.40   0.42   0.43   0.44   0.44   0.45   0.45   0.46   0.46   0.46 
+  JJPR  NCOMP     RP    GTO   DEMO   MDCA POLITE    CUZ     CC   WHQU   TPP3 
+  0.46   0.48   0.49   0.50   0.50   0.52   0.52   0.53   0.57   0.58   0.58 
+   VBG  THATD    PIT   BEMA  FPP1S     DT   HGOT     RB    VBN  QUTAG   EMPH 
+  0.60   0.60   0.61   0.61   0.61   0.61   0.62   0.62   0.64   0.64   0.64 
+  PASS    XX0   QUAN   SPP2  DOAUX    TTR   YNQU    VBD     LD   FPUH     IN 
+  0.65   0.65   0.67   0.68   0.69   0.71   0.74   0.78   0.81   0.83   0.86 
+  CONT    DMA    AWL     NN 
+  0.89   0.89   0.91   0.93 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#saveRDS(data, here("data", "processed", "dataforPCA.rds")) \# Last saved on 6 March 2024}
+\end{Highlighting}
+\end{Shaded}
+
+The final dataset entered in the analysis described in Chapter 7
+therefore comprises 4,980 texts/files, each with logged standardised
+normalised frequencies for 70 linguistic features.
 
 \bookmarksetup{startatroot}
 

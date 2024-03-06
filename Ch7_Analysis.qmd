@@ -1,4 +1,6 @@
-# Set-up
+# Appendix G: Data Analysis for the Model of Textbook English vs. ‘real-world’ English {.unnumbered}
+
+## Set-up
 
 ```{r}
 #| label: set-up
@@ -34,7 +36,7 @@ Import full data (see 7_Ref_data_prep.Rmd for data preparation steps)
 
 ```{r import-data}
 
-data <- readRDS(here("processed_data", "dataforPCA.rds")) 
+data <- readRDS(here("data", "processed", "dataforPCA.rds")) 
 
 ```
 

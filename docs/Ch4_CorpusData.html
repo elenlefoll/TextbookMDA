@@ -154,7 +154,7 @@ div.csl-indent {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+ <span class="menu-text">About</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -172,7 +172,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch3_LitReview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Appendix A: Literature review{.unnumbered}</span></span></a>
+ <span class="menu-text">Appendix A: Literature review</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -195,8 +195,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./Ch7_DataPrep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix F: Data Preparation for the Model of Textbook English vs.&nbsp;‘real-world’ English</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -253,7 +259,7 @@ p {
 </section><section id="reference-corpora" class="level2"><h2 class="anchored" data-anchor-id="reference-corpora">Reference corpora</h2>
 <section id="spoken-bnc2014" class="level3"><h3 class="anchored" data-anchor-id="spoken-bnc2014">Spoken BNC2014</h3>
 <p>The original corpus files of the Spoken British National Corpus (BNC) 2014 <span class="citation" data-cites="love2017 love2019">(<a href="references.html#ref-love2017" role="doc-biblioref">Love et al. 2017</a>; <a href="references.html#ref-love2019" role="doc-biblioref">Love et al. 2019</a>)</span> can be downloaded for free for research purposes from: <a href="http://corpora.lancs.ac.uk/bnc2014/signup.php" class="uri">http://corpora.lancs.ac.uk/bnc2014/signup.php</a>. I used the untagged XML version.</p>
-<p>The R script used to pre-process the untagged XML files as explained in Section 4.3.2.2 of the book can be found here: <a href="https://github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R" class="uri">https://github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R</a></p>
+<p>The R script used to pre-process the untagged XML files into the format used in this study (the “John and Jill in Ivybridge” version with added full stops at speaker turns, as explained in Section 4.3.2.2 of the book) can be found here: <a href="https://github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R" class="uri">https://github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R</a></p>
 </section><section id="informative-texts-for-teens-corpus-info-teens" class="level3"><h3 class="anchored" data-anchor-id="informative-texts-for-teens-corpus-info-teens">Informative Texts for Teens Corpus (Info Teens)</h3>
 <p>For copyright reasons, the corpus itself cannot be made available. Details of its composition can be found in Section 4.3.2.5 of the book. If you are interested in using this corpus for non-commercial research purposes and/or in a potential research collaboration, please get in touch with me via <a href="https://orcid.org/0000-0002-5839-8010">e-mail</a>.</p>
 </section><section id="youth-fiction-corpus" class="level3"><h3 class="anchored" data-anchor-id="youth-fiction-corpus">Youth Fiction corpus</h3>
@@ -726,8 +732,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./Ch3_LitReview.html" class="pagination-link  aria-label=" a:="" literature="" review="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Appendix A: Literature review{.unnumbered}</span></span>
+      <a href="./Ch3_LitReview.html" class="pagination-link  aria-label=" appendix="" a:="" literature="" review="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Appendix A: Literature review</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -762,7 +768,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>The original corpus files of the Spoken British National Corpus <span class="in">(</span>BNC<span class="in">)</span> 2014 <span class="ex">[</span><span class="ss">@love2017</span>; @love2019] can be downloaded for free for research purposes from<span class="in">:</span> &lt;http<span class="in">:</span><span class="er">//corpora.lancs.ac.uk/bnc2014/signup.php&gt;. I used the untagged XML version.</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>The R script used to pre-process the untagged XML files as explained in Section 4<span class="fu">.3.2.2</span> of the book can be found here<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R&gt;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>The R script used to pre-process the untagged XML files into the format used in this study <span class="in">(</span>the "John and Jill in Ivybridge" version with added full stops at speaker turns<span class="op">,</span> as explained in Section 4<span class="fu">.3.2.2</span> of the book<span class="in">)</span> can be found here<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/BNCspoken_nomark-up_JackJill.R&gt;</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>### Informative Texts for Teens Corpus <span class="in">(</span>Info Teens<span class="in">)</span></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
@@ -776,13 +782,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-<p><a href="https://www.elenlefoll.eu">Elen Le Foll”</a></p>
+<p><a href="https://www.elenlefoll.eu">Elen Le Foll</a></p>
 </div>   
     <div class="nav-footer-center">
-<p><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></p>
+<p><a href="https://benjamins.com/catalog/scl">Textbook English</a></p>
 </div>
     <div class="nav-footer-right">
-<p>Online supplement to <a href="https://benjamins.com/catalog/scl">Textbook English (Le Foll, forthcoming)</a></p>
+<p><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></p>
 </div>
   </div>
 </footer>

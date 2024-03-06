@@ -70,7 +70,7 @@ TxBdata <- cbind(TxBcounts[,1:6], as.data.frame(TxBzlogcounts))
 
 ```
 
-First, the TEC data as processed in Appendix D is imported. It consists of `{r} nrow(TxBdata)  |> format(big.mark=",")` texts/files, each with logged standardised normalised frequencies for `{r} ncol(TxBdata)-6` linguistic features.
+First, the TEC data as processed in Appendix D is imported. It comprises `{r} nrow(TxBdata)  |> format(big.mark=",")` texts/files, each with logged standardised normalised frequencies for `{r} ncol(TxBdata)-6` linguistic features.
 
 ## Checking the factorability of data
 
@@ -201,7 +201,7 @@ biplot.psych(pca2.rotated, vars = TRUE, choose=c(1,2))
 
 ## Principal Component Analysis (PCA)
 
-### Using the full dataset 
+### Using the full dataset
 
 Except outliers removed as part of the data preparation (see Appendix D).
 
@@ -858,7 +858,6 @@ plot_model(md3,
 #ggsave(here("plots", "TxB_PCA3_lmer_fixedeffects.svg"), height = 8, width = 8)
 ```
 
-
 ```{r}
 # Plot of random effects:
 plot_model(md3, 
@@ -933,7 +932,6 @@ plot_model(md4,
 #ggsave(here("plots", "TxB_PCA4_lmer_fixedeffects.svg"), height = 8, width = 8)
 ```
 
-
 ```{r}
 # Plot of random effects:
 plot_model(md4, 
@@ -948,7 +946,6 @@ plot_model(md4,
   theme_sjplot2()
 #ggsave(here("plots", "TxB_PCA4_lmer_randomeffects.svg"), height = 3, width = 8)
 ```
-
 
 ```{r}
 #| fig-height: 10

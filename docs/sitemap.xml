@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/index.html</loc>
-    <lastmod>2024-03-01T16:10:15.764Z</lastmod>
+    <lastmod>2024-03-06T13:32:07.780Z</lastmod>
   </url>
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/intro.html</loc>
@@ -14,19 +14,23 @@
   </url>
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/Ch3_LitReview.html</loc>
-    <lastmod>2024-03-06T08:38:31.470Z</lastmod>
+    <lastmod>2024-03-06T13:34:02.477Z</lastmod>
   </url>
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/Ch4_CorpusData.html</loc>
-    <lastmod>2024-03-06T08:39:00.871Z</lastmod>
+    <lastmod>2024-03-06T13:48:07.978Z</lastmod>
   </url>
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/Ch6_DataPrep.html</loc>
-    <lastmod>2024-03-06T13:00:19.969Z</lastmod>
+    <lastmod>2024-03-06T18:13:26.480Z</lastmod>
   </url>
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/Ch6_Analysis.html</loc>
-    <lastmod>2024-03-06T13:11:12.842Z</lastmod>
+    <lastmod>2024-03-06T18:34:38.793Z</lastmod>
+  </url>
+  <url>
+    <loc>https://elenlefoll.github.io/TextbookMDA/Ch7_DataPrep.html</loc>
+    <lastmod>2024-03-06T18:43:41.283Z</lastmod>
   </url>
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/summary.html</loc>
@@ -38,6 +42,6 @@
   </url>
   <url>
     <loc>https://elenlefoll.github.io/TextbookMDA/Textbook-English--A-Multi-Dimensional-Approach.pdf</loc>
-    <lastmod>2024-03-06T13:14:34.245Z</lastmod>
+    <lastmod>2024-03-06T18:53:05.367Z</lastmod>
   </url>
 </urlset>
