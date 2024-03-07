@@ -24,21 +24,25 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - Ch4_OpenScience.qmd
-    - Ch3_LitReview.qmd
-    - Ch4_CorpusData.qmd
-    - Ch6_DataPrep.qmd
-    - Ch6_Analysis.qmd
-    - Ch7_DataPrep.qmd
+    - OpenScience.qmd
     - summary.qmd
     - references.qmd
-
+  appendices:
+    - A_LitReview.qmd
+    - B_CorpusData.qmd
+    - D_Ch6_DataPrep.qmd
+    - E_Ch6_Analysis.qmd
+    - F_Ch7_DataPrep.qmd
+    - G_Ch7_Analysis.qmd
+    
 execute:
   message: false
   warning: false
   cache: true
 
 bibliography: references.bib
+
+lightbox: auto
 
 format:
   html:
@@ -58,6 +62,4 @@ format:
          \usepackage{fvextra}
          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
          \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
-
-editor: visual
 
