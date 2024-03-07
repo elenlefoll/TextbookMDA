@@ -586,26 +586,38 @@ Stewardship.''} \emph{Scientific Data} 3 (1): 160018.
 \addcontentsline{toc}{part}{Appendices}
 \appendix
 
-\chapter*{Appendix A: Literature
-review}\label{appendix-a-literature-review}
-\addcontentsline{toc}{chapter}{Appendix A: Literature review}
+\chapter{Literature Review Data}\label{literature-review-data}
 
-\markboth{Appendix A: Literature review}{Appendix A: Literature review}
+This table provides a tabular overview of the studies surveyed as part
+of this study's literature review on textbook research examining
+describing and/or evaluating the language of English textbooks designed
+for English L2 learners in various instructional settings.
 
-This is a
-\href{https://elenlefoll.github.io/TextbookEnglish/LitReviewTable.html}{tabular
-overview} of the Textbook English studies that I examined as part of my
-literature review. It presents the results of a non-exhaustive survey of
-Textbook English studies published over the past four decades,
-summarising some of the key information on each study, including its
-main language focus, methodological approach, information on the
-textbooks investigated, and, if applicable, on any reference corpora
-used. Empty cells represent fields that are either not applicable to
-this particular study or for which no information could be found.
-Intended as a dynamic resource, this interactive, searchable, and
-filterable table currently lists over 80 studies on the language content
-of English L2 textbooks, thereby demonstrating the breadth of Textbook
-English studies published as of early 2022.
+It presents the results of this non-exhaustive survey of Textbook
+English studies published over the past four decades, summarising some
+of the key information on each study, including its main language focus,
+methodological approach, information on the textbooks investigated, and,
+if applicable, on any reference corpora used. Empty cells represent
+fields for which no information was published. The table is fully
+searchable and filterable. You can adjust the widths of the individual
+columns to best fit your screen size.
+
+This list is intended to be a dynamic resource that will grow over time.
+If you would like to contribute any studies to the table, please either
+fork
+\href{https://github.com/elenlefoll/TextbookEnglish/blob/main/LitReviewTable.csv}{the
+corresponding CSV file in the repository} or send me an
+\href{mailto:elefoll@uni-koeln.de?subject=\%5BLitReviewTable\%5D\%20Suggestions}{e-mail}
+with the corresponding details of the studies that you would like to
+add.
+
+\textbf{This page was last updated on 07 March 2024.}
+
+\includegraphics{A_LitReviewTable_files/figure-pdf/display-1.pdf}
+
+The raw data can be downloaded as a comma-separated file from
+\href{https://github.com/elenlefoll/TextbookMDA}{the project GitHub
+repository}.
 
 \chapter{Corpus data}\label{corpus-data}
 
@@ -4900,7 +4912,7 @@ the modelled Dim1 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#svg(here("plots", "TxBReg3Reg\_predicted\_PC1\_scores\_interactions.svg"), height = 8, width = 9)}
+\CommentTok{\# svg(here("plots", "TxBReg3Reg\_predicted\_PC1\_scores\_interactions.svg"), height = 8, width = 9)}
 \FunctionTok{visreg}\NormalTok{(md\_interaction, }\AttributeTok{xvar =} \StringTok{"Level"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }
        \CommentTok{\#type = "contrast",}
        \AttributeTok{type =} \StringTok{"conditional"}\NormalTok{,}
@@ -4916,7 +4928,7 @@ the modelled Dim1 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#dev.off()}
+\CommentTok{\# dev.off()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4992,7 +5004,7 @@ Visualisation of the coefficient estimates of the fixed effects:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_model}\NormalTok{(md\_interaction, }
+\FunctionTok{plot\_model}\NormalTok{(md\_interaction\_PC2, }
            \CommentTok{\#type = "re", \# Option to visualise random effects }
            \AttributeTok{show.intercept =} \ConstantTok{TRUE}\NormalTok{,}
            \AttributeTok{show.values=}\ConstantTok{TRUE}\NormalTok{, }
@@ -5020,8 +5032,8 @@ Visualisation of the predicted Dim2 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#svg(here("plots", "TxBReg3Reg\_predicted\_PC2\_scores\_interactions.svg"), height = 8, width = 9)}
-\FunctionTok{visreg}\NormalTok{(md\_interaction, }\AttributeTok{xvar =} \StringTok{"Level"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }
+\CommentTok{\# svg(here("plots", "TxBReg3Reg\_predicted\_PC2\_scores\_interactions.svg"), height = 8, width = 9)}
+\FunctionTok{visreg}\NormalTok{(md\_interaction\_PC2, }\AttributeTok{xvar =} \StringTok{"Level"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }
        \CommentTok{\#type = "contrast",}
        \AttributeTok{type =} \StringTok{"conditional"}\NormalTok{,}
        \AttributeTok{line=}\FunctionTok{list}\NormalTok{(}\AttributeTok{col=}\StringTok{"darkred"}\NormalTok{), }
@@ -5036,7 +5048,7 @@ Visualisation of the predicted Dim2 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#dev.off()}
+\CommentTok{\# dev.off()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5111,7 +5123,7 @@ Visualisation of the coefficient estimates of the fixed effects:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_model}\NormalTok{(md\_interaction, }
+\FunctionTok{plot\_model}\NormalTok{(md\_interaction\_PC3, }
            \CommentTok{\#type = "re", \# Option to visualise random effects }
            \AttributeTok{show.intercept =} \ConstantTok{TRUE}\NormalTok{,}
            \AttributeTok{show.values=}\ConstantTok{TRUE}\NormalTok{, }
@@ -5139,8 +5151,8 @@ Visualisation of the predicted Dim3 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#svg(here("plots", "TxBReg3Reg\_predicted\_PC3\_scores\_interactions.svg"), height = 8, width = 9)}
-\FunctionTok{visreg}\NormalTok{(md\_interaction, }\AttributeTok{xvar =} \StringTok{"Level"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }
+\CommentTok{\# svg(here("plots", "TxBReg3Reg\_predicted\_PC3\_scores\_interactions.svg"), height = 8, width = 9)}
+\FunctionTok{visreg}\NormalTok{(md\_interaction\_PC3, }\AttributeTok{xvar =} \StringTok{"Level"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }
        \CommentTok{\#type = "contrast",}
        \AttributeTok{type =} \StringTok{"conditional"}\NormalTok{,}
        \AttributeTok{line=}\FunctionTok{list}\NormalTok{(}\AttributeTok{col=}\StringTok{"darkred"}\NormalTok{), }
@@ -5155,7 +5167,7 @@ Visualisation of the predicted Dim3 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#dev.off()}
+\CommentTok{\# dev.off()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5231,7 +5243,7 @@ Visualisation of the coefficient estimates of the fixed effects:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{plot\_model}\NormalTok{(md\_interaction, }
+\FunctionTok{plot\_model}\NormalTok{(md\_interaction\_PC4, }
            \CommentTok{\#type = "re", \# Option to visualise random effects }
            \AttributeTok{show.intercept =} \ConstantTok{TRUE}\NormalTok{,}
            \AttributeTok{show.values=}\ConstantTok{TRUE}\NormalTok{, }
@@ -5259,8 +5271,8 @@ Visualisation of the predicted Dim4 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#svg(here("plots", "TxBReg3Reg\_predicted\_PC4\_scores\_interactions.svg"), height = 8, width = 9)}
-\FunctionTok{visreg}\NormalTok{(md\_interaction, }\AttributeTok{xvar =} \StringTok{"Level"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }
+\CommentTok{\# svg(here("plots", "TxBReg3Reg\_predicted\_PC4\_scores\_interactions.svg"), height = 8, width = 9)}
+\FunctionTok{visreg}\NormalTok{(md\_interaction\_PC4, }\AttributeTok{xvar =} \StringTok{"Level"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }
        \CommentTok{\#type = "contrast",}
        \AttributeTok{type =} \StringTok{"conditional"}\NormalTok{,}
        \AttributeTok{line=}\FunctionTok{list}\NormalTok{(}\AttributeTok{col=}\StringTok{"darkred"}\NormalTok{), }
@@ -5275,7 +5287,7 @@ Visualisation of the predicted Dim4 scores:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#dev.off()}
+\CommentTok{\# dev.off()}
 \end{Highlighting}
 \end{Shaded}
 
