@@ -28,7 +28,7 @@ book:
     - summary.qmd
     - references.qmd
   appendices:
-    - A_LitReview.qmd
+    - A_LitReviewTable.qmd
     - B_CorpusData.qmd
     - D_Ch6_DataPrep.qmd
     - E_Ch6_Analysis.qmd
