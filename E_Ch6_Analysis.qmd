@@ -401,6 +401,44 @@ PCAtools::biplot(p,
   theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
 #dev.off()
 #ggsave(here("plots", "PCA_TxB_BiplotPC1_PC2.svg"), width = 12, height = 10)
+```
+
+
+```{r}
+#| eval: false
+#| echo: false
+###
+library(plotly)
+
+plot <- PCAtools::biplot(p,
+                 x = "PC1",
+                 y = "PC2",
+                 lab = NULL, # Otherwise will try to label each data point!
+                 colby = "Register",
+                 pointSize = 2,
+                 colkey = colkey,
+                 shape = "Level",
+                 shapekey = shapekey,
+                 showLoadings = FALSE,
+                 ellipse = TRUE,
+                 axisLabSize = 22,
+                 legendPosition = 'right',
+                 legendTitleSize = 22,
+                 legendLabSize = 18, 
+                 legendIconSize = 7) +
+  theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
+
+ggplotly(plot) # tooltip
+
+###
+```
+
+
+```{r}
+#| code-fold: true
+#| label: PCAtools-biplots-TxB2
+#| fig-height: 10
+#| fig-width: 13
 
 # Biplots to examine components more carefully
 pRegisters <- PCAtools::biplot(p,

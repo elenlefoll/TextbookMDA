@@ -10,7 +10,7 @@ p {
 }
 ```
 
-# Corpus data
+# Corpus Data
 
 ## Textbook English Corpus (TEC)
 

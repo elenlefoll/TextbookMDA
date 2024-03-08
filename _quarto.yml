@@ -30,6 +30,7 @@ book:
   appendices:
     - A_LitReviewTable.qmd
     - B_CorpusData.qmd
+    - C_TaggerEvaluation.qmd
     - D_Ch6_DataPrep.qmd
     - E_Ch6_Analysis.qmd
     - F_Ch7_DataPrep.qmd

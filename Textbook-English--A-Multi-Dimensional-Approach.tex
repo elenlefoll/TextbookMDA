@@ -225,7 +225,7 @@
 \makeatother
 \subtitle{Online Supplements}
 \author{Elen Le Foll}
-\date{2024-03-07}
+\date{2024-03-08}
 
 \begin{document}
 \maketitle
@@ -611,7 +611,7 @@ corresponding CSV file in the repository} or send me an
 with the corresponding details of the studies that you would like to
 add.
 
-\textbf{This page was last updated on 07 March 2024.}
+\textbf{This page was last updated on 08 March 2024.}
 
 \includegraphics{A_LitReviewTable_files/figure-pdf/display-1.pdf}
 
@@ -619,7 +619,7 @@ The raw data can be downloaded as a comma-separated file from
 \href{https://github.com/elenlefoll/TextbookMDA}{the project GitHub
 repository}.
 
-\chapter{Corpus data}\label{corpus-data}
+\chapter{Corpus Data}\label{corpus-data}
 
 \section{Textbook English Corpus
 (TEC)}\label{textbook-english-corpus-tec}
@@ -668,6 +668,813 @@ If you are interested in using this corpus for non-commercial research
 purposes and/or in a potential research collaboration, please get in
 touch with me via \href{https://orcid.org/0000-0002-5839-8010}{e-mail}.
 
+\chapter{Evaluation of the Multi-Feature Tagger of English
+(MFTE)}\label{evaluation-of-the-multi-feature-tagger-of-english-mfte}
+
+For more information on the evaluation data and methods, see Le Foll
+(2021a) and
+\url{https://github.com/elenlefoll/MultiFeatureTaggerEnglish}.
+
+\section{Packages required}\label{packages-required}
+
+The following packages must be installed and loaded to process the
+evaluation data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#renv::restore() \# Restore the project\textquotesingle{}s dependencies from the lockfile to ensure that same package versions are used as in the original thesis.}
+
+\FunctionTok{library}\NormalTok{(caret) }\CommentTok{\# For computing confusion matrices}
+\FunctionTok{library}\NormalTok{(harrypotter) }\CommentTok{\# Only for colour scheme}
+\FunctionTok{library}\NormalTok{(here) }\CommentTok{\# For path management}
+\FunctionTok{library}\NormalTok{(knitr) }\CommentTok{\# Loaded to display the tables using the kable() function}
+\FunctionTok{library}\NormalTok{(paletteer) }\CommentTok{\# For nice colours}
+\FunctionTok{library}\NormalTok{(readxl) }\CommentTok{\# For the direct import of Excel files}
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# For everything else!}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Data import from evaluation
+files}\label{data-import-from-evaluation-files}
+
+The data is imported directly from the Excel files in which the manual
+tag check and corrections was performed. A number of data wrangling
+steps need to be made for the data to be converted to a tidy format.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Function to import and wrangle the evaluation data from the Excel files in which the manual evaluation was conducted}
+\NormalTok{importEval3 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(file, fileID, register, corpus) \{}
+\NormalTok{  Tag1 }\OtherTok{\textless{}{-}}\NormalTok{ file }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{add\_column}\NormalTok{(}\AttributeTok{FileID =}\NormalTok{ fileID, }\AttributeTok{Register =}\NormalTok{ register, }\AttributeTok{Corpus =}\NormalTok{ corpus) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(FileID, Corpus, Register, Output, Tokens, Tag1, Tag1Gold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Tag =}\NormalTok{ Tag1, }\AttributeTok{TagGold =}\NormalTok{ Tag1Gold, }\AttributeTok{Token =}\NormalTok{ Tokens) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\FunctionTok{as.character}\NormalTok{(Tag), }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+  
+\NormalTok{  Tag2 }\OtherTok{\textless{}{-}}\NormalTok{ file }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{add\_column}\NormalTok{(}\AttributeTok{FileID =}\NormalTok{ fileID, }\AttributeTok{Register =}\NormalTok{ register, }\AttributeTok{Corpus =}\NormalTok{ corpus) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(FileID, Corpus, Register, Output, Tokens, Tag2, Tag2Gold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Tag =}\NormalTok{ Tag2, }\AttributeTok{TagGold =}\NormalTok{ Tag2Gold, }\AttributeTok{Token =}\NormalTok{ Tokens) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\FunctionTok{as.character}\NormalTok{(Tag), }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+
+\NormalTok{Tag3 }\OtherTok{\textless{}{-}}\NormalTok{ file }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{add\_column}\NormalTok{(}\AttributeTok{FileID =}\NormalTok{ fileID, }\AttributeTok{Register =}\NormalTok{ register, }\AttributeTok{Corpus =}\NormalTok{ corpus) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(FileID, Corpus, Register, Output, Tokens, Tag3, Tag3Gold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Tag =}\NormalTok{ Tag3, }\AttributeTok{TagGold =}\NormalTok{ Tag3Gold, }\AttributeTok{Token =}\NormalTok{ Tokens) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\FunctionTok{as.character}\NormalTok{(Tag), }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+
+\NormalTok{output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(Tag1, Tag2, Tag3) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.factor), str\_remove\_all, }\AttributeTok{pattern =} \FunctionTok{fixed}\NormalTok{(}\StringTok{" "}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Removes all white spaces which are found in the excel files}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Output)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+\NormalTok{\}}
+
+\CommentTok{\# Second function to import and wrangle the evaluation data for Excel files with four tag columns as opposed to three}
+\NormalTok{importEval4 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(file, fileID, register, corpus) \{}
+\NormalTok{  Tag1 }\OtherTok{\textless{}{-}}\NormalTok{ file }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{add\_column}\NormalTok{(}\AttributeTok{FileID =}\NormalTok{ fileID, }\AttributeTok{Register =}\NormalTok{ register, }\AttributeTok{Corpus =}\NormalTok{ corpus) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(FileID, Corpus, Register, Output, Tokens, Tag1, Tag1Gold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Tag =}\NormalTok{ Tag1, }\AttributeTok{TagGold =}\NormalTok{ Tag1Gold, }\AttributeTok{Token =}\NormalTok{ Tokens) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\FunctionTok{as.character}\NormalTok{(Tag), }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+  
+\NormalTok{  Tag2 }\OtherTok{\textless{}{-}}\NormalTok{ file }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{add\_column}\NormalTok{(}\AttributeTok{FileID =}\NormalTok{ fileID, }\AttributeTok{Register =}\NormalTok{ register, }\AttributeTok{Corpus =}\NormalTok{ corpus) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(FileID, Corpus, Register, Output, Tokens, Tag2, Tag2Gold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Tag =}\NormalTok{ Tag2, }\AttributeTok{TagGold =}\NormalTok{ Tag2Gold, }\AttributeTok{Token =}\NormalTok{ Tokens) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\FunctionTok{as.character}\NormalTok{(Tag), }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+
+\NormalTok{Tag3 }\OtherTok{\textless{}{-}}\NormalTok{ file }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{add\_column}\NormalTok{(}\AttributeTok{FileID =}\NormalTok{ fileID, }\AttributeTok{Register =}\NormalTok{ register, }\AttributeTok{Corpus =}\NormalTok{ corpus) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(FileID, Corpus, Register, Output, Tokens, Tag3, Tag3Gold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Tag =}\NormalTok{ Tag3, }\AttributeTok{TagGold =}\NormalTok{ Tag3Gold, }\AttributeTok{Token =}\NormalTok{ Tokens) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\FunctionTok{as.character}\NormalTok{(Tag), }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+
+\NormalTok{Tag4 }\OtherTok{\textless{}{-}}\NormalTok{ file }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{add\_column}\NormalTok{(}\AttributeTok{FileID =}\NormalTok{ fileID, }\AttributeTok{Register =}\NormalTok{ register, }\AttributeTok{Corpus =}\NormalTok{ corpus) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(FileID, Corpus, Register, Output, Tokens, Tag4, Tag4Gold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Tag =}\NormalTok{ Tag4, }\AttributeTok{TagGold =}\NormalTok{ Tag4Gold, }\AttributeTok{Token =}\NormalTok{ Tokens) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TagGold), }\FunctionTok{as.character}\NormalTok{(Tag), }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+
+\NormalTok{output }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(Tag1, Tag2, Tag3, Tag4) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.factor), str\_remove\_all, }\AttributeTok{pattern =} \FunctionTok{fixed}\NormalTok{(}\StringTok{" "}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Removes all white spaces which are found in the excel files}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Tag)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor)}
+
+\NormalTok{\}}
+
+\CommentTok{\# Function to decide which of the two above functions should be used}
+\NormalTok{importEval }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(file, fileID, register, corpus) \{ }
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(file}\SpecialCharTok{$}\NormalTok{Tag4)) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{    output }\OtherTok{=} \FunctionTok{importEval4}\NormalTok{(}\AttributeTok{file =}\NormalTok{ file, }\AttributeTok{fileID =}\NormalTok{ fileID, }\AttributeTok{register =}\NormalTok{ register, }\AttributeTok{corpus =}\NormalTok{ corpus)}
+\NormalTok{  \}}
+  \ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{    output }\OtherTok{=} \FunctionTok{importEval3}\NormalTok{(}\AttributeTok{file =}\NormalTok{ file, }\AttributeTok{fileID =}\NormalTok{ fileID, }\AttributeTok{register =}\NormalTok{ register, }\AttributeTok{corpus =}\NormalTok{ corpus)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{Solutions\_Intermediate\_Spoken\_0032 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"Solutions\_Intermediate\_Spoken\_0032\_Evaluation.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"Solutions\_Intermediate\_Spoken\_0032"}\NormalTok{, }\AttributeTok{register =} \StringTok{"Conversation"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"TEC{-}Sp"}\NormalTok{)}
+
+\NormalTok{HT\_5\_Poetry\_0001 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"HT\_5\_Poetry\_0001\_Evaluation.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"HT\_5\_Poetry\_0001"}\NormalTok{, }\AttributeTok{register =} \StringTok{"Poetry"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"TEC{-}Fr"}\NormalTok{)}
+
+\NormalTok{Achievers\_A1\_Informative\_0006 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"Achievers\_A1\_Informative\_0006\_Evaluation.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"Achievers\_A1\_Informative\_0006"}\NormalTok{, }\AttributeTok{register =} \StringTok{"Informative"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"TEC{-}Sp"}\NormalTok{)}
+
+\NormalTok{New\_GreenLine\_5\_Personal\_0003 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"New\_GreenLine\_5\_Personal\_0003\_Evaluation.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"New\_GreenLine\_5\_Personal\_0003"}\NormalTok{, }\AttributeTok{register =} \StringTok{"Personal communication"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"TEC{-}Ger"}\NormalTok{)}
+
+\NormalTok{Piece\_of\_cake\_3e\_Instructional\_0006 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"Piece\_of\_cake\_3e\_Instructional\_0006\_Evaluation.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"Piece\_of\_cake\_3e\_Instructional\_0006"}\NormalTok{, }\AttributeTok{register =} \StringTok{"Instructional"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"TEC{-}Fr"}\NormalTok{)}
+
+\NormalTok{Access\_4\_Narrative\_0006 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"Access\_4\_Narrative\_0006\_Evaluation.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"Access\_4\_Narrative\_0006"}\NormalTok{, }\AttributeTok{register =} \StringTok{"Fiction"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"TEC{-}Ger"}\NormalTok{)}
+
+\NormalTok{BNCBFict\_b2 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBFict\_b2.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBFict\_b2"}\NormalTok{, }\AttributeTok{register =} \StringTok{"fiction"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBFict\_m54 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBFict\_m54.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBFict\_m54"}\NormalTok{, }\AttributeTok{register =} \StringTok{"fiction"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBFict\_e27 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBFict\_e27.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBFict\_e27"}\NormalTok{, }\AttributeTok{register =} \StringTok{"fiction"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBMass16 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBMass16.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBMass16"}\NormalTok{, }\AttributeTok{register =} \StringTok{"news"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBMass23 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBMass23.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBMass23"}\NormalTok{, }\AttributeTok{register =} \StringTok{"news"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBReg111 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBReg111.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBReg111"}\NormalTok{, }\AttributeTok{register =} \StringTok{"news"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBReg750 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBReg750.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBReg750"}\NormalTok{, }\AttributeTok{register =} \StringTok{"news"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBSer486 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBSer486.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBSer486"}\NormalTok{, }\AttributeTok{register =} \StringTok{"news"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBSer562 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBSer562.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBSer562"}\NormalTok{, }\AttributeTok{register =} \StringTok{"news"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBEBl8 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBEBl8.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBEBl8"}\NormalTok{, }\AttributeTok{register =} \StringTok{"internet"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{BNCBEFor32 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"BNCBEFor32.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"BNCBEFor32"}\NormalTok{, }\AttributeTok{register =} \StringTok{"internet"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{S2DD }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"S2DD.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"S2DD"}\NormalTok{, }\AttributeTok{register =} \StringTok{"spoken"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{S3AV }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"S3AV.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"S3AV"}\NormalTok{, }\AttributeTok{register =} \StringTok{"spoken"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{SEL5 }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"SEL5.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"SEL5"}\NormalTok{, }\AttributeTok{register =} \StringTok{"spoken"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{SVLK }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"SVLK.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"SVLK"}\NormalTok{, }\AttributeTok{register =} \StringTok{"spoken"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{SZXQ }\OtherTok{\textless{}{-}} \FunctionTok{importEval}\NormalTok{(}\AttributeTok{file =} \FunctionTok{read\_excel}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"MFTE"}\NormalTok{, }\StringTok{"evaluation"}\NormalTok{, }\StringTok{"SZXQ.xlsx"}\NormalTok{)), }\AttributeTok{fileID =} \StringTok{"SZXQ"}\NormalTok{, }\AttributeTok{register =} \StringTok{"spoken"}\NormalTok{, }\AttributeTok{corpus =} \StringTok{"BNC2014"}\NormalTok{)}
+
+\NormalTok{TaggerEval }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(Solutions\_Intermediate\_Spoken\_0032, HT\_5\_Poetry\_0001, Achievers\_A1\_Informative\_0006, New\_GreenLine\_5\_Personal\_0003, Piece\_of\_cake\_3e\_Instructional\_0006, Access\_4\_Narrative\_0006, BNCBEBl8, BNCBFict\_b2, BNCBFict\_m54, BNCBFict\_e27, BNCBEFor32, BNCBMass16, BNCBMass23, BNCBReg111, BNCBReg750, BNCBSer486, BNCBSer562, S2DD, S3AV, SEL5, SVLK, SZXQ)}
+\end{Highlighting}
+\end{Shaded}
+
+Some tags had to be merged to account for changes made to the MFTE
+between the evaluation and the tagging of the corpora included in the
+present study.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TaggerEval }\OtherTok{\textless{}{-}}\NormalTok{ TaggerEval }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{ifelse}\NormalTok{(Tag }\SpecialCharTok{==} \StringTok{"PHC"}\NormalTok{, }\StringTok{"CC"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(Tag))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(TagGold }\SpecialCharTok{==} \StringTok{"PHC"}\NormalTok{, }\StringTok{"CC"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{ifelse}\NormalTok{(Tag }\SpecialCharTok{==} \StringTok{"QLIKE"}\NormalTok{, }\StringTok{"LIKE"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(Tag))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(TagGold }\SpecialCharTok{==} \StringTok{"QLIKE"}\NormalTok{, }\StringTok{"LIKE"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{ifelse}\NormalTok{(Tag }\SpecialCharTok{==} \StringTok{"TO"}\NormalTok{, }\StringTok{"IN"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(Tag))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{ifelse}\NormalTok{(TagGold }\SpecialCharTok{==} \StringTok{"TO"}\NormalTok{, }\StringTok{"IN"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(TagGold))) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate\_if}\NormalTok{(is.character, as.factor) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Evaluation =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(Tag) }\SpecialCharTok{==} \FunctionTok{as.character}\NormalTok{(TagGold), }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{))}
+
+\CommentTok{\# head(TaggerEval) \# Check sanity of data}
+\CommentTok{\# summary(TaggerEval) \# Check sanity of data}
+
+\CommentTok{\# saveRDS(TaggerEval, here("data", "processed", "MFTE\_Evaluation\_Results.rds"))}
+
+\CommentTok{\# write.csv(TaggerEval, here("data", "processed", "MFTE\_Evaluation\_Results.csv"))}
+\end{Highlighting}
+\end{Shaded}
+
+This table provides a summary of the complete evaluation dataset. It
+comprises 25,233 tags that were checked (and, if needs be, corrected) by
+at least one human annotator. This number includes tags for punctuation
+marks, which make up a considerable proportion of the tags.
+
+\begin{verbatim}
+          FileID          Corpus               Register        Output     
+ BNCBFict_b2 : 2621   TEC-Sp : 1042   fiction      :6500   ._.    : 1156  
+ BNCBFict_e27: 2104   TEC-Fr : 2058   news         :6312   the_DT :  820  
+ BNCBFict_m54: 1775   TEC-Ger: 1415   spoken       :6047   ,_,    :  720  
+ BNCBMass16  : 1619   BNC2014:20718   internet     :1859   a_DT   :  466  
+ SEL5        : 1463                   Instructional:1048   of_IN  :  328  
+ BNCBEFor32  : 1305                   Poetry       :1010   (Other):21742  
+ (Other)     :14346                   (Other)      :2457   NA's   :    1  
+     Token            Tag           TagGold      Evaluation     
+ .      : 1156   NN     : 4415   NN     : 4328   Mode :logical  
+ the    :  820   IN     : 2145   IN     : 2113   FALSE:832      
+ ,      :  720   DT     : 1454   DT     : 1457   TRUE :24401    
+ to     :  495   .      : 1367   .      : 1367                  
+ 's     :  493   VPRT   : 1044   VPRT   : 1054                  
+ (Other):21547   VBD    :  899   VBD    :  895                  
+ NA's   :    2   (Other):13909   (Other):14019                  
+\end{verbatim}
+
+\section{Estimating MFTE accuracy for Textbook
+English}\label{estimating-mfte-accuracy-for-textbook-english}
+
+In total, 4,515 tags from the TEC were manually checked. This chunk
+calculates the recall and precision rates of each feature, ignoring all
+punctuation and symbols.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ TaggerEval }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Corpus }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"TEC{-}Fr"}\NormalTok{, }\StringTok{"TEC{-}Ger"}\NormalTok{, }\StringTok{"TEC{-}Sp"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(TagGold }\SpecialCharTok{!=} \StringTok{"UNCLEAR"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(Tag, }\StringTok{"[A{-}Z0{-}9]+"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Remove punctuation tags which are uninteresting here.}
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{!=} \StringTok{"SYM"} \SpecialCharTok{\&}\NormalTok{ Tag }\SpecialCharTok{!=} \StringTok{"\textasciigrave{}\textasciigrave{}"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{droplevels}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{factor}\NormalTok{(Tag, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold)))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Ensure that the factor levels are the same for the next caret operation}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{factor}\NormalTok{(TagGold, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold))))}
+
+\CommentTok{\# Spot gold tag corrections that are not actually errors (should return zero rows if all is well)}
+\CommentTok{\# data[data$Tag==data$TagGold \& data$Evaluation == FALSE,] |\textgreater{} as.data.frame()}
+\end{Highlighting}
+\end{Shaded}
+
+The breakdown of inaccurate vs.~accurate tags in this TEC evaluation
+sample is:
+
+\begin{verbatim}
+   Mode   FALSE    TRUE 
+logical     114    3831 
+\end{verbatim}
+
+Note that the following accuracy metrics calculated using the
+\texttt{caret::confusionMatrix} are not very representative because they
+include tags, which were not entered in the study, e.g., LS and FW.
+
+\begin{verbatim}
+      Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
+          0.97           0.97           0.97           0.98           0.20 
+AccuracyPValue  McnemarPValue 
+          0.00            NaN 
+\end{verbatim}
+
+Accuracy metrics per feature are more interesting and relevant.
+
+\begin{longtable}[]{@{}lrrr@{}}
+\toprule\noalign{}
+& Precision & Recall & F1 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Class: ABLE & 1.00 & 1.00 & 1.00 \\
+Class: ACT & 0.97 & 0.98 & 0.98 \\
+Class: AMP & 1.00 & 1.00 & 1.00 \\
+Class: ASPECT & 1.00 & 1.00 & 1.00 \\
+Class: BEMA & 1.00 & 1.00 & 1.00 \\
+Class: CAUSE & 1.00 & 1.00 & 1.00 \\
+Class: CC & 1.00 & 0.99 & 1.00 \\
+Class: CD & 0.95 & 0.95 & 0.95 \\
+Class: COMM & 1.00 & 0.98 & 0.99 \\
+Class: COND & 1.00 & 1.00 & 1.00 \\
+Class: CONT & 1.00 & 1.00 & 1.00 \\
+Class: CUZ & 1.00 & 1.00 & 1.00 \\
+Class: DEMO & 0.97 & 0.97 & 0.97 \\
+Class: DMA & 1.00 & 1.00 & 1.00 \\
+Class: DOAUX & 0.86 & 1.00 & 0.92 \\
+Class: DT & 1.00 & 1.00 & 1.00 \\
+Class: DWNT & 0.67 & 1.00 & 0.80 \\
+Class: ELAB & 1.00 & 1.00 & 1.00 \\
+Class: EMPH & 0.83 & 1.00 & 0.91 \\
+Class: EX & 1.00 & 1.00 & 1.00 \\
+Class: EXIST & 1.00 & 1.00 & 1.00 \\
+Class: FPP1P & 1.00 & 1.00 & 1.00 \\
+Class: FPP1S & 1.00 & 1.00 & 1.00 \\
+Class: FPUH & 1.00 & 1.00 & 1.00 \\
+Class: FREQ & 1.00 & 1.00 & 1.00 \\
+Class: FW & 0.10 & 1.00 & 0.18 \\
+Class: GTO & 1.00 & 1.00 & 1.00 \\
+Class: HDG & 1.00 & 1.00 & 1.00 \\
+Class: HGOT & 1.00 & 1.00 & 1.00 \\
+Class: IN & 1.00 & 1.00 & 1.00 \\
+Class: JJ & 0.96 & 0.98 & 0.97 \\
+Class: JPRED & 0.97 & 0.90 & 0.94 \\
+Class: LIKE & 0.83 & 1.00 & 0.91 \\
+Class: MDCA & 1.00 & 1.00 & 1.00 \\
+Class: MDCO & 1.00 & 1.00 & 1.00 \\
+Class: MDMM & 1.00 & 0.67 & 0.80 \\
+Class: MDNE & 1.00 & 0.80 & 0.89 \\
+Class: MDWO & 1.00 & 1.00 & 1.00 \\
+Class: MDWS & 1.00 & 1.00 & 1.00 \\
+Class: MENTAL & 0.99 & 0.99 & 0.99 \\
+Class: NCOMP & 0.88 & 1.00 & 0.94 \\
+Class: NN & 0.95 & 0.99 & 0.97 \\
+Class: NULL & 1.00 & 0.08 & 0.14 \\
+Class: OCCUR & 0.94 & 1.00 & 0.97 \\
+Class: PASS & 0.89 & 0.89 & 0.89 \\
+Class: PEAS & 1.00 & 0.87 & 0.93 \\
+Class: PGET & 1.00 & 1.00 & 1.00 \\
+Class: PIT & 1.00 & 1.00 & 1.00 \\
+Class: PLACE & 1.00 & 0.83 & 0.91 \\
+Class: POLITE & 1.00 & 1.00 & 1.00 \\
+Class: POS & 1.00 & 1.00 & 1.00 \\
+Class: PROG & 1.00 & 0.89 & 0.94 \\
+Class: QUAN & 0.96 & 0.98 & 0.97 \\
+Class: QUPR & 1.00 & 1.00 & 1.00 \\
+Class: RB & 1.00 & 0.99 & 0.99 \\
+Class: RP & 1.00 & 1.00 & 1.00 \\
+Class: SO & 1.00 & 0.64 & 0.78 \\
+Class: SPLIT & 1.00 & 1.00 & 1.00 \\
+Class: SPP2 & 1.00 & 1.00 & 1.00 \\
+Class: STPR & 0.60 & 1.00 & 0.75 \\
+Class: THATD & 0.86 & 1.00 & 0.92 \\
+Class: THRC & 1.00 & 0.71 & 0.83 \\
+Class: THSC & 0.69 & 1.00 & 0.82 \\
+Class: TIME & 1.00 & 0.97 & 0.98 \\
+Class: TPP3P & 1.00 & 1.00 & 1.00 \\
+Class: TPP3S & 1.00 & 1.00 & 1.00 \\
+Class: VB & 0.94 & 0.94 & 0.94 \\
+Class: VBD & 0.97 & 0.99 & 0.98 \\
+Class: VBG & 0.96 & 1.00 & 0.98 \\
+Class: VBN & 0.85 & 0.92 & 0.88 \\
+Class: VIMP & 0.99 & 0.88 & 0.93 \\
+Class: VPRT & 0.98 & 0.98 & 0.98 \\
+Class: WHQU & 0.97 & 1.00 & 0.98 \\
+Class: WHSC & 1.00 & 0.97 & 0.99 \\
+Class: XX0 & 1.00 & 1.00 & 1.00 \\
+Class: YNQU & 1.00 & 1.00 & 1.00 \\
+Class: OCR & NA & 0.00 & NA \\
+\end{longtable}
+
+\section{MFTE accuracy for reference corpora (or comparable
+corpora)}\label{mfte-accuracy-for-reference-corpora-or-comparable-corpora}
+
+\subsection{Conversation}\label{conversation}
+
+These are extracts from the Spoken BNC2014 (as entered in the study).
+The evaluation data for this sample excludes 7 tokens deemed
+\emph{unclear} by at least one human annotator.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ TaggerEval }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Register }\SpecialCharTok{==} \StringTok{"spoken"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(TagGold }\SpecialCharTok{!=} \StringTok{"UNCLEAR"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(Tag, }\StringTok{"[A{-}Z0{-}9]+"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Remove all punctuation tags which are uninteresting here.}
+  \FunctionTok{droplevels}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{factor}\NormalTok{(Tag, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold)))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Ensure that the factor levels are the same for the next caret operation}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{factor}\NormalTok{(TagGold, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold))))}
+
+\CommentTok{\# Spot gold tag corrections that are not actually errors (should return zero rows if all is well)}
+\CommentTok{\# data[data$Tag==data$TagGold \& data$Evaluation == FALSE,] |\textgreater{} as.data.frame()}
+\end{Highlighting}
+\end{Shaded}
+
+The breakdown of inaccurate vs.~accurate tags in this evaluation sample
+is:
+
+\begin{verbatim}
+   Mode   FALSE    TRUE 
+logical     224    5388 
+\end{verbatim}
+
+Note that the following accuracy metrics calculated using the
+\texttt{caret::confusionMatrix} are not very representative because they
+include tags, which were not entered in the study, e.g., LS and FW.
+
+\begin{verbatim}
+      Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
+          0.96           0.96           0.95           0.97           0.12 
+AccuracyPValue  McnemarPValue 
+          0.00            NaN 
+\end{verbatim}
+
+\subsection{Fiction}\label{fiction}
+
+The evaluation data for this sample excludes 0 tokens deemed
+\emph{unclear} by at least one human annotator.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ TaggerEval }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Register }\SpecialCharTok{==} \StringTok{"fiction"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(TagGold }\SpecialCharTok{!=} \StringTok{"UNCLEAR"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(Tag, }\StringTok{"[A{-}Z0{-}9]+"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Remove all punctuation tags which are uninteresting here.}
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{!=} \StringTok{"SYM"} \SpecialCharTok{\&}\NormalTok{ Tag }\SpecialCharTok{!=} \StringTok{"\textasciigrave{}\textasciigrave{}"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{droplevels}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{factor}\NormalTok{(Tag, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold)))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Ensure that the factor levels are the same for the next caret operation}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{factor}\NormalTok{(TagGold, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold))))}
+
+\CommentTok{\# Spot gold tag corrections that are not actually errors (should return zero rows if all is well)}
+\CommentTok{\# data[data$Tag==data$TagGold \& data$Evaluation == FALSE,] |\textgreater{} as.data.frame()}
+\end{Highlighting}
+\end{Shaded}
+
+The breakdown of inaccurate vs.~accurate tags in this evaluation sample
+is:
+
+\begin{verbatim}
+   Mode   FALSE    TRUE 
+logical     168    5346 
+\end{verbatim}
+
+Note that the following accuracy metrics calculated using the
+\texttt{caret::confusionMatrix} are not very representative because they
+include tags, which were not entered in the study, e.g., LS and FW.
+
+\begin{verbatim}
+      Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
+          0.97           0.97           0.96           0.97           0.19 
+AccuracyPValue  McnemarPValue 
+          0.00            NaN 
+\end{verbatim}
+
+\subsection{Informative}\label{informative}
+
+The evaluation data for this sample excludes 8 tokens deemed
+\emph{unclear} by at least one human annotator.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ TaggerEval }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Register }\SpecialCharTok{==} \StringTok{"news"} \SpecialCharTok{|}\NormalTok{ FileID }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"BNCBEFor32"}\NormalTok{, }\StringTok{"BNCBEBl8"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(TagGold }\SpecialCharTok{!=} \StringTok{"UNCLEAR"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(Tag, }\StringTok{"[A{-}Z0{-}9]+"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Remove all punctuation tags which are uninteresting here.}
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{!=} \StringTok{"SYM"} \SpecialCharTok{\&}\NormalTok{ Tag }\SpecialCharTok{!=} \StringTok{"\textasciigrave{}\textasciigrave{}"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{droplevels}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{factor}\NormalTok{(Tag, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold)))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Ensure that the factor levels are the same for the next caret operation}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{factor}\NormalTok{(TagGold, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold))))}
+
+\CommentTok{\# Spot gold tag corrections that are not actually errors (should return zero rows if all is well)}
+\CommentTok{\# data[data$Tag==data$TagGold \& data$Evaluation == FALSE,] |\textgreater{} as.data.frame()}
+\end{Highlighting}
+\end{Shaded}
+
+The breakdown of inaccurate vs.~accurate tags in this evaluation sample
+is:
+
+\begin{verbatim}
+   Mode   FALSE    TRUE 
+logical     309    7113 
+\end{verbatim}
+
+Note that the following accuracy metrics calculated using the
+\texttt{caret::confusionMatrix} are not very representative because they
+include tags, which were not entered in the study, e.g., LS and FW.
+
+\begin{verbatim}
+      Accuracy          Kappa  AccuracyLower  AccuracyUpper   AccuracyNull 
+          0.96           0.95           0.95           0.96           0.24 
+AccuracyPValue  McnemarPValue 
+          0.00            NaN 
+\end{verbatim}
+
+\section{Estimating the overall MFTE accuracy for corpora used in the
+study}\label{estimating-the-overall-mfte-accuracy-for-corpora-used-in-the-study}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ TaggerEval }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(TagGold }\SpecialCharTok{!=} \StringTok{"UNCLEAR"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\FunctionTok{str\_extract}\NormalTok{(Tag, }\StringTok{"[A{-}Z0{-}9]+"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Remove all punctuation tags which are uninteresting here.}
+  \FunctionTok{filter}\NormalTok{(Tag }\SpecialCharTok{!=} \StringTok{"SYM"} \SpecialCharTok{\&}\NormalTok{ Tag }\SpecialCharTok{!=} \StringTok{"\textasciigrave{}\textasciigrave{}"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(TagGold }\SpecialCharTok{!=} \StringTok{"SYM"} \SpecialCharTok{\&}\NormalTok{ TagGold }\SpecialCharTok{!=} \StringTok{"\textasciigrave{}\textasciigrave{}"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{droplevels}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Tag =} \FunctionTok{factor}\NormalTok{(Tag, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold)))) }\SpecialCharTok{|\textgreater{}} \CommentTok{\# Ensure that the factor levels are the same for the next caret operation}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TagGold =} \FunctionTok{factor}\NormalTok{(TagGold, }\AttributeTok{levels =} \FunctionTok{union}\NormalTok{(}\FunctionTok{levels}\NormalTok{(Tag), }\FunctionTok{levels}\NormalTok{(TagGold))))}
+
+\CommentTok{\# Generate a better formatted results table for export: recall, precision and f1}
+\NormalTok{confusion\_matrix }\OtherTok{\textless{}{-}}\NormalTok{ cm}\SpecialCharTok{$}\NormalTok{table}
+\NormalTok{total }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(confusion\_matrix)}
+\NormalTok{number\_of\_classes }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(confusion\_matrix)}
+\NormalTok{correct }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(confusion\_matrix)}
+\CommentTok{\# sum all columns}
+\NormalTok{total\_actual\_class }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(confusion\_matrix, }\DecValTok{2}\NormalTok{, sum)}
+\CommentTok{\# sum all rows}
+\NormalTok{total\_pred\_class }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(confusion\_matrix, }\DecValTok{1}\NormalTok{, sum)}
+\CommentTok{\# Precision = TP / all that were predicted as positive}
+\NormalTok{precision }\OtherTok{\textless{}{-}}\NormalTok{ correct }\SpecialCharTok{/}\NormalTok{ total\_pred\_class}
+\CommentTok{\# Recall = TP / all that were actually positive}
+\NormalTok{recall }\OtherTok{\textless{}{-}}\NormalTok{ correct }\SpecialCharTok{/}\NormalTok{ total\_actual\_class}
+\CommentTok{\# F1}
+\NormalTok{f1 }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ precision }\SpecialCharTok{*}\NormalTok{ recall) }\SpecialCharTok{/}\NormalTok{ (precision }\SpecialCharTok{+}\NormalTok{ recall)}
+\CommentTok{\# create data frame to output results}
+\NormalTok{results }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(precision, recall, f1, total\_actual\_class)}
+
+\NormalTok{results }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\toprule\noalign{}
+& precision & recall & f1 & total\_actual\_class \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+ACT & 0.92 & 0.99 & 0.95 & 177 \\
+AMP & 1.00 & 0.94 & 0.97 & 16 \\
+ASPECT & 1.00 & 1.00 & 1.00 & 23 \\
+BEMA & 0.99 & 0.99 & 0.99 & 111 \\
+CAUSE & 1.00 & 1.00 & 1.00 & 18 \\
+CC & 1.00 & 0.99 & 0.99 & 254 \\
+CD & 0.99 & 0.98 & 0.98 & 134 \\
+COMM & 1.00 & 1.00 & 1.00 & 88 \\
+CONC & 0.90 & 0.82 & 0.86 & 11 \\
+COND & 1.00 & 1.00 & 1.00 & 17 \\
+CONT & 0.96 & 1.00 & 0.98 & 54 \\
+CUZ & 1.00 & 0.90 & 0.95 & 10 \\
+DEMO & 1.00 & 0.96 & 0.98 & 51 \\
+DMA & 0.50 & 0.40 & 0.44 & 5 \\
+DOAUX & 0.92 & 0.92 & 0.92 & 25 \\
+DT & 1.00 & 1.00 & 1.00 & 490 \\
+DWNT & 1.00 & 1.00 & 1.00 & 5 \\
+ELAB & 1.00 & 1.00 & 1.00 & 3 \\
+EMPH & 0.98 & 0.95 & 0.96 & 43 \\
+EX & 1.00 & 1.00 & 1.00 & 15 \\
+EXIST & 0.96 & 1.00 & 0.98 & 27 \\
+FPP1P & 1.00 & 1.00 & 1.00 & 49 \\
+FPP1S & 1.00 & 1.00 & 1.00 & 59 \\
+FPUH & 1.00 & 0.67 & 0.80 & 3 \\
+FREQ & 1.00 & 1.00 & 1.00 & 15 \\
+FW & 0.29 & 0.40 & 0.33 & 5 \\
+GTO & 1.00 & 1.00 & 1.00 & 4 \\
+HDG & 1.00 & 1.00 & 1.00 & 5 \\
+IN & 0.99 & 1.00 & 0.99 & 836 \\
+JJAT & 0.94 & 0.87 & 0.90 & 360 \\
+JJPR & 0.92 & 0.74 & 0.82 & 108 \\
+LIKE & 1.00 & 1.00 & 1.00 & 9 \\
+MDCA & 1.00 & 1.00 & 1.00 & 12 \\
+MDCO & 1.00 & 1.00 & 1.00 & 12 \\
+MDMM & 1.00 & 1.00 & 1.00 & 1 \\
+MDNE & 1.00 & 0.95 & 0.98 & 22 \\
+MDWO & 1.00 & 1.00 & 1.00 & 20 \\
+MDWS & 1.00 & 1.00 & 1.00 & 31 \\
+MENTAL & 0.98 & 1.00 & 0.99 & 106 \\
+NCOMP & 0.92 & 0.99 & 0.96 & 171 \\
+NN & 0.96 & 0.98 & 0.97 & 1805 \\
+OCCUR & 1.00 & 1.00 & 1.00 & 11 \\
+PASS & 0.92 & 0.92 & 0.92 & 79 \\
+PEAS & 1.00 & 0.91 & 0.96 & 70 \\
+PGET & 1.00 & 0.67 & 0.80 & 6 \\
+PIT & 1.00 & 0.96 & 0.98 & 78 \\
+PLACE & 0.86 & 1.00 & 0.93 & 19 \\
+POLITE & 1.00 & 1.00 & 1.00 & 7 \\
+POS & 0.98 & 0.96 & 0.97 & 46 \\
+PROG & 0.92 & 0.88 & 0.90 & 40 \\
+PRP & 0.00 & 0.00 & NaN & 1 \\
+QUAN & 0.96 & 1.00 & 0.98 & 80 \\
+QUPR & 1.00 & 1.00 & 1.00 & 21 \\
+RB & 0.96 & 0.95 & 0.96 & 137 \\
+RP & 1.00 & 0.82 & 0.90 & 44 \\
+SO & 1.00 & 0.89 & 0.94 & 9 \\
+SPLIT & 1.00 & 1.00 & 1.00 & 40 \\
+SPP2 & 1.00 & 1.00 & 1.00 & 53 \\
+STPR & 0.50 & 1.00 & 0.67 & 2 \\
+THATD & 0.85 & 1.00 & 0.92 & 11 \\
+THRC & 1.00 & 0.50 & 0.67 & 8 \\
+THSC & 0.85 & 1.00 & 0.92 & 34 \\
+TIME & 0.95 & 0.98 & 0.96 & 40 \\
+TPP3P & 1.00 & 1.00 & 1.00 & 61 \\
+TPP3S & 1.00 & 1.00 & 1.00 & 108 \\
+URL & 1.00 & 1.00 & 1.00 & 1 \\
+USEDTO & 0.00 & NaN & NaN & 0 \\
+VB & 0.90 & 0.93 & 0.91 & 258 \\
+VBD & 0.96 & 0.97 & 0.97 & 215 \\
+VBG & 0.91 & 0.91 & 0.91 & 111 \\
+VBN & 0.42 & 1.00 & 0.59 & 22 \\
+VIMP & 0.71 & 0.34 & 0.47 & 29 \\
+VPRT & 0.95 & 0.95 & 0.95 & 351 \\
+WHQU & 1.00 & 0.44 & 0.62 & 9 \\
+WHSC & 0.95 & 1.00 & 0.97 & 95 \\
+XX0 & 1.00 & 0.97 & 0.99 & 76 \\
+YNQU & 0.00 & NaN & NaN & 0 \\
+NULL & NaN & 0.00 & NaN & 38 \\
+SYM & NaN & 0.00 & NaN & 1 \\
+`` & NaN & 0.00 & NaN & 1 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resultslong }\OtherTok{\textless{}{-}}\NormalTok{ results }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{tag =} \FunctionTok{row.names}\NormalTok{(.)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(tag }\SpecialCharTok{!=} \StringTok{"NULL"} \SpecialCharTok{\&}\NormalTok{ tag }\SpecialCharTok{!=} \StringTok{"SYM"} \SpecialCharTok{\&}\NormalTok{ tag }\SpecialCharTok{!=} \StringTok{"OCR"} \SpecialCharTok{\&}\NormalTok{ tag }\SpecialCharTok{!=} \StringTok{"FW"} \SpecialCharTok{\&}\NormalTok{ tag }\SpecialCharTok{!=} \StringTok{"USEDTO"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{n =}\NormalTok{ total\_actual\_class) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(}\StringTok{"precision"}\NormalTok{, }\StringTok{"recall"}\NormalTok{, }\StringTok{"f1"}\NormalTok{), }\AttributeTok{names\_to =} \StringTok{"metric"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"value"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{metric =} \FunctionTok{factor}\NormalTok{(metric, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"precision"}\NormalTok{, }\StringTok{"recall"}\NormalTok{, }\StringTok{"f1"}\NormalTok{)))}
+
+\CommentTok{\# summary(resultslong$n)}
+
+\FunctionTok{ggplot}\NormalTok{(resultslong, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{reorder}\NormalTok{(tag, }\FunctionTok{desc}\NormalTok{(tag)), }\AttributeTok{x =}\NormalTok{ value, }\AttributeTok{group =}\NormalTok{ metric, }\AttributeTok{colour =}\NormalTok{ n)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ metric) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_paletteer\_c}\NormalTok{(}\StringTok{"harrypotter::harrypotter"}\NormalTok{, }\AttributeTok{trans =} \StringTok{"log"}\NormalTok{, }\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{1000}\NormalTok{), }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{1000}\NormalTok{), }\AttributeTok{name =} \StringTok{"\# tokens }\SpecialCharTok{\textbackslash{}n}\StringTok{manually}\SpecialCharTok{\textbackslash{}n}\StringTok{evaluated"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid.major.y =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{colour =} \StringTok{"darkgrey"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{C_TaggerEvaluation_files/figure-pdf/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ggsave(here("plots", "TaggerAccuracyPlot.svg"), width = 7, height = 12)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Exploring tagger errors}\label{exploring-tagger-errors}
+
+To inspect regular/systematic tagger errors, we add an error tag with
+the incorrectly assigned tag and underscore and then the correct
+``gold'' label.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{errors }\OtherTok{\textless{}{-}}\NormalTok{ TaggerEval }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Evaluation}\SpecialCharTok{==}\StringTok{"FALSE"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(TagGold }\SpecialCharTok{!=} \StringTok{"UNCLEAR"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Error =} \FunctionTok{paste}\NormalTok{(Tag, TagGold, }\AttributeTok{sep =} \StringTok{" {-}\textgreater{} "}\NormalTok{))}
+
+\NormalTok{FreqErrors }\OtherTok{\textless{}{-}}\NormalTok{ errors }\SpecialCharTok{|\textgreater{}} 
+  \CommentTok{\#filter(Corpus \%in\% c("TEC{-}Fr", "TEC{-}Ger", "TEC{-}Sp")) |\textgreater{} }
+  \FunctionTok{count}\NormalTok{(Error) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n))}
+
+\CommentTok{\# Number of error types that only occur once}
+\NormalTok{once }\OtherTok{\textless{}{-}}\NormalTok{ FreqErrors }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(n }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{nrow}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+The total number of errors is 817. Of those, 94 occur just once. In
+total, there are 198 different types of errors. The most frequent 10
+are:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{FreqErrors }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(n }\SpecialCharTok{\textgreater{}} \DecValTok{10}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Error & n \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+NCOMP -\textgreater{} NULL & 37 \\
+NN -\textgreater{} JJAT & 35 \\
+JJAT -\textgreater{} NN & 27 \\
+NN -\textgreater{} VB & 27 \\
+IN -\textgreater{} RP & 25 \\
+NN -\textgreater{} VPRT & 24 \\
+VB -\textgreater{} NN & 22 \\
+THSC -\textgreater{} DEMO & 19 \\
+VB -\textgreater{} VIMP & 19 \\
+NN -\textgreater{} OCR & 16 \\
+VBN -\textgreater{} JJAT & 16 \\
+ACT -\textgreater{} NULL & 15 \\
+THATD -\textgreater{} NULL & 15 \\
+CD -\textgreater{} NN & 12 \\
+MENTAL -\textgreater{} NULL & 12 \\
+NN -\textgreater{} VBG & 11 \\
+NN -\textgreater{} VIMP & 11 \\
+THSC -\textgreater{} THRC & 11 \\
+VBG -\textgreater{} PROG & 11 \\
+VBN -\textgreater{} JJPR & 11 \\
+\end{longtable}
+
+The code in the following chunk can be used to take a closer look at
+specific types of frequent errors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{errors }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Error }\SpecialCharTok{==} \StringTok{"NN {-}\textgreater{} JJAT"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Output, }\SpecialCharTok{{-}}\NormalTok{Corpus, }\SpecialCharTok{{-}}\NormalTok{Tag, }\SpecialCharTok{{-}}\NormalTok{TagGold) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Token, }\AttributeTok{pattern =} \StringTok{"[A{-}Z]+."}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+FileID & Register & Token & Evaluation & Error \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+BNCBEFor32 & internet & Intermediate & FALSE & NN -\textgreater{}
+JJAT \\
+BNCBMass16 & news & FINAL & FALSE & NN -\textgreater{} JJAT \\
+BNCBMass16 & news & Big & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg111 & news & Scottish & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg111 & news & Scottish & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg111 & news & Mental & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg111 & news & Scottish & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg111 & news & Central & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg750 & news & English & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg750 & news & Natural & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg750 & news & European & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg750 & news & Christian & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg750 & news & Social & FALSE & NN -\textgreater{} JJAT \\
+BNCBReg750 & news & Common & FALSE & NN -\textgreater{} JJAT \\
+BNCBSer486 & news & Northern & FALSE & NN -\textgreater{} JJAT \\
+BNCBSer486 & news & Northern & FALSE & NN -\textgreater{} JJAT \\
+BNCBSer486 & news & Northern & FALSE & NN -\textgreater{} JJAT \\
+BNCBSer562 & news & United & FALSE & NN -\textgreater{} JJAT \\
+BNCBSer562 & news & White & FALSE & NN -\textgreater{} JJAT \\
+BNCBSer562 & news & Untold & FALSE & NN -\textgreater{} JJAT \\
+BNCBSer562 & news & New & FALSE & NN -\textgreater{} JJAT \\
+SEL5 & spoken & Black & FALSE & NN -\textgreater{} JJAT \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{errors }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Error }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"NN {-}\textgreater{} VB"}\NormalTok{, }\StringTok{"VB {-}\textgreater{} NN"}\NormalTok{, }\StringTok{"NN {-}\textgreater{} VPRT"}\NormalTok{, }\StringTok{"VPRT {-}\textgreater{} NN"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{count}\NormalTok{(Token) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(n }\SpecialCharTok{\textgreater{}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Token & n \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+mince & 5 \\
+build & 4 \\
+win & 4 \\
+hunt & 3 \\
+wags & 3 \\
+throw & 2 \\
+look & 2 \\
+swamp & 2 \\
+stop & 2 \\
+defeats & 2 \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{errors }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(Error }\SpecialCharTok{==} \StringTok{"ACT {-}\textgreater{} NULL"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{count}\NormalTok{(Token) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(n)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{kable}\NormalTok{(}\AttributeTok{digits =} \DecValTok{2}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Token & n \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+win & 3 \\
+throw & 2 \\
+lost & 2 \\
+left & 1 \\
+waiting & 1 \\
+working & 1 \\
+running & 1 \\
+done & 1 \\
+fixed & 1 \\
+Play & 1 \\
+reached & 1 \\
+\end{longtable}
+
+For more information on the MFTE evaluation, see (Le Foll 2021a) and
+\url{https://github.com/elenlefoll/MultiFeatureTaggerEnglish}.
+
 \chapter{Data Preparation for the Model of Intra-Textbook
 Variation}\label{data-preparation-for-the-model-of-intra-textbook-variation}
 
@@ -675,7 +1482,7 @@ This script documents the steps taken to pre-process the Textbook
 English Corpus (TEC) data that were entered in the multi-dimensional
 model of intra-textbook linguistic variation (Chapter 6).
 
-\section{Packages required}\label{packages-required}
+\section{Packages required}\label{packages-required-1}
 
 The following packages must be installed and loaded to process the data.
 
@@ -1510,7 +2317,7 @@ the statistics and plots included in the book, as well as many others
 that were used in the analysis, but not included in the book for reasons
 of space.
 
-\section{Packages required}\label{packages-required-1}
+\section{Packages required}\label{packages-required-2}
 
 The following packages must be installed and loaded to carry out the
 following analyses.
@@ -1994,7 +2801,11 @@ components more carefully.
 \begin{Highlighting}[]
 \CommentTok{\#dev.off()}
 \CommentTok{\#ggsave(here("plots", "PCA\_TxB\_BiplotPC1\_PC2.svg"), width = 12, height = 10)}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Biplots to examine components more carefully}
 \NormalTok{pRegisters }\OtherTok{\textless{}{-}}\NormalTok{ PCAtools}\SpecialCharTok{::}\FunctionTok{biplot}\NormalTok{(p,}
                  \AttributeTok{x =} \StringTok{"PC3"}\NormalTok{,}
@@ -2844,7 +3655,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{E_Ch6_Analysis_files/figure-pdf/unnamed-chunk-28-1.pdf}
+\includegraphics{E_Ch6_Analysis_files/figure-pdf/unnamed-chunk-30-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2966,7 +3777,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{E_Ch6_Analysis_files/figure-pdf/unnamed-chunk-31-1.pdf}
+\includegraphics{E_Ch6_Analysis_files/figure-pdf/unnamed-chunk-33-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2986,7 +3797,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{E_Ch6_Analysis_files/figure-pdf/unnamed-chunk-32-1.pdf}
+\includegraphics{E_Ch6_Analysis_files/figure-pdf/unnamed-chunk-34-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3041,7 +3852,7 @@ that were ultimately entered in the comparative multi-dimensional model
 of Textbook English as compared to English outside the EFL classroom
 (Chapter 7).
 
-\section{Packages required}\label{packages-required-2}
+\section{Packages required}\label{packages-required-3}
 
 The following packages must be installed and loaded to process the data.
 
@@ -3928,7 +4739,7 @@ described in Chapter 7. It generates all of the statistics and plots
 included in the book, as well as many others that were used in the
 analysis, but were not included in the book for reasons of space.
 
-\section{Packages required}\label{packages-required-3}
+\section{Packages required}\label{packages-required-4}
 
 The following packages must be installed and loaded to process the data.
 
