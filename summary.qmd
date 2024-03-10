@@ -1,3 +1,9 @@
 # Summary
 
-In summary, this book has no content whatsoever.
+::: {.callout-warning}
+## Warning
+
+This website is a work in progress.
+:::
+
+This page will soon feature a summary of the book.

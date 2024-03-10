@@ -156,6 +156,22 @@
 \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
 \KOMAoption{captions}{tableheading}
 \makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
 \@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
 \makeatother
 \makeatletter
@@ -225,7 +241,7 @@
 \makeatother
 \subtitle{Online Supplements}
 \author{Elen Le Foll}
-\date{2024-03-08}
+\date{2024-03-10}
 
 \begin{document}
 \maketitle
@@ -243,6 +259,8 @@
 
 \markboth{About}{About}
 
+\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, leftrule=.75mm, coltitle=black, breakable, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colframe=quarto-callout-warning-color-frame, toprule=.15mm, bottomrule=.15mm, left=2mm, bottomtitle=1mm, toptitle=1mm, titlerule=0mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, colback=white]
+
 This Quarto book is \textbf{work in progress}. It will eventually
 contain the online supplements to:
 
@@ -251,6 +269,8 @@ Le Foll, Elen. to appear. \emph{Textbook English: A Multi-Dimensional
 Approach} {[}Studies in Corpus Linguistics{]}. Amsterdam: John
 Benjamins.
 \end{quote}
+
+\end{tcolorbox}
 
 The book is based on my PhD thesis, which is accessible in Open Access:
 
@@ -494,7 +514,13 @@ addition to the corresponding references in the bibliography).
 
 \chapter{Summary}\label{summary}
 
-In summary, this book has no content whatsoever.
+\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, leftrule=.75mm, coltitle=black, breakable, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colframe=quarto-callout-warning-color-frame, toprule=.15mm, bottomrule=.15mm, left=2mm, bottomtitle=1mm, toptitle=1mm, titlerule=0mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, colback=white]
+
+This website is a work in progress.
+
+\end{tcolorbox}
+
+This page will soon feature a summary of the book.
 
 \bookmarksetup{startatroot}
 
@@ -542,6 +568,11 @@ Peter Crosthwaite, 142--56. London: Routledge.
 ---------. n.d. {``{\emph{Schulenglisch}}: A Multi-Dimensional Model of
 the Variety of English Taught in German Secondary Schools.''} \emph{AAA:
 Arbeiten Aus Anglistik Und Amerikanistik} 49.
+
+\bibitem[\citeproctext]{ref-lefoll2023}
+Le Foll, Elen, and Muhammad Shakir. 2023. {``Introducing a New
+Open-Source Corpus-Linguistic Tool: The Multi-Feature Tagger of English
+(MFTE),''} May.
 
 \bibitem[\citeproctext]{ref-love2019}
 Love, Robbie, Vaclav Brezina, Tony McEnery, Abi Hawtin, Andrew Hardie,
@@ -611,7 +642,7 @@ corresponding CSV file in the repository} or send me an
 with the corresponding details of the studies that you would like to
 add.
 
-\textbf{This page was last updated on 08 March 2024.}
+\textbf{This page was last updated on 10 March 2024.}
 
 \includegraphics{A_LitReviewTable_files/figure-pdf/display-1.pdf}
 
@@ -671,9 +702,21 @@ touch with me via \href{https://orcid.org/0000-0002-5839-8010}{e-mail}.
 \chapter{Evaluation of the Multi-Feature Tagger of English
 (MFTE)}\label{evaluation-of-the-multi-feature-tagger-of-english-mfte}
 
-For more information on the evaluation data and methods, see Le Foll
-(2021a) and
+For more information on the tagger itself, as well as the evaluation
+data and methods, see Le Foll (2021a) and
 \url{https://github.com/elenlefoll/MultiFeatureTaggerEnglish}.
+
+\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, leftrule=.75mm, coltitle=black, breakable, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, colframe=quarto-callout-tip-color-frame, toprule=.15mm, bottomrule=.15mm, left=2mm, bottomtitle=1mm, toptitle=1mm, titlerule=0mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, colback=white]
+
+The Multi-Feature Tagger of English (MFTE) is free to use and was
+released under an Open Source licence. If you are interested in using
+the MFTE for your own project, I recommend using the latest version of
+the MFTE Python, which is much easier to use, can tag many more
+features, and also underwent a thorough evaluation. To find out more,
+see Le Foll \& Shakir (2023) and
+\url{https://github.com/mshakirDr/MFTE}.
+
+\end{tcolorbox}
 
 \section{Packages required}\label{packages-required}
 

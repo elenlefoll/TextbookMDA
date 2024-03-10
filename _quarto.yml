@@ -13,6 +13,13 @@ book:
   date: last-modified
   downloads: pdf
   license: "CC BY-SA"
+  sidebar:
+    title: "Textbook English: A Multi-Dimensional Approach (Le Foll 2024)"
+    tools:
+      - icon: mastodon
+        href: https://fediscience.org/@ElenLeFoll
+      - icon: envelope
+        href: https://mailto:elefoll@uni-koeln.de
   page-footer:
     background: light
     left: <a href="https://www.elenlefoll.eu">Elen Le Foll</a>

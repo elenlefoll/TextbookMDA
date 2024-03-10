@@ -1,6 +1,12 @@
 # Evaluation of the Multi-Feature Tagger of English (MFTE)
 
-For more information on the evaluation data and methods, see Le Foll [-@lefoll2021] and <https://github.com/elenlefoll/MultiFeatureTaggerEnglish>.
+For more information on the tagger itself, as well as the evaluation data and methods, see Le Foll [-@lefoll2021] and <https://github.com/elenlefoll/MultiFeatureTaggerEnglish>. 
+
+::: {.callout-tip}
+## Using the MFTE
+
+The Multi-Feature Tagger of English (MFTE) is free to use and was released under an Open Source licence. If you are interested in using the MFTE for your own project, I recommend using the latest version of the MFTE Python, which is much easier to use, can tag many more features, and also underwent a thorough evaluation. To find out more, see Le Foll & Shakir [-@lefoll2023] and <https://github.com/mshakirDr/MFTE>.
+:::
 
 ## Packages required
 
@@ -253,13 +259,15 @@ Accuracy metrics per feature are more interesting and relevant.
 
 cm$byClass[,5:7] |> 
   kable(digits = 2)
+
+SpokenUnclear <- TaggerEval |> filter(Register == "spoken") |>  filter(TagGold == "UNCLEAR") |> nrow()
 ```
 
 ## MFTE accuracy for reference corpora (or comparable corpora)
 
 ### Conversation
 
-These are extracts from the Spoken BNC2014 (as entered in the study). The evaluation data for this sample excludes `{r} TaggerEval |> filter(Register == "spoken") |>  filter(TagGold == "UNCLEAR") |> nrow()` tokens deemed *unclear* by at least one human annotator.
+These are extracts from the Spoken BNC2014 (as entered in the study). The evaluation data for this sample excludes `{r} SpokenUnclear` tokens deemed *unclear* by at least one human annotator.
 
 ```{r tagger-accuracy-SpokenBNC2014}
 #| code-fold: true
@@ -296,11 +304,13 @@ cm$overall |> round(2)
 
 # cm$byClass[,5:7] |> 
   # kable(digits = 2)
+
+FictionUnclear <- TaggerEval |> filter(Register == "fiction") |>  filter(TagGold == "UNCLEAR") |> nrow()
 ```
 
 ### Fiction
 
-The evaluation data for this sample excludes `{r} TaggerEval |> filter(Register == "fiction") |>  filter(TagGold == "UNCLEAR") |> nrow()` tokens deemed *unclear* by at least one human annotator.
+The evaluation data for this sample excludes `{r} FictionUnclear` tokens deemed *unclear* by at least one human annotator.
 
 ```{r tagger-accuracy-Fiction}
 
@@ -336,11 +346,13 @@ cm$overall |> round(2)
 
 # cm$byClass[,5:7] |> 
   # kable(digits = 2)
+
+InfoUnclear <- TaggerEval |> filter(Register == "news" | FileID %in% c("BNCBEFor32", "BNCBEBl8")) |>  filter(TagGold == "UNCLEAR") |> nrow()
 ```
 
 ### Informative
 
-The evaluation data for this sample excludes `{r} TaggerEval |> filter(Register == "news" | FileID %in% c("BNCBEFor32", "BNCBEBl8")) |>  filter(TagGold == "UNCLEAR") |> nrow()` tokens deemed *unclear* by at least one human annotator.
+The evaluation data for this sample excludes `{r} InfoUnclear` tokens deemed *unclear* by at least one human annotator.
 
 ```{r tagger-accuracy-Informative}
 
