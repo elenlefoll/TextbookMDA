@@ -14,7 +14,7 @@ book:
   downloads: pdf
   license: "CC BY-SA"
   sidebar:
-    title: "Textbook English: A Multi-Dimensional Approach (Le Foll 2024)"
+    title: "Textbook English (Le Foll 2024)"
     tools:
       - icon: envelope
         href: mailto:elefoll@uni-koeln.de
@@ -33,13 +33,13 @@ book:
     - summary.qmd
     - references.qmd
   appendices:
-    - A_LitReviewTable.qmd
-    - B_CorpusData.qmd
-    - C_TaggerEvaluation.qmd
-    - D_Ch6_DataPrep.qmd
-    - E_Ch6_Analysis.qmd
-    - F_Ch7_DataPrep.qmd
-    - G_Ch7_Analysis.qmd
+    - AppendixA.qmd
+    - AppendixB.qmd
+    - AppendixC.qmd
+    - AppendixD.qmd
+    - AppendixE.qmd
+    - AppendixF.qmd
+    - AppendixG.qmd
     
 execute:
   message: false
