@@ -24,3 +24,11 @@ stringr
 forcats
 lubridate
 visreg
+lattice
+caret
+DescTools
+factoextra
+ggthemes
+patchwork
+ggrepel
+PCAtools

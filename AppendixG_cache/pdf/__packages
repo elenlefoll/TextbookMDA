@@ -27,3 +27,9 @@ stringr
 forcats
 lubridate
 visreg
+broom.mixed
+carData
+car
+corrplot
+GGally
+scales

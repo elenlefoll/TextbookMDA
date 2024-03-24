@@ -25,3 +25,7 @@ dplyr
 stringr
 lubridate
 visreg
+DT
+zoo
+xts
+PerformanceAnalytics

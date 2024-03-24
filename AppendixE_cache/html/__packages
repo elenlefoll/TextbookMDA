@@ -26,3 +26,7 @@ stringr
 lubridate
 visreg
 plotly
+DT
+zoo
+xts
+PerformanceAnalytics

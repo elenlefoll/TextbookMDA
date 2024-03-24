@@ -14,7 +14,9 @@ book:
   downloads: pdf
   license: "CC BY-SA"
   sidebar:
-    title: "Textbook English (Le Foll 2024)"
+    title: |
+      Textbook English 
+      (Le Foll 2024)
     tools:
       - icon: envelope
         href: mailto:elefoll@uni-koeln.de
@@ -40,6 +42,7 @@ book:
     - AppendixE.qmd
     - AppendixF.qmd
     - AppendixG.qmd
+    - AppendixH.qmd
     
 execute:
   message: false

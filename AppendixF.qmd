@@ -1,505 +1,1015 @@
-# Data Preparation for the Model of Textbook English vs. ‘real-world’ English
+# Data Analysis for the Model of Intra-Textbook Variation
 
-This script documents the steps taken to pre-process the data extracted from the Textbook English Corpus (TEC) and the three reference corpora that were ultimately entered in the comparative multi-dimensional model of Textbook English as compared to English outside the EFL classroom (Chapter 7).
+This script documents the analysis of the pre-processed data from the Textbook English Corpus (TEC) to arrive at the multi-dimensional model of intra-textbook linguistic variation (Chapter 6). It generates all of the statistics and plots included in the book, as well as many others that were used in the analysis, but not included in the book for reasons of space.
 
 ## Packages required
 
-The following packages must be installed and loaded to process the data.
+The following packages must be installed and loaded to carry out the following analyses.
 
 ```{r}
 #| label: set-up
 
-#renv::restore() # Restore the project's dependencies from the lockfile to ensure that same package versions are used as in the original thesis.
+#renv::restore() # Restore the project's dependencies from the lockfile to ensure that same package versions are used as in the original study
 
-library(broom.mixed) # For checking singularity issues 
-library(car) # For recoding data
-library(corrplot) # For the feature correlation matrix
-library(cowplot) # For nice plots
-library(emmeans) # Comparing group means of predicted values
-library(GGally) # For ggpairs
-library(gridExtra) # For making large faceted plots
-library(here) # For ease of sharing
+library(caret) # For its confusion matrix function
+library(cowplot)
+library(DescTools) # For 95% CI
+library(emmeans)
+library(factoextra) # For circular graphs of variables
+library(forcats) # For data manipulation
+library(ggthemes) # For theme of factoextra plots
+library(here) # For dynamic file paths
 library(knitr) # Loaded to display the tables using the kable() function
-library(lme4) # For mixed effects modelling
-library(psych) # For various useful stats function, including KMO()
-library(scales) # For working with colours
-library(sjPlot) # For nice tabular display of regression models
-library(tidyverse) # For data wrangling and plotting
-library(visreg) # For nice visualisations of model results
-select <- dplyr::select
-filter <- dplyr::filter
-```
+library(lme4) # For linear regression modelling
+library(patchwork) # To create figures with more than one plot
+library(PCAtools) # For nice biplots of PCA results
+library(psych) # For various useful stats function
+library(sjPlot) # For model plots and tables
+library(tidyverse) # For data wrangling
+library(visreg) # For plots of interaction effects
 
-```{r palette}
-#| echo: false
-# Colours used in Register Studies paper and included in Open Access plots published on Zenodo:
-#colours <- suf_palette(name = "london", n = 6, type = "continuous") # Very nice, similar to OrRd palette
-#scales::show_col(colours)
-#colours <- colours[6:1] 
-
-# Colour scheme used in PhD thesis:
-colours = c("#F9B921", "#A18A33",  "#722672", "#BD241E", "#15274D", "#D54E1E") 
-# scales::show_col(colours)
+# From https://github.com/RainCloudPlots/RainCloudPlots:
+source(here("R_rainclouds.R")) # For geom_flat_violin rainplots
 
 ```
 
-## Data import from MFTE outputs
+```{r colours, include=FALSE}
+# This is a beautiful feminist colour palette based on banners from the suffragette mouvement: https://github.com/alburezg/suffrager
 
-The raw data used in this script comes from the matrices of mixed normalised frequencies as output by the [MFTE Perl v. 3.1](https://github.com/mshakirDr/MultiFeatureTaggerEnglish) [@lefoll2021].
+# devtools::install_github("alburezg/suffrager")
+# library(suffrager)
+# colours <- suf_palette(name = "london", n = 6, type = "continuous") 
+# colours2 <- suf_palette(name = "classic", n = 5, type = "continuous") 
+# colours <- c(colours, colours2[c(2:4)]) # Nine colours range
+# palette <- colours[c(1,5,6,2,3,8,7,4,9)] # Good order for PCA
+# scales::show_col(palette)
 
-### Spoken BNC2014
-
-```{r SpokenBNC2014}
-#| code-fold: true
-
-SpokenBNC2014 <- read.delim(here("data", "MFTE", "SpokenBNC2014_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)
-
-SpokenBNC2014$Series <- "Spoken BNC2014"
-SpokenBNC2014$Level <- "Ref."
-SpokenBNC2014$Country <- "Spoken BNC2014"
-SpokenBNC2014$Register <- "Spoken BNC2014"
+# This is the palette created above on the basis of the suffrager package (but without needed to install the package)
+palette <- c("#BD241E", "#A18A33", "#15274D", "#D54E1E", "#EA7E1E", "#4C4C4C", "#722672", "#F9B921", "#267226")
 
 ```
 
-These normalised frequencies were computed on the basis of my own "John and Jill in Ivybridge" version of the Spoken BNC2014 with added full stops at speaker turns (see Appendix B for details). This corpus comprises of `{r} nrow(SpokenBNC2014) |> format(big.mark=",")` texts, all of which were used in the following analyses.
+## Preparing the data for PCA
 
-### Youth Fiction corpus
-
-```{r YouthFiction}
-#| code-fold: true
-
-YouthFiction <- read.delim(here("data", "MFTE", "YF_sampled_500_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)
-
-YouthFiction$Series <- "Youth Fiction"
-YouthFiction$Level <- "Ref."
-YouthFiction$Country <- "Youth Fiction"
-YouthFiction$Register <- "Youth Fiction"
-
-```
-
-These normalised frequencies were computed on the basis of the random samples of approximately 5,000 words of the books of the Youth Fiction corpus (for details of the works included in this corpus, see Appendix B). The sampling procedure is described in Section 4.3.2.4 of the book. This dataset consists of `{r} nrow(YouthFiction) |> format(big.mark=",")` files.
-
-### Informative Texts for Teens (InfoTeens) corpus
-
-```{r InfoTeencounts}
-#| code-fold: true
-
-InfoTeen <- read.delim(here("data", "MFTE", "InfoTeen_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)
-
-# Removes three outlier files which should not have been included in the corpus as they contain exam papers only
-InfoTeen <- InfoTeen |> 
-  filter(Filename!=".DS_Store" & Filename!="Revision_World_GCSE_10529068_wjec-level-law-past-papers.txt" & Filename!="Revision_World_GCSE_10528474_wjec-level-history-past-papers.txt" & Filename!="Revision_World_GCSE_10528472_edexcel-level-history-past-papers.txt")
-
-InfoTeen$Series <- "Info Teens"
-InfoTeen$Level <- "Ref."
-InfoTeen$Country <- "Info Teens"
-InfoTeen$Register <- "Info Teens"
-
-```
-
-Details of the composition of the Info Teens corpus can be found in Section 4.3.2.5 of the book. The version used in the present study comprises `{r} nrow(InfoTeen) |> format(big.mark=",")` texts.
-
-## Merging TEC and reference corpora data
-
-```{r DataMerging}
-#| code-fold: true
-#| echo: false
-
-TxBncounts <- readRDS(here("data", "processed", "TxBcounts.rds"))
-All3Reg <- c("Conversation", "Fiction", "Informative")
-
-TxBncounts3Reg <- TxBncounts |> 
-  filter(Register %in% All3Reg) |> 
-  droplevels()
-
-ncounts <- bind_rows(TxBncounts3Reg, InfoTeen, SpokenBNC2014, YouthFiction, .id = "Corpus")
-
-# Convert all character vectors to factors
-ncounts[sapply(ncounts, is.character)] <- lapply(ncounts[sapply(ncounts, is.character)], as.factor)
-
-# Change all NAs to 0
-ncounts[is.na(ncounts)] <- 0
-
-levels(ncounts$Corpus) <- list(Textbook.English="1", Informative.Teens="2", Spoken.BNC2014="3", Youth.Fiction="4")
-# summary(ncounts$Corpus)
-# summary(ncounts$Series)
-
-# Wrangle metadata variables
-ncounts$Subcorpus <- ncounts$Register
-#levels(ncounts$Subcorpus)
-levels(ncounts$Subcorpus) <- c("Textbook Conversation", "Textbook Fiction", "Info Teens Ref.", "Textbook Informative", "Spoken BNC2014 Ref.", "Youth Fiction Ref.")
-
-# Re-order registers
-levels(ncounts$Register) <- c("Conversation", "Fiction", "Informative", "Informative", "Conversation", "Fiction")
-#summary(ncounts$Register)
-
-# Re-order variables
-ncounts <- select(ncounts, order(names(ncounts))) |> 
-  select(Filename, Register, Level, Series, Country, Corpus, Subcorpus, Words, everything()) # Then place the metadata variable at the front of the table
-
-#saveRDS(ncounts, here("data", "processed", "counts3Reg.rds")) # Last saved 6 March 2024
-
-```
-
-### Corpus size
-
-These tables provide some summary statistics about the texts/files whose normalised feature frequencies were entered in the model of Textbook English vs. real-world English described in Chapter 7.
+### TEC data import
 
 ```{r}
-#| label: corpora-summary-stats
+#| label: import
 #| code-fold: true
 
-summary(ncounts$Subcorpus) |> 
-  kable(col.names = c("(Sub)corpus", "# texts"),
-        format.args = list(big.mark = ","))
+TxBcounts <- readRDS(here("data", "processed", "TxBcounts3.rds"))
+# colnames(TxBcounts)
+# nrow(TxBcounts)
 
-ncounts  |>  
-  group_by(Register) |>  
-  summarise(totaltexts = n(), 
-            totalwords = sum(Words), 
-            mean = as.integer(mean(Words)), 
-            sd = as.integer(sd(Words)), 
-            TTRmean = mean(TTR)) |>  
-  kable(digits = 2, 
-        format.args = list(big.mark = ","),
-        col.names = c("Register", "# texts/files", "# words", "mean # words per text", "SD", "mean TTR"))
+TxBzlogcounts <- readRDS(here("data", "processed", "TxBzlogcounts.rds")) 
+# nrow(TxBzlogcounts)
+# colnames(TxBzlogcounts)
+
+TxBdata <- cbind(TxBcounts[,1:6], as.data.frame(TxBzlogcounts))
+# str(TxBdata)
 
 ```
 
-## Data preparation for PCA
+First, the TEC data as processed in Appendix D is imported. It comprises `{r} nrow(TxBdata)  |> format(big.mark=",")` texts/files, each with logged standardised normalised frequencies for `{r} ncol(TxBdata)-6` linguistic features.
 
-### Feature distributions
-
-The distributions of each linguistic features were examined by means of visualisation. As shown below, before transformation, many of the features displayed highly skewed distributions.
-
-```{r}
-#| label: distribution-viz
-#| code-fold: true
-#| fig-height: 40
-
-#ncounts <- readRDS(here("data", "processed", "counts3Reg.rds"))
-
-ncounts |>
-  select(-Words) |> 
-  keep(is.numeric) |> 
-  gather() |> # This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet_wrap function from ggplot2
-  ggplot(aes(value, after_stat(density))) +
-    theme_bw() +
-    facet_wrap(~ key, scales = "free", ncol = 4) +
-    scale_x_continuous(expand=c(0,0)) +
-    scale_y_continuous(limits = c(0,NA)) +
-    geom_histogram(bins = 30, colour= "black", fill = "grey") +
-    geom_density(colour = "darkred", weight = 2, fill="darkred", alpha = .4)
-
-#ggsave(here("plots", "DensityPlotsAllVariables.svg"), width = 15, height = 49)
-
-```
-
-### Feature removal
-
-A number of features were removed from the dataset as they are not linguistically interpretable. In the case of the TEC, this included the variable CD because numbers spelt out as digits were removed from the textbooks before these were tagged with the MFTE. In addition, the variables LIKE and SO because these are "bin" features included in the output of the MFTE to ensure that the counts for these polysemous words do not inflate other categories due to mistags [@lefoll2021a].
-
-Whenever linguistically meaningful, very low-frequency features, features with low MSA or communalities (see chunks below) were merged. Finally, features absent from more than third of texts were also excluded. For the comparative analysis of TEC and the reference corpora, the following linguistic features were excluded from the analysis due to low dispersion:
-
-```{r}
-#| label: feature-removal
-#| code-fold: true
-
-# Removal of meaningless feature: CD because numbers as digits were mostly removed from the textbooks, LIKE and SO because they are dustbin categories
-ncounts <- ncounts |> 
-  select(-c(CD, LIKE, SO))
-
-# Combine problematic features into meaningful groups whenever this makes linguistic sense
-ncounts <- ncounts |> 
-  mutate(JJPR = JJPR + ABLE, ABLE = NULL) |> 
-  mutate(PASS = PGET + PASS, PGET = NULL) |> 
-  mutate(TPP3 = TPP3S + TPP3P, TPP3P = NULL, TPP3S = NULL) |> # Merged due to TTP3P having an individual MSA < 0.5
-  mutate(FQTI = FREQ + TIME, FREQ = NULL, TIME = NULL) # Merged due to TIME communality < 0.2 (see below)
-
-# Function to compute percentage of texts with occurrences meeting a condition
-compute_percentage <- function(data, condition, threshold) {
-  numeric_data <- Filter(is.numeric, data)
-  percentage <- round(colSums(condition[, sapply(numeric_data, is.numeric)])/nrow(data) * 100, 2)
-  percentage <- as.data.frame(percentage)
-  colnames(percentage) <- "Percentage"
-  percentage <- percentage |> 
-    filter(!is.na(Percentage)) |>
-    rownames_to_column() |>
-    arrange(Percentage)
-  if (!missing(threshold)) {
-    percentage <- percentage |> 
-      filter(Percentage > threshold)
-  }
-  return(percentage)
-}
-
-# Calculate percentage of texts with 0 occurrences of each feature
-zero_features <- compute_percentage(ncounts, ncounts == 0, 66.6)
-zero_features |> 
-  kable(col.names = c("Feature", "% texts with zero occurrences"))
-
-# Drop variables with low document frequency
-ncounts2 <- select(ncounts, -one_of(zero_features$rowname))
-
-```
-
-These feature removal operations resulted in a feature set of `{r} ncol(ncounts2)-8` linguistic variables.
-
-### Identifying outlier texts
-
-All normalised frequencies were normalised to identify any potential outlier texts.
-
-```{r}
-#| label: z-standardisation-outliers
-#| fig-width: 15
-#| fig-height: 10
-
-# First scale the normalised counts (z-standardisation) to be able to compare the various features
-zcounts <- ncounts2 |>
-  select(-Words) |> 
-  keep(is.numeric) |> 
-  scale()
-
-# If necessary, remove any outliers at this stage.
-data <- cbind(ncounts2[,1:8], as.data.frame(zcounts))
-outliers <- data |> 
- filter(if_any(where(is.numeric) & !Words,  .fns = function(x){x > 8}))  |>
-  select(Filename, Corpus, Register, Words) 
-```
-
-The following outlier texts were identified according to the above conditions and excluded in subsequent analyses.
-
-```{r}
-#| label: list-outliers
-#| code-fold: true
-
-# These are potential outlier texts :
-outliers |> 
-  kable(col.names = c("Filename", "Corpus", "Register", "# words"))
-```
-
-We check that that outlier texts are not particularly long or short texts by looking at the distribution of text/file length of the outliers.
-
-```{r}
-#| code-fold: true
-
-summary(outliers$Words)
-
-hist(outliers$Words, breaks = 30)
-```
-
-We also check the distribution of outlier texts across the four corpora. The majority come from the Info Teens corpus, though quite a few are also from the TEC.
-
-```{r}
-#| code-fold: true
-
-summary(outliers$Corpus) |> 
-  kable(col.names = c("(Sub)corpus", "# outlier texts"))
-
-# Report on the manual check of a sample of these outliers:
-
-# Encyclopedia_Kinds_au_10085347_Nobel_Prize_in_Chemistry.txt is essentially a list of Nobel prize winners but with some additional information. In other words, not a bad representative of the type of texts of the Info Teen corpus.
-# Solutions_Elementary_ELF_Spoken_0013 --> Has a lot of "going to" constructions because they are learnt in this chapter but is otherwise a well-formed text.
-# Teen_Kids_News_10403972_a-brief-history-of-white-house-weddings --> No issues
-# Teen_Kids_News_10403301_golden-globe-winners-2019-the-complete-list --> Similar to the Nobel prize laureates text.
-# Revision_World_GCSE_10528123_gender-written-textual-analysis-framework --> Text includes bullet points tokenised as the letter "o" but otherwise a fairly typical informative text.
-
-# Removing the outliers at the request of the reviewers (but comparisons of models including the outliers showed that the results are very similar):
-ncounts3 <- ncounts2 |> 
-  filter(!Filename %in% outliers$Filename)
-
-#saveRDS(ncounts3, here("data", "processed", "ncounts3_3Reg.rds")) # Last saved 6 March 2024
-
-```
-
-This resulted in `{r} nrow(ncounts3) |> format(big.mark=",")` texts/files being included in the comparative model of Textbook English vs. 'real-world' English. These standardised feature frequencies were distributed as follows:
-
-```{r}
-#| label: z-transformed-distributions
-#| fig-width: 15
-#| fig-height: 10
-#| code-fold: true
-
-zcounts3 <- ncounts3 |>
-  select(-Words) |> 
-  keep(is.numeric) |> 
-  scale()
-
-boxplot(zcounts3, las = 3, main = "z-scores") # Slow
-
-```
-
-### Signed log transformation
-
-A signed logarithmic transformation was applied to (further) deskew the feature distributions [see @diwersy2014; @neumann2021].
-
-The signed log transformation function was inspired by the SignedLog function proposed in <https://cran.r-project.org/web/packages/DataVisualizations/DataVisualizations.pdf>.
-
-```{r}
-#| label: signed.log.transformation
-
-signed.log <- function(x) {sign(x)*log(abs(x)+1)}
-
-# Standardise first, then sign log transform
-zlogcounts <- signed.log(zcounts3) 
-
-```
-
-```{r}
-#| echo: false
-
-#saveRDS(zlogcounts, here("data", "processed", "zlogcounts_3Reg.rds")) # Last saved 16 March 2024
-
-```
-
-The new feature distributions are visualised below.
-
-```{r}
-#| label: signed.log.transformation-distributions
-#| fig-height: 40
-#| code-fold: true
-
-zlogcounts |>
-  as.data.frame() |> 
-  gather() |> # This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet_wrap function from ggplot2
-  ggplot(aes(value, after_stat(density))) +
-  theme_bw() +
-  facet_wrap(~ key, scales = "free", ncol = 4) +
-  scale_x_continuous(expand=c(0,0)) +
-  scale_y_continuous(limits = c(0,NA)) +
-  geom_histogram(bins = 30, colour= "black", fill = "grey") +
-  geom_density(colour = "darkred", weight = 2, fill="darkred", alpha = .4)
-
-#ggsave(here("plots", "DensityPlotsAllVariablesSignedLog.svg"), width = 15, height = 49)
-
-```
-
-### Merging of data for MDA
-
-```{r}
-#| code-fold: true
-
-zlogcounts <- readRDS(here("data", "processed", "zlogcounts_3Reg.rds")) 
-#nrow(zlogcounts)
-#colnames(zlogcounts)
-
-ncounts3 <- readRDS(here("data", "processed", "ncounts3_3Reg.rds"))
-#nrow(ncounts3)
-#colnames(ncounts3)
-
-data <- cbind(ncounts3[,1:8], as.data.frame(zlogcounts))
-#saveRDS(data, here("data", "processed", "datazlogcounts_3Reg.rds")) # Last saved 16 March 2024
-
-```
-
-The final dataset comprises of `{r} nrow(data) |> format(big.mark=",")` texts/files, divided as follows:
-
-```{r}
-#| echo: false
-
-summary(data$Subcorpus) |> 
-  kable(col.names = c("(Sub)corpus", "# texts/files"))
-
-```
-
-```{r prepare-data}
-#| echo: false
-
-# Quick import
-#data <- readRDS(here("data", "processed", "datazlogcounts_3Reg.rds"))
-
-# This rearranges the levels in the desired order for the plot legends:
-data <- data |> 
-  mutate(Subcorpus = fct_relevel(Subcorpus, "Info Teens Ref.", after = 9))
-
-```
-
-## Testing factorability of data
-
-### Visualisation of feature correlations
-
-We begin by visualising the correlations of the transformed feature frequencies using the `heatmap` function of the `stats` library. Negative correlations are rendered in blue; positive ones are in red.
-
-```{r heatmap}
-#| code-fold: true
-#| fig-width: 15
-
-# Simple heatmap in base R (inspired by Stephanie Evert's SIGIL code)
-cor.colours <- c(
-  hsv(h=2/3, v=1, s=(10:1)/10), # blue = negative correlation 
-  rgb(1,1,1), # white = no correlation 
-  hsv(h=0, v=1, s=(1:10/10))) # red = positive correlation
-
-#png(here("plots", "heatmapzlogcounts.png"), width = 30, height= 30, units = "cm", res = 300)
-heatmap(cor(zlogcounts), 
-        symm=TRUE, 
-        zlim=c(-1,1), 
-        col=cor.colours, 
-        margins=c(7,7))
-
-#dev.off()
-```
-
-### Collinearity
-
-As a result of the normalisation unit of finite verb phrases for verb-based features, the present tense (VPRT) and past tense (VBD) variables are correlated to a very high degree:
-
-```{r collinear}
-cor(data$VPRT, data$VBD) |> round(2)
-```
-
-We therefore remove the least marked of the pair of collinear variables: VPRT.
-
-```{r collinear2}
-data <- data |> 
-  select(-c(VPRT))
-```
-
-### MSA
+## Checking the factorability of data
 
 ```{r factorability.TEC}
 
-kmo <- KMO(data[,9:ncol(data)]) # The first eight columns contain metadata.
+kmo <- KMO(TxBdata[,7:ncol(TxBdata)]) 
 
 ```
 
 The overall MSA value of the dataset is `{r} kmo$MSA |> round(2)`. The features have the following individual MSA values (ordered from lowest to largest):
 
 ```{r}
-#| code-fold: true
-
 kmo$MSAi[order(kmo$MSAi)] |>  round(2)
 ```
 
-We aim to remove features with an individual MSA \< 0.5. All features have individual MSAs of \> 0.5 (but only because TPP3P was merged into a broader category in an earlier chunk).
+### Removal of feature with MSAs of \< 0.5
 
-### Scree plot
-
-Six components were originally retained on the basis of the following screeplot, though only the first four were found to be interpretable and were therefore included in the model.
+We first remove the first feature with an individual MSA \< 0.5, then check the MSA values again and continue removing features one by one if necessary.
 
 ```{r}
-#| code-fold: true
+TxBdata <- TxBdata |> 
+  select(-c(MDWO))
 
-# png(here("plots", "screeplot-TEC-Ref_3Reg.png"), width = 20, height= 12, units = "cm", res = 300)
-scree(data[,9:ncol(data)], factors = FALSE, pc = TRUE) # 
-# dev.off()
+kmo2 <- KMO(TxBdata[,7:ncol(TxBdata)]) 
 
-# Perform PCA
-pca1 <- psych::principal(data[9:ncol(data)], 
-                         nfactors = 6)
 ```
 
-### Communalities
+The overall MSA value of the dataset is now `{r} kmo2$MSA |> round(2)`. None of the remaining features have individual MSA values below 0.5:
 
-If features with final communalities of \< 0.2 are removed, TIME would have to be removed. TIME was therefore merged with FREQ in an earlier chunk so that now all features have final communalities of \> 0.2 (note that this is a very generous threshold!).
+```{r}
+kmo2$MSAi[order(kmo2$MSAi)] |>  round(2)
+```
 
-```{r communalities}
+### Choosing the number of principal components to retain
+
+On the basis of this scree plot, six principal components were initially retained.
+
+```{r}
+#| label: screeplot
 #| code-fold: true
+
+# Plot screen plot
+#png(here("plots", "screeplot-TEC-only.png"), width = 20, height= 12, units = "cm", res = 300)
+scree(TxBdata[,7:ncol(TxBdata)], factors = FALSE, pc = TRUE) # Retain six components
+#dev.off()
+
+# Perform PCA
+pca1 <- psych::principal(TxBdata[,7:ncol(TxBdata)], 
+                         nfactors = 6,
+                         rotate = "none")
+#pca1$loadings
+
+```
+
+### Excluding features with low final communalites
+
+We first check whether some feature have extremely low communalities (see [https://rdrr.io/cran/FactorAssumptions/man/communalities_optimal_solution.html](https://rdrr.io/cran/FactorAssumptions/man/communalities_optimal_solution.htmlhttps://rdrr.io/cran/FactorAssumptions/man/communalities_optimal_solution.html)).
+
+```{r}
+#| echo: false
 
 pca1$communality |> sort() |> round(2)
 
-#saveRDS(data, here("data", "processed", "dataforPCA.rds")) # Last saved on 6 March 2024
+```
+
+As we chose to exclude features with communalities of \< 0.2, we remove STPR, HDG, MDNE and CAUSE from the dataset to be analysed.
+
+```{r}
+TxBdataforPCA <- TxBdata |> 
+  select(-c(STPR, MDNE, HDG, CAUSE))
+```
+
+```{r}
+#| echo: false
+#saveRDS(TxBdataforPCA, here("data", "processed", "TxBdataforPCA.rds")) # Last saved on 6 March 2024
+
+kmo3 <- KMO(TxBdataforPCA[,7:ncol(TxBdataforPCA)]) 
 
 ```
 
-The final dataset entered in the analysis described in Chapter 7 therefore comprises `{r} nrow(data)  |> format(big.mark=",")` texts/files, each with logged standardised normalised frequencies for `{r} ncol(data)-8` linguistic features.
+The overall MSA value of the dataset is now `{r} kmo3$MSA |> round(2)`. None of the remaining features have individual MSA values below 0.5:
+
+```{r}
+
+kmo3$MSAi[order(kmo3$MSAi)] |>round(2)
+
+```
+
+The final number of linguistic features entered in the intra-textbook model of linguistic variation is `{r} ncol(TxBdataforPCA)-6`.
+
+## Testing the effect of rotating the components
+
+This chunk was used when considering whether or not to rotate the components (see methods section). Ultimately, the components were not rotated.
+
+```{r}
+#| label: PCA-rotation-tests
+#| eval: false
+
+# Comparing a rotated vs. a non-rotated solution
+
+#TxBdata <- readRDS(here("data", "processed", "TxBdataforPCA.rds"))
+
+# No rotation
+pca2 <- psych::principal(TxBdata[,7:ncol(TxBdata)], 
+                         nfactors = 6, 
+                         rotate = "none")
+
+pca2$loadings
+
+biplot.psych(pca2, 
+             vars = TRUE, 
+             choose=c(1,2),
+             )
+
+# Promax rotation
+pca2.rotated <- psych::principal(TxBdata[,7:ncol(TxBdata)], 
+                         nfactors = 6, 
+                         rotate = "promax")
+
+# This summary shows the component correlations which is particularly interesting
+pca2.rotated
+
+pca2.rotated$loadings
+
+biplot.psych(pca2.rotated, vars = TRUE, choose=c(1,2))
+
+```
+
+## Principal Component Analysis (PCA)
+
+### Using the full dataset
+
+Except outliers removed as part of the data preparation (see Appendix D).
+
+```{r PCA-prcomp-full-data}
+# Perform PCA on full data
+TxBdata <- readRDS(here("data", "processed", "TxBdataforPCA.rds"))
+```
+
+### Using random subsets of the data
+
+Alternatively, it is possible to conduct the PCA on random subsets of the data to test the stability of the solution. Re-running this line will generate a new subset of the TEC texts containing 2/3 of the texts randomly sampled.
+
+```{r PCA-prcomp-random-subset, eval=FALSE}
+
+TxBdata <- readRDS(here("data", "processed", "TxBdataforPCA.rds")) |>
+  slice_sample(n = round(1961*0.6), replace = FALSE)
+
+nrow(TxBdata)
+TxBdata$Filename[1:10]
+nrow(TxBdata) / (ncol(TxBdata)-6) # Check that there is enough data to conduct a PCA. This ratio should be at least 5 (see Friginal & Hardy 2014: 303–304).
+```
+
+### Using specific subsets of the data
+
+The following chunk can be used to perform the PCA on a country subset of the data to test the stability of the solution. See [@lefoll] for a detailed analysis of the subcorpus of textbooks used in Germany.
+
+```{r PCA-prcomp-country-subset, eval=FALSE}
+
+TxBdata <- readRDS(here("data", "processed", "TxBdataforPCA.rds")) |>
+  #filter(Country == "France")
+  #filter(Country == "Germany")
+  filter(Country == "Spain")
+
+nrow(TxBdata)
+TxBdata$Filename[1:10] # Check data
+nrow(TxBdata) / (ncol(TxBdata)-6) # Check that there is enough data to conduct a PCA. This should be > 5 (see Friginal & Hardy 2014: 303–304).
+
+```
+
+### Performing the PCA
+
+We perform the PCA using the `prcomp` function and print a summary of the results.
+
+```{r PCA-prcomp}
+#| code-fold: true
+pca <- prcomp(TxBdata[,7:ncol(TxBdata)], scale.=FALSE, rank. = 6) # All quantitative variables for all TxB files except outliers
+register  <- factor(TxBdata[,"Register"]) # Register
+level <- factor(TxBdata[,"Level"]) # Textbook proficiency level
+
+# summary(register)
+# summary(level)
+summary(pca)
+
+```
+
+## Plotting PCA results
+
+### 3D plots
+
+The following chunk can be used to create projections of TEC texts on three dimensions of the model. These plots cannot be rendered in two dimensions and are therefore not generated in the present document. For more information on the `pca3d` library, see: <https://cran.r-project.org/web/packages/pca3d/vignettes/pca3d.pdf>.
+
+```{r 3D-plots-TxB, eval=FALSE}
+
+library(pca3d) # For 3-D plots
+
+col <- palette[c(1:3,8,7)] # without poetry
+names(col) <- c("Conversation", "Fiction", "Informative", "Instructional", "Personal")
+scales::show_col(col) # Check colours
+
+pca3d(pca, 
+      group = register,
+      components = 1:3,
+      #components = 4:6,
+      show.ellipses=FALSE, 
+      ellipse.ci=0.75,
+      show.plane=FALSE,
+      col = col,
+      shape = "sphere",
+      radius = 1,
+      legend = "right")
+
+snapshotPCA3d(here("plots", "PCA_TxB_3Dsnapshot.png"))
+
+names(col) <- c("C", "B", "E", "A", "D") # To colour the dots according to the profiency level of the textbooks
+pca3d(pca, 
+      components = 4:6,
+      group = level,
+      show.ellipses=FALSE, 
+      ellipse.ci=0.75,
+      show.plane=FALSE,
+      col = col,
+      shape = "sphere",
+      radius = 0.8,
+      legend = "right")
+
+```
+
+## Two-dimensional plots (biplots)
+
+These plots were generated using the `PCAtools` package, which requires the data to be formatted in a rather unconventional way so it needs to wrangled first.
+
+### Data wrangling for PCAtools
+
+```{r PCAtools-biplots}
+#| code-fold: true
+
+#TxBdata <- readRDS(here("data", "processed", "TxBdataforPCA.rds"))
+
+TxBdata2meta <- TxBdata[,1:6]
+rownames(TxBdata2meta) <- TxBdata2meta$Filename
+TxBdata2meta <- TxBdata2meta |> select(-Filename)
+#head(TxBdata2meta)
+
+TxBdata2 = TxBdata
+rownames(TxBdata2) <- TxBdata2$Filename
+TxBdata2num <- as.data.frame(base::t(TxBdata2[,7:ncol(TxBdata2)]))
+#TxBdata2num[1:12,1:3] # Check sanity of data
+
+p <- PCAtools::pca(TxBdata2num, 
+         metadata = TxBdata2meta,
+         scale = FALSE)
+
+```
+
+### Pairs plot
+
+We first produce a scatterplot matrix of all the combinations of the first six dimensions of the model of intra-textbook variation. Note that the number before the comma on each axis label shows which principal component is plotted on that axis; this is followed by the percentage of the total variance explained by that particular component. The colours correspond to the text registers.
+
+```{r}
+#| code-fold: true
+#| label: PCAtools-pairsplots-TxB
+#| fig-height: 12
+#| fig-width: 10
+
+## Colour and shape scheme for all biplots
+colkey = c(Conversation="#BD241E", Fiction="#A18A33", Informative="#15274D", Instructional="#F9B921", Personal="#722672")
+shapekey = c(A=1, B=2, C=6, D=0, E=5)
+
+## Very slow, open in zoomed out window!
+# Add legend manually? Yes (take it from the biplot code below), sadly really the simplest solution, here. Or use Evert's mvar.pairs plot function (though that also requires manual axis annotation).
+
+# png(here("plots", "PCA_TxB_pairsplot.png"), width = 12, height= 19, units = "cm", res = 300)
+PCAtools::pairsplot(p,
+                 triangle = FALSE,
+                 components = 1:6,
+                 ncol = 3,
+                 nrow = 5,
+                 pointSize = 0.8,
+                 lab = NULL, # Otherwise will try to label each data point!
+                 colby = "Register",
+                 colkey = colkey,
+                 shape = "Level",
+                 shapekey = shapekey,
+                 margingaps = unit(c(0.2, 0.2, 0.2, 0.2), "cm"),
+                 legendPosition = "none")
+```
+
+```{r}
+#| include: false
+# dev.off()
+# ggsave(here("plots", "PCA_TxB_pairsplot.svg"), width = 6, height = 10)
+
+```
+
+### Bi-plots
+
+Then, biplots of the most important dimensions are generated to examine components more carefully.
+
+```{r}
+#| code-fold: true
+#| label: PCAtools-biplots-TxB
+#| fig-height: 10
+#| fig-width: 13
+
+colkey = c(Conversation="#BD241E", Fiction="#A18A33", Informative="#15274D", Instructional="#F9B921", Personal="#722672")
+shapekey = c(A=1, B=2, C=6, D=0, E=5)
+
+#png(here("plots", "PCA_TxB_Biplot_PC1_PC2.png"), width = 40, height= 25, units = "cm", res = 300)
+PCAtools::biplot(p,
+                 x = "PC1",
+                 y = "PC2",
+                 lab = NULL, # Otherwise will try to label each data point!
+                 #xlim = c(min(p$rotated$PC1)-0.5, max(p$rotated$PC1)+0.5),
+                 #ylim = c(min(p$rotated$PC2)-0.5, max(p$rotated$PC2)+0.5),
+                 colby = "Register",
+                 pointSize = 2,
+                 colkey = colkey,
+                 shape = "Level",
+                 shapekey = shapekey,
+                 showLoadings = FALSE,
+                 ellipse = TRUE,
+                 axisLabSize = 22,
+                 legendPosition = 'right',
+                 legendTitleSize = 22,
+                 legendLabSize = 18, 
+                 legendIconSize = 7) +
+  theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
+#dev.off()
+#ggsave(here("plots", "PCA_TxB_BiplotPC1_PC2.svg"), width = 12, height = 10)
+```
+
+
+```{r}
+#| eval: false
+#| echo: false
+###
+library(plotly)
+
+plot <- PCAtools::biplot(p,
+                 x = "PC1",
+                 y = "PC2",
+                 lab = NULL, # Otherwise will try to label each data point!
+                 colby = "Register",
+                 pointSize = 2,
+                 colkey = colkey,
+                 shape = "Level",
+                 shapekey = shapekey,
+                 showLoadings = FALSE,
+                 ellipse = TRUE,
+                 axisLabSize = 22,
+                 legendPosition = 'right',
+                 legendTitleSize = 22,
+                 legendLabSize = 18, 
+                 legendIconSize = 7) +
+  theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
+
+ggplotly(plot) # tooltip
+
+###
+```
+
+
+```{r}
+#| code-fold: true
+#| label: PCAtools-biplots-TxB2
+#| fig-height: 10
+#| fig-width: 13
+
+# Biplots to examine components more carefully
+pRegisters <- PCAtools::biplot(p,
+                 x = "PC3",
+                 y = "PC4",
+                 lab = NULL, # Otherwise will try to label each data point!
+                 colby = "Register",
+                 pointSize = 2,
+                 colkey = colkey,
+                 shape = "Level",
+                 shapekey = shapekey,
+                 showLoadings = FALSE,
+                 ellipse = TRUE,
+                 legendPosition = 'right',
+                 legendTitleSize = 22,
+                 legendLabSize = 18, 
+                 legendIconSize = 7) +
+  theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
+
+#ggsave(here("plots", "PCA_TxB_BiplotPC3_PC4.svg"), width = 12, height = 10)
+
+# Biplots to examine components more carefully
+pRegisters2 <- PCAtools::biplot(p,
+                 x = "PC5",
+                 y = "PC6",
+                 lab = NULL, # Otherwise will try to label each data point!
+                 colby = "Register",
+                 pointSize = 2,
+                 colkey = colkey,
+                 shape = "Level",
+                 shapekey = shapekey,
+                 showLoadings = FALSE,
+                 ellipse = TRUE,
+                 legendPosition = 'right',
+                 legendTitleSize = 22,
+                 legendLabSize = 18, 
+                 legendIconSize = 7) +
+  theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
+
+#ggsave(here("plots", "PCA_TxB_BiplotPC5_PC6.svg"), width = 12, height = 10)
+
+```
+
+Changing the colour of the points and the ellipses to represent the texts' target proficiency levels instead of the register allows for a different interpretation of the model.
+
+```{r}
+#| code-fold: true
+#| label: PCAtools-biplots-TxB-Levels
+#| fig-height: 10
+#| fig-width: 13
+
+# Inverted keys for the biplots with ellipses for Level rather than Register
+colkeyLevels = c(A="#F9B921", B="#A18A33", C="#BD241E", D="#722672", E="#15274D")
+shapekeyLevels = c(Conversation=1, Fiction=2, Informative=6, Instructional=0, Personal=5)
+
+pLevels <- PCAtools::biplot(p,
+                 x = "PC3",
+                 y = "PC4",
+                 lab = NULL, # Otherwise will try to label each data point!
+                 #xlim = c(min(p$rotated$PC1)-0.5, max(p$rotated$PC1)+0.5),
+                 #ylim = c(min(p$rotated$PC2)-0.5, max(p$rotated$PC2)+0.5),
+                 colby = "Level",
+                 pointSize = 2,
+                 colkey = colkeyLevels,
+                 shape = "Register",
+                 shapekey = shapekeyLevels,
+                 showLoadings = FALSE,
+                 ellipse = TRUE,
+                 legendPosition = 'right',
+                 legendTitleSize = 22,
+                 legendLabSize = 18, 
+                 legendIconSize = 7) +
+  theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
+#ggsave(here("plots", "PCA_TxB_BiplotPC3_PC4_Level.svg"), width = 12, height = 10)
+
+pLevels2 <- PCAtools::biplot(p,
+                 x = "PC5",
+                 y = "PC6",
+                 lab = NULL, # Otherwise will try to label each data point!
+                 #xlim = c(min(p$rotated$PC1)-0.5, max(p$rotated$PC1)+0.5),
+                 #ylim = c(min(p$rotated$PC2)-0.5, max(p$rotated$PC2)+0.5),
+                 colby = "Level",
+                 pointSize = 2,
+                 colkey = colkeyLevels,
+                 shape = "Register",
+                 shapekey = shapekeyLevels,
+                 showLoadings = FALSE,
+                 ellipse = TRUE,
+                 legendPosition = 'right',
+                 legendTitleSize = 22,
+                 legendLabSize = 18, 
+                 legendIconSize = 7) +
+  theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
+#ggsave(here("plots", "PCA_TxB_BiplotPC5_PC6_Level.svg"), width = 12, height = 10)
+
+
+# Display and save the two different representations of data points on PC2 and PC3 using the {patchwork} package
+pRegisters / pLevels
+#ggsave(here("plots", "PCA_TxB_BiplotPC3_PC4_Register_vs_Level.svg"), width = 14, height = 20)
+
+# Display and save the two different representations of data points on PC5 and PC6 using the {patchwork} package 
+pRegisters2 / pLevels2
+#ggsave(here("plots", "PCA_TxB_BiplotPC5_PC6_Register_vs_Level.svg"), width = 14, height = 20)
+
+```
+
+## Feature contributions (loadings) on each component
+
+```{r}
+#| code-fold: true
+#| label: loadings
+
+#TxBdata <- readRDS(here("data", "processed", "TxBdataforPCA.rds"))
+
+pca <- prcomp(TxBdata[,7:ncol(TxBdata)], scale.=FALSE) # All quantitative variables for all TEC files
+
+# The rotated data that represents the observations / samples is stored in rotated, while the variable loadings are stored in loadings
+loadings <- as.data.frame(pca$rotation[,1:4])
+loadings |> 
+  round(2) |> 
+  kable()
+```
+
+We can go back to the normalised frequencies of the individual features to compare them across different registers and levels, e.g.:
+
+```{r}
+#| label: comparisons
+
+TxBcounts |> 
+  group_by(Register, Level) |> 
+  summarise(median(NCOMP), MAD(NCOMP)) |> 
+  select(1:4) |> 
+  kable(digits=2)
+
+```
+
+Graphs of features display the features with the strongest contributions to any two dimensions of the model of intra-textbook variation. They are created using the `factoextra::fviz_pca_var` function.
+
+```{r graphs-of-variables}
+#| code-fold: true
+
+factoextra::fviz_pca_var(pca,
+             axes = c(1,2),
+             select.var = list(cos2 = 0.1),
+             col.var = "contrib", # Colour by contributions to the PC
+             gradient.cols = c("#F9B921", "#DB241E", "#722672"),
+             title = "",
+             repel = TRUE, # Try to avoid too much text overlapping
+             ggtheme = ggthemes::theme_few())
+#ggsave(here("plots", "fviz_pca_var_PC1_PC2.svg"), width = 11, height = 9)
+
+factoextra::fviz_pca_var(pca,
+             axes = c(3,2),
+             select.var = list(contrib = 30),
+             col.var = "contrib", # Colour by contributions to the PC
+             gradient.cols = c("#F9B921", "#DB241E", "#722672"),
+             title = "",
+             repel = TRUE, # Try to avoid too much text overlapping
+             ggtheme = ggthemes::theme_few())
+#ggsave(here("plots", "fviz_pca_var_PC3_PC2.svg"), width = 9, height = 8)
+
+factoextra::fviz_pca_var(pca,
+             axes = c(3,4),
+             select.var = list(contrib = 30),
+             col.var = "contrib", # Colour by contributions to the PC
+             gradient.cols = c("#F9B921", "#DB241E", "#722672"),
+             title = "",
+             repel = TRUE, # Try to avoid too much text overlapping
+             ggtheme = ggthemes::theme_few())
+#ggsave(here("plots", "fviz_pca_var_PC3_PC4.svg"), width = 9, height = 8)
+
+```
+
+## Exploring the dimensions of the model
+
+We begin with some descriptive statistics of the dimension scores.
+
+```{r PCA-numerical-results}
+#| code-fold: true
+
+# http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/118-principal-component-analysis-in-r-prcomp-vs-princomp/#pca-results-for-variables
+
+#TxBdata <- readRDS(here("data", "processed", "TxBdataforPCA.rds"))
+
+pca <- prcomp(TxBdata[,7:ncol(TxBdata)], scale.=FALSE) # All quantitative variables for all TxB files
+register  <- factor(TxBdata[,"Register"]) # Register
+level <- factor(TxBdata[,"Level"]) # Textbook proficiency level
+
+# summary(register)
+# summary(level)
+# summary(pca)
+
+## Access to the PCA results for individual PC
+#pca$rotation[,1]
+
+res.ind <- cbind(TxBdata[,1:5], as.data.frame(pca$x)[,1:6])
+
+res.ind |> 
+  group_by(Register) |> 
+  summarise_if(is.numeric, mean) |> 
+  kable(digits = 2)
+
+res.ind |> 
+  group_by(Register, Level) |> 
+  summarise_if(is.numeric, mean) |> 
+  kable(digits = 2)
+
+```
+
+The following chunk can be used to search for example texts that are located in specific areas of the biplots. For example, we can search for texts that have high scores on Dim3 and low ones on Dim2 to proceed with a qualitative comparison and analysis of these texts.
+
+```{r}
+#| label: example-texts
+
+res.ind |> 
+  filter(PC3 > 2.5 & PC2 < -2) |> 
+  select(Filename, PC2, PC3) |> 
+  kable(digits = 2)
+
+```
+
+## Computing mixed-effects models of the dimension scores
+
+### Dimension 1: ‘Overt instructions and explanations’
+
+Having compared various models, the following model is chosen as the best-fitting one.
+
+```{r lmer-models-dim1}
+# Models with Textbook series as random intercepts
+md1 <- lmer(PC1 ~ Register*Level + (1|Series), data = res.ind, REML = FALSE)
+md1Register <- lmer(PC1 ~ Register + (1|Series), data = res.ind, REML = FALSE)
+md1Level <- lmer(PC1 ~ Level + (1|Series), data = res.ind, REML = FALSE)
+
+anova(md1, md1Register, md1Level)
+
+tab_model(md1, wrap.labels = 300) # Marginal R2 = 0.890
+```
+
+```{r}
+#| include: false
+
+# tab_model(md1Register) # Marginal R2 = 0.877
+# tab_model(md1Level) # Marginal R2 = 0.002
+
+# Tweak plot aesthetics with: https://cran.r-project.org/web/packages/sjPlot/vignettes/custplot.html
+# Colour customisation trick from: https://stackoverflow.com/questions/55598920/different-line-colors-in-forest-plot-output-from-sjplot-r-package
+```
+
+Its estimated coefficients are visualised in the plot below.
+
+```{r}
+#| label: Dim1fixed
+#| code-fold: true
+
+# Plot of fixed effects:
+plot_model(md1Register, 
+           type = "est",
+           show.intercept = TRUE,
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           colors = palette[c(1:3,8,7)],
+           group.terms = c(1:5), 
+           title = "",
+           wrap.labels = 40,
+           axis.title = "PC1 estimated coefficients") +
+  theme_sjplot2() 
+
+#ggsave(here("plots", "TxB_PCA1_lmer_fixedeffects_Register.svg"), height = 3, width = 8)
+```
+
+The `emmeans` and `pairs` functions are used to compare the estimated Dim1 scores for each register and to compare these to one another.
+
+```{r}
+#| label: Dim1comparisons
+#| code-fold: true
+
+Register_results <- emmeans(md1Register, "Register")
+summary(Register_results)
+
+comparisons <- pairs(Register_results, adjust = "tukey")
+comparisons
+#write_last_clip()
+confint(comparisons)
+#write_last_clip()
+```
+
+We can also visualise the estimated coefficients for the textbook series, which is modelled here as a random effect.
+
+```{r}
+#| label: Dim1random
+#| code-fold: true
+
+plot_model(md1, 
+           type = "re", # Option to visualise random effects
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           colors = "bw",
+           wrap.labels = 40,
+           axis.title = "PC1 estimated coefficients") +
+  theme_sjplot2()
+#ggsave(here("plots", "TxB_PCA1_lmer_randomeffects.svg"), height = 3, width = 8)
+
+```
+
+### Dimension 2: ‘Involved vs. Informational Production’
+
+```{r}
+#| label: Dim2model
+#| code-fold: true
+
+md2 <- lmer(PC2 ~ Register*Level + (1|Series), data = res.ind, REML = FALSE)
+md2Register <- lmer(PC2 ~ Register + (1|Series), data = res.ind, REML = FALSE)
+md2Level <- lmer(PC2 ~ Level + (1|Series), data = res.ind, REML = FALSE)
+anova(md2, md2Register, md2Level)
+
+tab_model(md2) # Marginal R2 = 0.723
+# tab_model(md2Register) # Marginal R2 = 0.558
+# tab_model(md2Level) # Marginal R2 = 0.228
+```
+
+Estimated coefficients of fixed effects on Dim2 scores:
+
+```{r}
+#| label: Dim2fixed
+#| code-fold: true
+#| fig-height: 10
+
+plot_model(md2, 
+           type = "est",
+           show.intercept = TRUE,
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           colors = palette[c(1:3,8,7)],
+           group.terms = c(1:5,1,1,1,1,2:5,2:5,2:5,2:5), 
+           title = "",
+           wrap.labels = 40,
+           axis.title = "PC2 estimated coefficients") +
+  theme_sjplot2() 
+
+#ggsave(here("plots", "TxB_PCA2_lmer_fixedeffects.svg"), height = 8, width = 8)
+```
+
+Estimated coefficients of random effects on Dim2 scores:
+
+```{r}
+#| label: Dim2random
+#| code-fold: true
+
+## Random intercepts
+plot_model(md2, 
+           type = "re", # Option to visualise random effects
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           colors = "bw",
+           wrap.labels = 40,
+           axis.title = "PC2 estimated coefficients") +
+  theme_sjplot2()
+#ggsave(here("plots", "TxB_PCA2_lmer_randomeffects.svg"), height = 3, width = 8)
+
+# Textbook Country as a random effect variable
+md2country <- lmer(PC2 ~ Register*Level + (1|Country), data = res.ind, REML = FALSE)
+
+plot_model(md2country, 
+           type = "re", # Option to visualise random effects
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           colors = "bw",
+           wrap.labels = 40,
+           axis.title = "PC2 estimated coefficients") +
+  theme_sjplot2()
+#ggsave(here("plots", "TxB_PCA2_lmer_randomeffects_country.svg"), height = 3, width = 8)
+
+```
+
+The `visreg` function is used to visualise the distributions of the modelled Dim2 scores:
+
+```{r}
+#| label: Dim2estimateplots
+#| code-fold: true
+#| fig-width: 10
+#| fig-height: 8
+
+# svg(here("plots", "TxB_predicted_PC2_scores_interactions.svg"), height = 5, width = 8)
+visreg(md2, xvar = "Level", by="Register", type = "conditional",
+       line=list(col="darkred"), 
+       xlab = "Textbook Level", ylab = "PC2"
+       #,gg = TRUE
+       ,layout=c(5,1)
+)
+# dev.off()
+
+# Textbook Series-Register interactions
+visreg::visreg(md2, "Register", by="Series", re.form=~(1|Series),
+               ylab="PC2", line=list(col="darkred"))
+
+visreg(md2, xvar = "Series", by="Level", type = "conditional", re.form=~(1|Series), 
+       line=list(col="darkred"), xlab = "Textbook Series", ylab = "PC2",
+       layout=c(1,5))
+
+# Textbook Series-Register interactions
+# svg(here("plots", "TxB_PCA2_lmer_randomeffects_country_register.svg"), height = 5, width = 8)
+visreg::visreg(md2country, "Country", by="Register", re.form=~(1|Country),
+               ylab="PC2", line=list(col="darkred"))
+# dev.off()
+
+```
+
+### Dimension 3: ‘Narrative vs. factual discourse’
+
+```{r}
+#| label: Dim3model
+#| code-fold: true
+#| fig-height: 10
+
+md3 <- lmer(PC3 ~ Register*Level + (1|Series), data = res.ind, REML = FALSE)
+md3Register <- lmer(PC3 ~ Register + (1|Series), data = res.ind, REML = FALSE)
+md3Level <- lmer(PC3 ~ Level + (1|Series), data = res.ind, REML = FALSE)
+
+anova(md3, md3Register, md3Level)
+
+tab_model(md3) # Marginal R2 = 0.436
+# tab_model(md3Register) # Marginal R2 = 0.272
+# tab_model(md3Level) # Marginal R2 = 0.119
+
+# Plot of fixed effects:
+plot_model(md3, 
+           type = "est",
+           show.intercept = TRUE,
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           colors = palette[c(1:3,8,7)],
+           group.terms = c(1:5,1,1,1,1,2:5,2:5,2:5,2:5), 
+           title = "",
+           wrap.labels = 40,
+           axis.title = "PC3 estimated coefficients") +
+  theme_sjplot2() 
+#ggsave(here("plots", "TxB_PCA3_lmer_fixedeffects.svg"), height = 8, width = 8)
+```
+
+```{r}
+# Plot of random effects:
+plot_model(md3, 
+           type = "re", # Option to visualise random effects
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           color = "bw",
+           wrap.labels = 40,
+           axis.title = "PC3 estimated coefficients") +
+  theme_sjplot2()
+#ggsave(here("plots", "TxB_PCA3_lmer_randomeffects.svg"), height = 3, width = 8)
+
+```
+
+```{r}
+#| label: Dim3comparisons
+#| code-fold: true
+#| fig-width: 10
+#| fig-height: 8
+
+# svg(here("plots", "TxB_predicted_PC3_scores_interactions.svg"), height = 5, width = 8)
+visreg(md3, xvar = "Level", by="Register", type = "conditional",
+       line=list(col="darkred"), 
+       xlab = "Textbook Level", ylab = "PC3"
+       #,gg = TRUE
+       ,layout=c(5,1)
+)
+# dev.off()
+
+# Textbook Series-Register interactions
+visreg::visreg(md3, "Series", by="Register", re.form=~(1|Series),
+               ylab="PC3", line=list(col="darkred"))
+
+visreg(md3, xvar = "Level", by="Series", type = "conditional", re.form=~(1|Series), 
+       line=list(col="darkred"), xlab = "Textbook Series", ylab = "PC3")
+
+```
+
+### Dimension 4: ‘Informational compression vs. elaboration’
+
+```{r}
+#| label: Dim4model
+#| code-fold: true
+#| fig-height: 10
+
+md4 <- lmer(PC4 ~ Register*Level + (1|Series), data = res.ind, REML = FALSE)
+md4Register <- lmer(PC4 ~ Register + (1|Series), data = res.ind, REML = FALSE)
+md4Level <- lmer(PC4 ~ Level + (1|Series), data = res.ind, REML = FALSE)
+
+anova(md4, md4Register, md4Level)
+
+tab_model(md4) # Marginal R2 = 0.426
+# tab_model(md4Register) # Marginal R2 = 0.203
+# tab_model(md4Level) # Marginal R2 = 0.187
+
+# Plot of fixed effects:
+plot_model(md4, 
+           type = "est",
+           show.intercept = TRUE,
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           colors = palette[c(1:3,8,7)],
+           group.terms = c(1:5,1,1,1,1,2:5,2:5,2:5,2:5), 
+           title = "",
+           wrap.labels = 40,
+           axis.title = "PC4 estimated coefficients") +
+  theme_sjplot2() 
+#ggsave(here("plots", "TxB_PCA4_lmer_fixedeffects.svg"), height = 8, width = 8)
+```
+
+```{r}
+# Plot of random effects:
+plot_model(md4, 
+           type = "re", # Option to visualise random effects
+           show.values=TRUE, 
+           show.p=TRUE,
+           value.offset = .4,
+           value.size = 3.5,
+           color = "bw",
+           wrap.labels = 40,
+           axis.title = "PC4 estimated coefficients") +
+  theme_sjplot2()
+#ggsave(here("plots", "TxB_PCA4_lmer_randomeffects.svg"), height = 3, width = 8)
+```
+
+```{r}
+#| fig-height: 10
+
+# svg(here("plots", "TxB_predicted_PC4_scores_interactions.svg"), height = 5, width = 8)
+visreg(md4, xvar = "Level", by="Register", type = "conditional",
+       line=list(col="darkred"), 
+       xlab = "Textbook Level", ylab = "PC4"
+       #,gg = TRUE
+       ,layout=c(5,1)
+)
+# dev.off()
+
+```
+
+### Testing model assumptions
+
+This chunk can be used to check the assumptions of all of the models computed above. In the following example, we examine the final model selected to predict Dim2 scores.
+
+```{r lmer-diagnostics}
+
+model2test <- md2
+
+# check distribution of residuals
+plot(model2test)
+
+# scale-location plot
+plot(model2test,
+     sqrt(abs(resid(.)))~fitted(.),
+     type=c("p","smooth"), col.line=1)
+
+# Q-Q plot
+lattice::qqmath(model2test)
+
+```
