@@ -14,9 +14,7 @@ book:
   downloads: pdf
   license: "CC BY-SA"
   sidebar:
-    title: |
-      Textbook English 
-      (Le Foll 2024)
+    title: Textbook English <br>(Le Foll 2024)
     tools:
       - icon: envelope
         href: mailto:elefoll@uni-koeln.de
@@ -50,6 +48,7 @@ execute:
   cache: true
 
 bibliography: references.bib
+csl: unified-style-sheet-for-linguistics.csl
 
 lightbox: auto
 

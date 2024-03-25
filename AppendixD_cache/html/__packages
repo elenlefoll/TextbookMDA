@@ -1,14 +1,11 @@
 ggplot2
 lattice
 caret
-DT
+harrypotter
 here
 knitr
-patchwork
-zoo
-xts
-PerformanceAnalytics
-psych
+paletteer
+readxl
 tidyverse
 tibble
 tidyr
@@ -18,6 +15,3 @@ dplyr
 stringr
 forcats
 lubridate
-harrypotter
-paletteer
-readxl
