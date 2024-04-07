@@ -32,15 +32,18 @@ The raw data used in this script is a tab-separated file that corresponds to the
 
 # Read in Textbook Corpus data
 TxBcounts <- read.delim(here("data", "MFTE", "TxB900MDA_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)
+
 TxBcounts <- TxBcounts |> 
   filter(Filename!=".DS_Store") |>  
   droplevels()
+
 #str(TxBcounts) # Check sanity of data
 #nrow(TxBcounts) # Should be 2014 files
+
 datatable(TxBcounts,
   filter = "top",
 ) |> 
-  formatRound(2:ncol(TxBcounts), digits=2)
+  formatRound(3:ncol(TxBcounts), digits=2)
 
 ```
 

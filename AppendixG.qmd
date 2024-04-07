@@ -15,6 +15,7 @@ library(broom.mixed) # For checking singularity issues
 library(car) # For recoding data
 library(corrplot) # For the feature correlation matrix
 library(cowplot) # For nice plots
+library(DT) # To display interactive HTML tables
 library(emmeans) # Comparing group means of predicted values
 library(GGally) # For ggpairs
 library(gridExtra) # For making large faceted plots
@@ -63,6 +64,16 @@ SpokenBNC2014$Register <- "Spoken BNC2014"
 
 These normalised frequencies were computed on the basis of my own "John and Jill in Ivybridge" version of the Spoken BNC2014 with added full stops at speaker turns (see Appendix B for details). This corpus comprises of `{r} nrow(SpokenBNC2014) |> format(big.mark=",")` texts, all of which were used in the following analyses.
 
+```{r}
+#| echo: false
+
+datatable(SpokenBNC2014,
+  filter = "top",) |> 
+  formatRound(3:ncol(SpokenBNC2014), digits=2)
+
+```
+
+
 ### Youth Fiction corpus
 
 ```{r YouthFiction}
@@ -78,6 +89,15 @@ YouthFiction$Register <- "Youth Fiction"
 ```
 
 These normalised frequencies were computed on the basis of the random samples of approximately 5,000 words of the books of the Youth Fiction corpus (for details of the works included in this corpus, see Appendix B). The sampling procedure is described in Section 4.3.2.4 of the book. This dataset consists of `{r} nrow(YouthFiction) |> format(big.mark=",")` files.
+
+```{r}
+#| echo: false
+
+datatable(YouthFiction,
+  filter = "top",) |> 
+  formatRound(3:ncol(YouthFiction), digits=2)
+
+```
 
 ### Informative Texts for Teens (InfoTeens) corpus
 
@@ -98,6 +118,16 @@ InfoTeen$Register <- "Info Teens"
 ```
 
 Details of the composition of the Info Teens corpus can be found in Section 4.3.2.5 of the book. The version used in the present study comprises `{r} nrow(InfoTeen) |> format(big.mark=",")` texts.
+
+```{r}
+#| echo: false
+
+datatable(InfoTeen,
+  filter = "top",) |> 
+  formatRound(3:ncol(InfoTeen), digits=2)
+
+```
+
 
 ## Merging TEC and reference corpora data
 
