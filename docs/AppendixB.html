@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.30">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Elen Le Foll">
-<title>Textbook English: A Multi-Dimensional Approach - Appendix B — Corpus Data</title>
+<title>Textbook English – Appendix B — Corpus Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -141,7 +141,7 @@ div.csl-indent {
         <div class="sidebar-tools-main tools-wide">
     <a href="mailto:elefoll@uni-koeln.de" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-envelope"></i></a>
     <a href="https://github.com/elenlefoll/TextbookMDA/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./Textbook-English--A-Multi-Dimensional-Approach.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="./Textbook-English.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -155,7 +155,7 @@ div.csl-indent {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">Online supplements</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -305,7 +305,7 @@ p {
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-love2019" class="csl-entry" role="listitem">
-Love, Robbie, Vaclav Brezina, Tony McEnery, Abi Hawtin, Andrew Hardie &amp; Claire Dembry. 2019. Functional variation in the Spoken BNC2014 and the potential for register analysis. <em>Register Studies</em> 1(2). 296–317. <a href="https://doi.org/10.1075/rs.18013.lov">https://doi.org/10.1075/rs.18013.lov</a>.
+Love, Robbie, Vaclav Brezina, Tony McEnery, Abi Hawtin, Andrew Hardie &amp; Claire Dembry. 2019. Functional variation in the <span>Spoken</span> <span>BNC2014</span> and the potential for register analysis. <em>Register Studies</em> 1(2). 296–317. <a href="https://doi.org/10.1075/rs.18013.lov">https://doi.org/10.1075/rs.18013.lov</a>.
 </div>
 <div id="ref-love2017" class="csl-entry" role="listitem">
 Love, Robbie, Claire Dembry, Andrew Hardie, Vaclav Brezina &amp; Tony McEnery. 2017. The spoken BNC2014. <em>International Journal of Corpus Linguistics</em> 22(3). 319–344. https://doi.org/<a href="https://doi.org/10.1075/ijcl.22.3.02lov">https://doi.org/10.1075/ijcl.22.3.02lov</a>.
@@ -346,18 +346,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -389,7 +378,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -448,10 +459,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
           // target, if specified
           link.setAttribute("target", "_blank");
           if (link.getAttribute("rel") === null) {
@@ -493,7 +509,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -767,12 +787,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./AppendixA.html" class="pagination-link  aria-label=" review="" data="">
+      <a href="./AppendixA.html" class="pagination-link" aria-label="Literature Review Data">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Literature Review Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./AppendixC.html" class="pagination-link" aria-label="<span class='chapter-number'>C</span>&nbsp; <span class='chapter-title'>Linguistic Features</span>">
+      <a href="./AppendixC.html" class="pagination-link" aria-label="Linguistic Features">
         <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Linguistic Features</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -812,7 +832,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>### Youth Fiction corpus</span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>For copyright reasons<span class="op">,</span> the corpus itself cannot be made available. The corresponding metadata can be found here<span class="in">:</span> &lt;https<span class="in">:</span><span class="er">//github.com/elenlefoll/TextbookEnglish/blob/main/3_Data/3_Youth_Fiction_Index.csv&gt;. If you are interested in using this corpus for non-commercial research purposes and/or in a potential research collaboration, please get in touch with me via [e-mail](https://orcid.org/0000-0002-5839-8010).</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">

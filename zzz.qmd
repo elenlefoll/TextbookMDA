@@ -1,0 +1,11 @@
+---
+title: "Dummy file"
+---
+
+As recommended in https://github.com/rstudio/renv/issues/1672.
+
+```{r}
+library(downlit)
+library(xml2)
+```
+

@@ -1,3 +1,9 @@
+---
+format:
+  html:
+    code-tools: false
+---
+
 # References {.unnumbered}
 
 ::: {#refs}

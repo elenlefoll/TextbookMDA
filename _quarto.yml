@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "Textbook English: A Multi-Dimensional Approach"
-  subtitle: "Online Supplements"
+  title: "Textbook English"
+  subtitle: "A Multi-Dimensional Approach"
   author: 
   - name: Elen Le Foll
     orcid: 0000-0002-5839-8010
@@ -65,7 +65,7 @@ format:
   pdf:
     documentclass: scrreprt
     keep-tex: true
-    include-in-header: 
+    include-in-header:
        text: |
          \usepackage{fvextra}
          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}

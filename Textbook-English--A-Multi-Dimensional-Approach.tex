@@ -43,14 +43,28 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -70,7 +84,7 @@
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
@@ -80,7 +94,7 @@
 \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
 \newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
@@ -241,7 +255,7 @@
 \makeatother
 \subtitle{Online Supplements}
 \author{Elen Le Foll}
-\date{2024-04-07}
+\date{2024-05-07}
 
 \begin{document}
 \maketitle
@@ -259,7 +273,7 @@
 
 \markboth{About}{About}
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, coltitle=black, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, left=2mm, arc=.35mm, toprule=.15mm, leftrule=.75mm, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toptitle=1mm, bottomrule=.15mm, colback=white, opacityback=0, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, toptitle=1mm, colframe=quarto-callout-warning-color-frame, opacityback=0, arc=.35mm, opacitybacktitle=0.6, toprule=.15mm, left=2mm, leftrule=.75mm, bottomrule=.15mm, breakable, bottomtitle=1mm, coltitle=black, rightrule=.15mm, titlerule=0mm, colback=white, colbacktitle=quarto-callout-warning-color!10!white]
 
 This Quarto book is \textbf{work in progress}. It will eventually
 contain the online supplements to:
@@ -325,28 +339,28 @@ memories of school foreign language lessons testify (see also, e.g.,
 Freudenstein 2002: 55), textbooks play an absolutely central role in
 classroom-based foreign language learning. In the following, we will see
 that the dominance of textbooks in EFL school contexts persists to this
-day. According to Thornbury (2012 in a response to Chong 2012: n.p.),
-they ``(more often {[}than{]} not) instantiate the curriculum, provide
-the texts, and - to a large extent - guide the methodology''. In lower
+day. According to Thornbury (in response de Chong 2012: n.p.), they
+``(more often {[}than{]} not) instantiate the curriculum, provide the
+texts, and - to a large extent - guide the methodology''. In lower
 secondary EFL instructional contexts, in particular, textbooks
 constitute a major vector of foreign language input. Yet, numerous
 studies have shown that ``considerable mismatches between naturally
 occurring English and the English that is put forward as a model in
-pedagogical descriptions'' (Römer 2006: 125-26) exist. These mismatches
-have been observed and sometimes extensively described in textbooks'
-representations of numerous language features ranging from the use of
-individual words and phraseological patterns (e.g., Conrad 2004 on the
-preposition though; Gouverneur 2008 on the high-frequency verbs make and
-take), to tenses and aspects (e.g., Barbieri \& Eckhardt 2007 on
-reported speech; Römer 2005 on the progressive). More rarely, textbook
-language studies have also ventured into the study of spoken grammar
-(e.g., Gilmore 2004) and pragmatics (e.g., Hyland 1994 on hedging in
-ESP/EAP textbooks).
+pedagogical descriptions'' (Römer 2006: 125--126) exist. These
+mismatches have been observed and sometimes extensively described in
+textbooks' representations of numerous language features ranging from
+the use of individual words and phraseological patterns (e.g., Conrad
+2004 on the preposition \emph{though}; Gouverneur 2008 on the
+high-frequency verbs \emph{make} and \emph{take}), to tenses and aspects
+(Barbieri \& Eckhardt 2007 on reported speech; Römer 2005 on the
+progressive). More rarely, textbook language studies have also ventured
+into the study of spoken grammar (e.g., Gilmore 2004) and pragmatics
+(e.g., Hyland 1994 on hedging in ESP/EAP textbooks).
 
 However, as we will see in Chapter 2, previous EFL textbook studies have
 tended to focus on one or at most a handful of individual linguistic
 features. Taken together, they provide valuable insights into ``the kind
-of synthetic English'' (Römer 2004b: 185) that pupils are exposed to via
+of synthetic English'' (Römer 2004a: 185) that pupils are exposed to via
 their textbooks; yet, what is missing is a more comprehensive, broader
 understanding of what constitutes `Textbook English' from a linguistic
 point of view. Although corpus-based\footnote{Here the adjectives
@@ -375,14 +389,14 @@ been built specifically for this project with the aim of representing
 comparable `authentic' (for a discussion of this controversial term in
 ELT, see 2.2) and age-appropriate learner target language.
 
-A bottom-up, corpus-based approach is adopted (e.g., Mindt 1992, 1995a;
-Biber \& Quirk 2012; Biber \& Gray 2015; Ronald Carter \& McCarthy
-2006a). A broad range of linguistic features are considered: ranging
-from tenses and aspects to negation and discourse markers. We will pay
-particular attention to the lexico-grammatical aspects of Textbook
-English that substantially diverge from the target learner language
-reference corpora and examine these with direct comparisons of textbook
-excerpts with comparable texts from the reference data.
+A bottom-up, corpus-based approach is adopted (e.g., Biber \& Quirk
+2012; Biber \& Gray 2015; Mindt 1992; 1995; Carter \& McCarthy 2006). A
+broad range of linguistic features are considered: ranging from tenses
+and aspects to negation and discourse markers. We will pay particular
+attention to the lexico-grammatical aspects of Textbook English that
+substantially diverge from the target learner language reference corpora
+and examine these with direct comparisons of textbook excerpts with
+comparable texts from the reference data.
 
 \section{Outline of the book}\label{outline-of-the-book}
 
@@ -407,8 +421,8 @@ Chapter 5 describes the multivariable statistical methods applied to
 describe the linguistic nature of Textbook English on multiple
 dimensions of linguistic variation. It begins by explaining the
 well-established multi-feature/dimensional analysis (MDA) method
-pioneered by Biber (1988, 1995; see also Berber Sardinha \& Veirano
-Pinto 2014, 2019), before outlining the reasoning for the modified MDA
+pioneered by Biber (1988; 1995; see also Berber Sardinha \& Veirano
+Pinto 2014; 2019), before outlining the reasoning for the modified MDA
 framework applied in the present study. Chapter 6 presents the results
 of an MDA model of Textbook English which highlights the sources of
 linguistic variation within EFL textbooks across several dimensions of
@@ -527,7 +541,11 @@ detail here. Whenever data, packages or other open-source scripts from
 other researchers were used, links to these are also provided in the
 \href{https://elenlefoll.github.io/TextbookMDA/references.html}{Online
 Supplements} (in addition to the corresponding references in the
-bibliography).
+bibliography). To reproduce the R analyses, use the
+\href{https://rstudio.github.io/renv/reference/restore.html}{\texttt{renv::restore()}}
+command to ensure that you are using the correct package versions (Ushey
+\& Wickham 2023). For full reproducibility it may be necessary to use
+\href{https://github.com/r-lib/rig}{rig} to run the code in R v. 4.3.1.
 
 \bookmarksetup{startatroot}
 
@@ -642,7 +660,7 @@ key linguistic differences that distinguish stereotypically
 textbook-like texts from situationally similar `real-world' texts.
 
 Corroborating the findings of previous Textbook English studies, notably
-Mindt (1987; 1992; 1995) and Römer (2004; 2005), the present study
+Mindt (1987; 1992; 1995) and Römer (2004b; 2005), the present study
 identified a wide gap between conversational English as it is presented
 in contemporary secondary school EFL textbooks and `real-world'
 conversation that learners can be expected to be involved in outside the
@@ -834,11 +852,27 @@ Al-Hoorie, Ali H. \& Emma Marsden. Open scholarship and transparency in
 applied linguistics research.
 \url{https://doi.org/10.31219/osf.io/7ntq2}.
 
+\bibitem[\citeproctext]{ref-BarbieriApplyingCorpusBasedFindings2007}
+Barbieri, Federica \& Suzanne EB Eckhardt. 2007. Applying corpus-based
+findings to form-focused instruction: The case of reported speech.
+\emph{Language Teaching Research} 11(3). 319--346.
+https://doi.org/\url{http://dx.doi.org/10.1177/1362168807077563}.
+
 \bibitem[\citeproctext]{ref-BelzSystematicReviewReproducibility2021}
 Belz, Anya, Shubham Agarwal, Anastasia Shimorina \& Ehud Reiter. 2021. A
 systematic review of reproducibility research in natural language
 processing. \emph{arXiv:2103.07929 {[}cs{]}}.
 \url{http://arxiv.org/abs/2103.07929}.
+
+\bibitem[\citeproctext]{ref-BerberSardinhaMultiDimensionalAnalysis252014}
+Berber Sardinha, Tony \& Marcia Veirano Pinto (eds.). 2014.
+\emph{Multi-dimensional analysis, 25 years on: A tribute to douglas
+biber} (Studies in Corpus Linguistics). John Benjamins.
+
+\bibitem[\citeproctext]{ref-BerberSardinhaMultiDimensionalAnalysisResearch2019}
+Berber Sardinha, Tony \& Marcia Veirano Pinto (eds.). 2019.
+\emph{Multi-dimensional analysis: Research methods and current issues}.
+Bloomsbury Academic. \url{https://doi.org/10.5040/9781350023857}.
 
 \bibitem[\citeproctext]{ref-Berez-KroekerReproducibleresearchlinguistics2018}
 Berez-Kroeker, Andrea L., Lauren Gawne, Susan Smythe Kung, Barbara F.
@@ -856,6 +890,15 @@ Cambridge University Press.
 Biber, Douglas. 1995. \emph{Dimensions of register variation}. Cambridge
 University Press.
 
+\bibitem[\citeproctext]{ref-BiberGrammaticalcomplexityacademic2015}
+Biber, Douglas \& Bethany Gray. 2015. \emph{Grammatical complexity in
+academic english: Linguistic change in writing} (Studies in English
+Language). Cambridge University Press.
+
+\bibitem[\citeproctext]{ref-BiberLongmanGrammarSpoken2012}
+Biber, Douglas \& Randolph Quirk (eds.). 2012. \emph{Longman grammar of
+spoken and written english}. 10th edition. Longman.
+
 \bibitem[\citeproctext]{ref-bochynskaReproducibleResearchPractices2023}
 Bochynska, Agata, Liam Keeble, Caitlin Halfacre, Joseph V. Casillas,
 Irys-Amélie Champagne, Kaidi Chen, Melanie Röthlisberger, Erin M.
@@ -867,6 +910,22 @@ transparency across linguistics. \emph{Glossa Psycholinguistics} 2(1).
 Brezina, V. \& D. Gablasova. 2015. Is there a core general vocabulary?
 Introducing the new general service list. \emph{Applied Linguistics}
 36(1). 1--22. \url{https://doi.org/10.1093/applin/amt018}.
+
+\bibitem[\citeproctext]{ref-CarterCambridgegrammarEnglish2006}
+Carter, Ronald \& Michael McCarthy. 2006. \emph{Cambridge grammar of
+english: A comprehensive guide: Spoken and written english grammar and
+usage}. Cambridge University Press.
+
+\bibitem[\citeproctext]{ref-ChongTeachOffMyreaction2012}
+Chong, Chia Suan. 2012. The teach-off -- my reaction to coursebooks \&
+uncount nouns. \emph{chiasuanchong.com}.
+\url{https://chiasuanchong.com/2012/04/26/the-teach-off-my-reaction-to-coursebooks-uncountable-nouns/}.
+
+\bibitem[\citeproctext]{ref-ConradCorpusvarietyCorpus2004}
+Conrad, Susan. 2004. Corpus variety: Corpus linguistics, language
+variation, and language teaching. In John McH. Sinclair (ed.), \emph{How
+to use corpora in language teaching} (Studies in Corpus Linguistics),
+67--85. John Benjamins. \url{https://doi.org/10.1075/scl.12.08con}.
 
 \bibitem[\citeproctext]{ref-CookFunctionsInventedSentences2002}
 Cook, Vivian. 2002. The functions of invented sentences: A reply to guy
@@ -884,10 +943,21 @@ corpus-based study of phraseological items in british english and
 american english conversation with implications for EFL teaching}.
 Osnabrück University PhD thesis.
 
+\bibitem[\citeproctext]{ref-FreudensteinWasmorgengeschah2002}
+Freudenstein, Reinhold. 2002. Was morgen geschah... Schulischer
+fremdsprachenunterricht gestern, heute - und in zukunft? In Christiane
+Neveling (ed.), \emph{Perspektiven für die zukünftige
+fremdsprachendidaktik}, 45--62. Gunter Narr Verlag.
+
 \bibitem[\citeproctext]{ref-GabrielatosCorpusBasedAnalysisPedagogical2006}
 Gabrielatos, Costas. 2006. Corpus-based analysis of pedagogical
 materials: If-conditionals in ELT coursebooks and the BNC.
 \url{https://www.researchgate.net/publication/228880683_Corpus-based_evaluation_of_pedagogical_materials_If-conditionals_in_ELT_coursebooks_and_the_BNC}.
+
+\bibitem[\citeproctext]{ref-GilmoreComparisonTextbookAuthentic2004}
+Gilmore, Alex. 2004. A comparison of textbook and authentic
+interactions. \emph{ELT Journal} 58(4). 363--374.
+\url{https://doi.org/10.1093/elt/58.4.363}.
 
 \bibitem[\citeproctext]{ref-gomesWhyDonWe2022}
 Gomes, Dylan G. E., Patrice Pottier, Robert Crystal-Ornelas, Emma J.
@@ -896,6 +966,17 @@ al. 2022. Why don't we share data and code? Perceived barriers and
 benefits to public archiving practices. \emph{Proceedings of the Royal
 Society B: Biological Sciences}. Royal 289(1987). 20221113.
 \url{https://doi.org/10.1098/rspb.2022.1113}.
+
+\bibitem[\citeproctext]{ref-GouverneurPhraseologicalPatternsHighfrequency2008}
+Gouverneur, Céline. 2008. The phraseological patterns of high-frequency
+verbs in advanced english for general purposes: A corpus-driven approach
+to EFL textbook analysis. In Fanny Meunier \& Sylviane Granger (eds.),
+\emph{Phraseology in foreign language learning and teaching}, 223--243.
+John Benjamins.
+
+\bibitem[\citeproctext]{ref-HylandHedgingacademicwriting1994}
+Hyland, Ken. 1994. Hedging in academic writing and EAP textbooks.
+\emph{English for Specific Purposes} 13(3). 239--256.
 
 \bibitem[\citeproctext]{ref-LeFollRegisterVariationSchool2021}
 Le Foll, Elen. 2021a. Register variation in school EFL textbooks.
@@ -1041,16 +1122,27 @@ R Core Team. 2022. \emph{R: A language and environment for statistical
 computing}. Vienna, Austria. \url{https://www.R-project.org/}.
 
 \bibitem[\citeproctext]{ref-RomerComparingrealideal2004}
-Römer, Ute. 2004. Comparing real and ideal language learner input: The
+Römer, Ute. 2004b. Comparing real and ideal language learner input: The
 use of an EFL textbook corpus in corpus linguistics and language
 teaching. In Guy Aston, Silvia Bernardini \& Dominic Stewart (eds.),
 \emph{Studies in corpus linguistics}, 151--168. John Benjamins.
+
+\bibitem[\citeproctext]{ref-RomerCorpusDrivenApproachModal2004}
+Römer, Ute. 2004a. A corpus-driven approach to modal auxiliaries and
+their didactics. In John McH. Sinclair (ed.), \emph{How to use corpora
+in language teaching} (Studies in Corpus Linguistics), 185--199. John
+Benjamins. \url{https://doi.org/10.1075/scl.12.14rom}.
 
 \bibitem[\citeproctext]{ref-RomerProgressivesPatternsPedagogy2005}
 Römer, Ute. 2005. \emph{Progressives, patterns, pedagogy: A
 corpus-driven approach to english progressive forms, functions,
 contexts, and didactics} (Studies in Corpus Linguistics). John
 Benjamins.
+
+\bibitem[\citeproctext]{ref-RomerPedagogicalapplicationscorpora2006}
+Römer, Ute. 2006. Pedagogical applications of corpora: Some reflections
+on the current scope and a wish list for future developments.
+\emph{Zeitschrift für Anglistik und Amerikanistik} 54(2). 121--134.
 
 \bibitem[\citeproctext]{ref-RoslerPerspektivenvielfaltLehrwerkanalyseund2016}
 Rösler, Dietmar \& Michael Schart. 2016. Die perspektivenvielfalt der
@@ -1081,6 +1173,10 @@ An emergent, researched pedagogy. In Andrea E. Tyler, Lourdes Ortega,
 Mariko Uno \& Hae In Park (eds.), \emph{Usage-inspired L2 instruction:
 Researched pedagogy} (Language Learning \& Language Teaching), 3--26.
 John Benjamins. \url{https://doi.org/10.1075/lllt.49.01tyl}.
+
+\bibitem[\citeproctext]{ref-usheyRenvProjectEnvironments2023}
+Ushey, Kevin \& Hadley Wickham. 2023. \emph{Renv: Project environments}.
+\url{https://CRAN.R-project.org/package=renv}.
 
 \bibitem[\citeproctext]{ref-wilkinson2016}
 Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg,
@@ -1128,7 +1224,7 @@ corresponding CSV file in the repository} or send me an
 with the corresponding details of the studies that you would like to
 add.
 
-\textbf{This page was last updated on 07 April 2024.}
+\textbf{This page was last updated on 07 May 2024.}
 
 \includegraphics{AppendixA_files/figure-pdf/display-1.pdf}
 
@@ -1194,7 +1290,7 @@ For more information on the development of the tagger, see Le Foll
 (2021b) and
 \url{https://github.com/elenlefoll/MultiFeatureTaggerEnglish}.
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, coltitle=black, breakable, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, left=2mm, arc=.35mm, toprule=.15mm, leftrule=.75mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toptitle=1mm, bottomrule=.15mm, colback=white, opacityback=0, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, opacityback=0, arc=.35mm, opacitybacktitle=0.6, toprule=.15mm, left=2mm, leftrule=.75mm, bottomrule=.15mm, breakable, bottomtitle=1mm, coltitle=black, rightrule=.15mm, titlerule=0mm, colback=white, colbacktitle=quarto-callout-tip-color!10!white]
 
 The Multi-Feature Tagger of English (MFTE) Perl is free to use and was
 released under an Open Source licence. If you are interested in using
@@ -1319,7 +1415,7 @@ For more information on the tagger itself, as well as the evaluation
 data and methods, see Le Foll (2021b) and
 \url{https://github.com/elenlefoll/MultiFeatureTaggerEnglish}.
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, coltitle=black, breakable, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, left=2mm, arc=.35mm, toprule=.15mm, leftrule=.75mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toptitle=1mm, bottomrule=.15mm, colback=white, opacityback=0, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, opacityback=0, arc=.35mm, opacitybacktitle=0.6, toprule=.15mm, left=2mm, leftrule=.75mm, bottomrule=.15mm, breakable, bottomtitle=1mm, coltitle=black, rightrule=.15mm, titlerule=0mm, colback=white, colbacktitle=quarto-callout-tip-color!10!white]
 
 The Multi-Feature Tagger of English (MFTE) Perl is free to use and was
 released under an Open Source licence. If you are interested in using

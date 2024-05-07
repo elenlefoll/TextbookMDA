@@ -1,6 +1,9 @@
 ---
 bibliography: references.bib
 engine: knitr
+format:
+  html:
+    code-tools: false
 ---
 
 ```{css}
