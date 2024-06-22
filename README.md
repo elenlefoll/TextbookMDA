@@ -2,7 +2,7 @@
 
 This repository contains all the source files (data, code, and Quarto documents) included in the [Online Supplements](elenlefoll.github.io/TextbookMDA/) to:
 
-- Le Foll, Elen. to appear. Textbook English: A Multi-Dimensional Approach [Studies in Corpus Linguistics]. Amsterdam: John Benjamins.
+- Le Foll, Elen. 2024. Textbook English: A Multi-Dimensional Approach [Studies in Corpus Linguistics]. Amsterdam: John Benjamins. https://benjamins.com/catalog/scl.116.
 
 The book is a considerably reworked version of chapters 1–3 and 7–8 my PhD thesis, which is accessible in Open Access:
 
