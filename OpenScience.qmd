@@ -13,13 +13,17 @@ p {
 }
 ```
 
+::: callout-note
+This page displays Section 4.4.2 from the Author Accepted Manuscript (AAA) version of the book: <https://osf.io/jpxae/>. Please cite the Version of Record: <https://benjamins.com/catalog/scl.116>.
+:::
+
 # Open Science statement
 
 Among the wealth of Textbook English publications summarised in Chapter 3 (see also [Appendix A](https://elenlefoll.github.io/TextbookMDA/AppendixA.html)), very few have included the data and, where relevant, the code necessary to reproduce or replicate the findings that they report [thereby reflecting current sharing practices in linguistics more broadly, see @bochynskaReproducibleResearchPractices2023].[^openscience-1]
 
 [^openscience-1]: This is also true of my own earlier work on the language of EFL textbooks [@LeFollRegisterVariationSchool2021; -@LeFollMakingteamistakes2022; -@LeFollputtingsaltmy2022]. More recent work conducted as part of this project , however, was published alongside with the data and code [@LeFollTextbookEnglishCorpusBased2022; -@LeFollconceptualreplicationMultiDimensional2023; -@LeFollSchulenglischmultidimensionalmodelsubmitted].
 
-Although the terms are sometimes used interchangeably [see @parsonsCommunitysourcedGlossaryOpen2022 for a comprehensive glossary of Open Science terminology],  ‘reproducibility’ is used here to refer to the ability to obtain the same results using the researchers’ original data and code, whilst ‘replicability’[^openscience-2] entails repeating a study and obtaining compatible results with different data analysed with either the same or different methods [@Berez-KroekerReproducibleresearchlinguistics2018, p. 4; @PorteDoingReplicationResearch2018, pp. 6-7]. Not only does not sharing data and materials mean that published results are not reproducible, hereby making it difficult to assess their reliability, it also makes it very difficult to attempt to replicate the results to gain insights into the extent to which they are generalisable, e.g., across a different set of EFL textbooks used in a different educational context [see also @lefollWhyWeNeed2022; @mcmanusReplicationOpenScienceinpress].
+Although the terms are sometimes used interchangeably [see @parsonsCommunitysourcedGlossaryOpen2022 for a comprehensive glossary of Open Science terminology],  ‘reproducibility’ is used here to refer to the ability to obtain the same results using the researchers’ original data and code, whilst ‘replicability’[^openscience-2] entails repeating a study and obtaining compatible results with different data analysed with either the same or different methods [@Berez-KroekerReproducibleresearchlinguistics2018, p. 4; @PorteDoingReplicationResearch2018, pp. 6-7]. Not only does not sharing data and materials mean that published results are not reproducible, hereby making it difficult to assess their reliability, it also makes it very difficult to attempt to replicate the results to gain insights into the extent to which they are generalisable, e.g., across a different set of EFL textbooks used in a different educational context [see also @lefollWhyWeNeed2024; @mcmanusReplicationOpenScienceinpress].
 
 [^openscience-2]: Confusingly, other terms are also frequently used to refer to the same or related concepts, e.g., *repeatability*, *robustness* and *generalisability* [see, e.g., @BelzSystematicReviewReproducibility2021, p. 2-3; @parsonsCommunitysourcedGlossaryOpen2022].
 

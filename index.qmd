@@ -8,9 +8,12 @@ format:
 
 This webpage contains the online supplements to:
 
-> Le Foll, Elen. to appear/October 2024. *Textbook English: A Multi-Dimensional Approach* \[[Studies in Corpus Linguistics](https://benjamins.com/catalog/scl)\]. Amsterdam: John Benjamins.
+> Le Foll, Elen. 2024. *Textbook English: A Multi-Dimensional Approach* \[[Studies in Corpus Linguistics](https://benjamins.com/catalog/scl)\]. Amsterdam: John Benjamins. ISBN [9789027214935](https://benjamins.com/catalog/scl.116).
 
+[![](images/scl116hb.png){fig-alt="Front cover of the book published by John Benjamins, number 115 in the series Studies In Corpus Linguistics" fig-align="center" width="275"}](https://benjamins.com/catalog/scl.116)
 
-The book is based on revised versions of selected (sub)chapters from my PhD thesis:
+An open-access Author Accepted Manuscript (AAA) version of the book can be downloaded from <https://osf.io/jpxae/>.
+
+The book is based on revised versions of selected (sub)chapters from:
 
 > Le Foll, Elen. 2022. *Textbook English: A Corpus-Based Analysis of the Language of EFL textbooks used in Secondary Schools in France, Germany and Spain*. Osnabrück, Germany: Osnabrück University. PhD thesis. <https://doi.org/10.48693/278>.
