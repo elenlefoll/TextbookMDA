@@ -293,6 +293,13 @@ div.csl-indent {
   <li><a href="#communalities" id="toc-communalities" class="nav-link" data-scroll-target="#communalities"><span class="header-section-number">G.5.5</span> Communalities</a></li>
   </ul>
 </li>
+  <li>
+<a href="#packages-used-in-this-script" id="toc-packages-used-in-this-script" class="nav-link" data-scroll-target="#packages-used-in-this-script"><span class="header-section-number">G.6</span> Packages used in this script</a>
+  <ul class="collapse">
+<li><a href="#package-names-and-versions" id="toc-package-names-and-versions" class="nav-link" data-scroll-target="#package-names-and-versions"><span class="header-section-number">G.6.1</span> Package names and versions</a></li>
+  <li><a href="#package-references" id="toc-package-references" class="nav-link" data-scroll-target="#package-references"><span class="header-section-number">G.6.2</span> Package references</a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -323,7 +330,7 @@ div.csl-indent {
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/taiyun/corrplot">corrplot</a></span><span class="op">)</span> <span class="co"># For the feature correlation matrix</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op">)</span> <span class="co"># For nice plots</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT">DT</a></span><span class="op">)</span> <span class="co"># To display interactive HTML tables</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans">emmeans</a></span><span class="op">)</span> <span class="co"># Comparing group means of predicted values</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/">emmeans</a></span><span class="op">)</span> <span class="co"># Comparing group means of predicted values</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span> <span class="co"># For ggpairs</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span> <span class="co"># For making large faceted plots</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span> <span class="co"># For ease of sharing</span></span>
@@ -545,7 +552,7 @@ div.csl-indent {
 <span><span class="co"># Function to compute percentage of texts with occurrences meeting a condition</span></span>
 <span><span class="va">compute_percentage</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">condition</span>, <span class="va">threshold</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">numeric_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html">Filter</a></span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">data</span><span class="op">)</span></span>
-<span>  <span class="va">percentage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">colSums</a></span><span class="op">(</span><span class="va">condition</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">numeric_data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="va">percentage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="va">condition</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">numeric_data</span>, <span class="va">is.numeric</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="va">percentage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">percentage</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Percentage"</span></span>
 <span>  <span class="va">percentage</span> <span class="op">&lt;-</span> <span class="va">percentage</span> <span class="op">|&gt;</span> </span>
@@ -1593,6 +1600,106 @@ MENTAL    VBD  FPP1S   MDMM   PEAS   CONC   MDWO   THRC     NN   COND   PROG
 </details>
 </div>
 <p>The final dataset entered in the analysis described in Chapter 7 therefore comprises 4,980 texts/files, each with logged standardised normalised frequencies for 70 linguistic features.</p>
+</section></section><section id="packages-used-in-this-script" class="level2" data-number="G.6"><h2 data-number="G.6" class="anchored" data-anchor-id="packages-used-in-this-script">
+<span class="header-section-number">G.6</span> Packages used in this script</h2>
+<section id="package-names-and-versions" class="level3" data-number="G.6.1"><h3 data-number="G.6.1" class="anchored" data-anchor-id="package-names-and-versions">
+<span class="header-section-number">G.6.1</span> Package names and versions</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.5
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Madrid
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices datasets  utils     methods   base     
+
+other attached packages:
+ [1] DT_0.33             visreg_2.7.0        lubridate_1.9.3    
+ [4] forcats_1.0.0       stringr_1.5.1       dplyr_1.1.4        
+ [7] purrr_1.0.2         readr_2.1.5         tidyr_1.3.1        
+[10] tibble_3.2.1        tidyverse_2.0.0     sjPlot_2.8.16      
+[13] scales_1.3.0        psych_2.4.6.26      lme4_1.1-35.5      
+[16] Matrix_1.7-0        knitr_1.48          here_1.0.1         
+[19] gridExtra_2.3       GGally_2.2.1        ggplot2_3.5.1      
+[22] emmeans_1.10.3      cowplot_1.1.3       corrplot_0.92      
+[25] car_3.1-2           carData_3.0-5       broom.mixed_0.2.9.5
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_1.2.1    sjlabelled_1.2.0    fastmap_1.2.0      
+ [4] sjstats_0.19.0      digest_0.6.36       timechange_0.3.0   
+ [7] estimability_1.5.1  lifecycle_1.0.4     magrittr_2.0.3     
+[10] compiler_4.4.1      rlang_1.1.4         tools_4.4.1        
+[13] utf8_1.2.4          yaml_2.3.9          htmlwidgets_1.6.4  
+[16] mnormt_2.1.1        plyr_1.8.9          RColorBrewer_1.1-3 
+[19] abind_1.4-5         withr_3.0.0         grid_4.4.1         
+[22] datawizard_0.12.1   fansi_1.0.6         xtable_1.8-4       
+[25] colorspace_2.1-0    future_1.33.2       globals_0.16.3     
+[28] MASS_7.3-60.2       insight_0.20.2      cli_3.6.3          
+[31] mvtnorm_1.2-5       rmarkdown_2.27      generics_0.1.3     
+[34] rstudioapi_0.16.0   performance_0.12.2  tzdb_0.4.0         
+[37] minqa_1.2.7         splines_4.4.1       parallel_4.4.1     
+[40] BiocManager_1.30.23 vctrs_0.6.5         boot_1.3-30        
+[43] jsonlite_1.8.8      hms_1.1.3           listenv_0.9.1      
+[46] glue_1.7.0          parallelly_1.37.1   nloptr_2.1.1       
+[49] ggstats_0.6.0       codetools_0.2-20    stringi_1.8.4      
+[52] gtable_0.3.5        ggeffects_1.7.0     munsell_0.5.1      
+[55] furrr_0.3.1         pillar_1.9.0        htmltools_0.5.8.1  
+[58] R6_2.5.1            rprojroot_2.0.4     evaluate_0.24.0    
+[61] lattice_0.22-6      backports_1.5.0     broom_1.0.6        
+[64] renv_1.0.3          Rcpp_1.0.13         coda_0.19-4.1      
+[67] nlme_3.1-164        xfun_0.46           sjmisc_2.8.10      
+[70] pkgconfig_2.0.3    </code></pre>
+</div>
+</div>
+</section><section id="package-references" class="level3" data-number="G.6.2"><h3 data-number="G.6.2" class="anchored" data-anchor-id="package-references">
+<span class="header-section-number">G.6.2</span> Package references</h3>
+<p>[1] B. Auguie. <em>gridExtra: Miscellaneous Functions for “Grid” Graphics</em>. R package version 2.3. 2017.</p>
+<p>[2] D. Bates, M. Mächler, B. Bolker, et al.&nbsp;“Fitting Linear Mixed-Effects Models Using lme4”. In: <em>Journal of Statistical Software</em> 67.1 (2015), pp.&nbsp;1-48. DOI: 10.18637/jss.v067.i01.</p>
+<p>[3] D. Bates, M. Maechler, B. Bolker, et al.&nbsp;<em>lme4: Linear Mixed-Effects Models using Eigen and S4</em>. R package version 1.1-35.5. 2024. <a href="https://github.com/lme4/lme4/" class="uri">https://github.com/lme4/lme4/</a>.</p>
+<p>[4] D. Bates, M. Maechler, and M. Jagan. <em>Matrix: Sparse and Dense Matrix Classes and Methods</em>. R package version 1.7-0. 2024. <a href="https://Matrix.R-forge.R-project.org" class="uri">https://Matrix.R-forge.R-project.org</a>.</p>
+<p>[5] B. Bolker and D. Robinson. <em>broom.mixed: Tidying Methods for Mixed Models</em>. R package version 0.2.9.5. 2024. <a href="https://github.com/bbolker/broom.mixed" class="uri">https://github.com/bbolker/broom.mixed</a>.</p>
+<p>[6] P. Breheny and W. Burchett. <em>visreg: Visualization of Regression Models</em>. R package version 2.7.0. 2020. <a href="http://pbreheny.github.io/visreg" class="uri">http://pbreheny.github.io/visreg</a>.</p>
+<p>[7] P. Breheny and W. Burchett. “Visualization of Regression Models Using visreg”. In: <em>The R Journal</em> 9.2 (2017), pp.&nbsp;56-71.</p>
+<p>[8] J. Fox and S. Weisberg. <em>An R Companion to Applied Regression</em>. Third. Thousand Oaks CA: Sage, 2019. <a href="https://socialsciences.mcmaster.ca/jfox/Books/Companion/" class="uri">https://socialsciences.mcmaster.ca/jfox/Books/Companion/</a>.</p>
+<p>[9] J. Fox, S. Weisberg, and B. Price. <em>car: Companion to Applied Regression</em>. R package version 3.1-2. 2023. <a href="https://r-forge.r-project.org/projects/car/" class="uri">https://r-forge.r-project.org/projects/car/</a>.</p>
+<p>[10] J. Fox, S. Weisberg, and B. Price. <em>carData: Companion to Applied Regression Data Sets</em>. R package version 3.0-5. 2022. <a href="https://r-forge.r-project.org/projects/car/" class="uri">https://r-forge.r-project.org/projects/car/</a>.</p>
+<p>[11] G. Grolemund and H. Wickham. “Dates and Times Made Easy with lubridate”. In: <em>Journal of Statistical Software</em> 40.3 (2011), pp. 1-25. <a href="https://www.jstatsoft.org/v40/i03/" class="uri">https://www.jstatsoft.org/v40/i03/</a>.</p>
+<p>[12] R. V. Lenth. <em>emmeans: Estimated Marginal Means, aka Least-Squares Means</em>. R package version 1.10.3. 2024. <a href="https://rvlenth.github.io/emmeans/" class="uri">https://rvlenth.github.io/emmeans/</a>.</p>
+<p>[13] D. Lüdecke. <em>sjPlot: Data Visualization for Statistics in Social Science</em>. R package version 2.8.16. 2024. <a href="https://strengejacke.github.io/sjPlot/" class="uri">https://strengejacke.github.io/sjPlot/</a>.</p>
+<p>[14] K. Müller. <em>here: A Simpler Way to Find Your Files</em>. R package version 1.0.1. 2020. <a href="https://here.r-lib.org/" class="uri">https://here.r-lib.org/</a>.</p>
+<p>[15] K. Müller and H. Wickham. <em>tibble: Simple Data Frames</em>. R package version 3.2.1. 2023. <a href="https://tibble.tidyverse.org/" class="uri">https://tibble.tidyverse.org/</a>.</p>
+<p>[16] R Core Team. <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. Vienna, Austria, 2024. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+<p>[17] W. Revelle. <em>psych: Procedures for Psychological, Psychometric, and Personality Research</em>. R package version 2.4.6.26. 2024. <a href="https://personality-project.org/r/psych/" class="uri">https://personality-project.org/r/psych/</a>.</p>
+<p>[18] B. Schloerke, D. Cook, J. Larmarange, et al.&nbsp;<em>GGally: Extension to ggplot2</em>. R package version 2.2.1. 2024. <a href="https://ggobi.github.io/ggally/" class="uri">https://ggobi.github.io/ggally/</a>.</p>
+<p>[19] V. Spinu, G. Grolemund, and H. Wickham. <em>lubridate: Make Dealing with Dates a Little Easier</em>. R package version 1.9.3. 2023. <a href="https://lubridate.tidyverse.org" class="uri">https://lubridate.tidyverse.org</a>.</p>
+<p>[20] T. Wei and V. Simko. <em>corrplot: Visualization of a Correlation Matrix</em>. R package version 0.92. 2021. <a href="https://github.com/taiyun/corrplot" class="uri">https://github.com/taiyun/corrplot</a>.</p>
+<p>[21] T. Wei and V. Simko. <em>R package ‘corrplot’: Visualization of a Correlation Matrix</em>. (Version 0.92). 2021. <a href="https://github.com/taiyun/corrplot" class="uri">https://github.com/taiyun/corrplot</a>.</p>
+<p>[22] H. Wickham. <em>forcats: Tools for Working with Categorical Variables (Factors)</em>. R package version 1.0.0. 2023. <a href="https://forcats.tidyverse.org/" class="uri">https://forcats.tidyverse.org/</a>.</p>
+<p>[23] H. Wickham. <em>ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York, 2016. ISBN: 978-3-319-24277-4. <a href="https://ggplot2.tidyverse.org" class="uri">https://ggplot2.tidyverse.org</a>.</p>
+<p>[24] H. Wickham. <em>stringr: Simple, Consistent Wrappers for Common String Operations</em>. R package version 1.5.1. 2023. <a href="https://stringr.tidyverse.org" class="uri">https://stringr.tidyverse.org</a>.</p>
+<p>[25] H. Wickham. <em>tidyverse: Easily Install and Load the Tidyverse</em>. R package version 2.0.0. 2023. <a href="https://tidyverse.tidyverse.org" class="uri">https://tidyverse.tidyverse.org</a>.</p>
+<p>[26] H. Wickham, M. Averick, J. Bryan, et al.&nbsp;“Welcome to the tidyverse”. In: <em>Journal of Open Source Software</em> 4.43 (2019), p.&nbsp;1686. DOI: 10.21105/joss.01686.</p>
+<p>[27] H. Wickham, W. Chang, L. Henry, et al.&nbsp;<em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. R package version 3.5.1. 2024. <a href="https://ggplot2.tidyverse.org" class="uri">https://ggplot2.tidyverse.org</a>.</p>
+<p>[28] H. Wickham, R. François, L. Henry, et al.&nbsp;<em>dplyr: A Grammar of Data Manipulation</em>. R package version 1.1.4. 2023. <a href="https://dplyr.tidyverse.org" class="uri">https://dplyr.tidyverse.org</a>.</p>
+<p>[29] H. Wickham and L. Henry. <em>purrr: Functional Programming Tools</em>. R package version 1.0.2. 2023. <a href="https://purrr.tidyverse.org/" class="uri">https://purrr.tidyverse.org/</a>.</p>
+<p>[30] H. Wickham, J. Hester, and J. Bryan. <em>readr: Read Rectangular Text Data</em>. R package version 2.1.5. 2024. <a href="https://readr.tidyverse.org" class="uri">https://readr.tidyverse.org</a>.</p>
+<p>[31] H. Wickham, T. L. Pedersen, and D. Seidel. <em>scales: Scale Functions for Visualization</em>. R package version 1.3.0. 2023. <a href="https://scales.r-lib.org" class="uri">https://scales.r-lib.org</a>.</p>
+<p>[32] H. Wickham, D. Vaughan, and M. Girlich. <em>tidyr: Tidy Messy Data</em>. R package version 1.3.1. 2024. <a href="https://tidyr.tidyverse.org" class="uri">https://tidyr.tidyverse.org</a>.</p>
+<p>[33] C. O. Wilke. <em>cowplot: Streamlined Plot Theme and Plot Annotations for ggplot2</em>. R package version 1.1.3. 2024. <a href="https://wilkelab.org/cowplot/" class="uri">https://wilkelab.org/cowplot/</a>.</p>
+<p>[34] Y. Xie. <em>Dynamic Documents with R and knitr</em>. 2nd. ISBN 978-1498716963. Boca Raton, Florida: Chapman and Hall/CRC, 2015. <a href="https://yihui.org/knitr/" class="uri">https://yihui.org/knitr/</a>.</p>
+<p>[35] Y. Xie. “knitr: A Comprehensive Tool for Reproducible Research in R”. In: <em>Implementing Reproducible Computational Research</em>. Ed. by V. Stodden, F. Leisch and R. D. Peng. ISBN 978-1466561595. Chapman and Hall/CRC, 2014.</p>
+<p>[36] Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. R package version 1.48. 2024. <a href="https://yihui.org/knitr/" class="uri">https://yihui.org/knitr/</a>.</p>
+<p>[37] Y. Xie, J. Cheng, and X. Tan. <em>DT: A Wrapper of the JavaScript Library DataTables</em>. R package version 0.33. 2024. <a href="https://github.com/rstudio/DT" class="uri">https://github.com/rstudio/DT</a>.</p>
 
 
 <!-- -->
@@ -2097,541 +2204,563 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb36" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Preparation for the Model of Textbook English vs. ‘real-world’ English</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>This script documents the steps taken to pre-process the data extracted from the Textbook English Corpus (TEC) and the three reference corpora that were ultimately entered in the comparative multi-dimensional model of Textbook English as compared to English outside the EFL classroom (Chapter 7).</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Packages required</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>The following packages must be installed and loaded to process the data.</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: set-up</span></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="co">#renv::restore() # Restore the project's dependencies from the lockfile to ensure that same package versions are used as in the original thesis.</span></span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed) <span class="co"># For checking singularity issues </span></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co"># For recoding data</span></span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot) <span class="co"># For the feature correlation matrix</span></span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot) <span class="co"># For nice plots</span></span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT) <span class="co"># To display interactive HTML tables</span></span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans) <span class="co"># Comparing group means of predicted values</span></span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally) <span class="co"># For ggpairs</span></span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra) <span class="co"># For making large faceted plots</span></span>
-<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) <span class="co"># For ease of sharing</span></span>
-<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># Loaded to display the tables using the kable() function</span></span>
-<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4) <span class="co"># For mixed effects modelling</span></span>
-<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych) <span class="co"># For various useful stats function, including KMO()</span></span>
-<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># For working with colours</span></span>
-<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot) <span class="co"># For nice tabular display of regression models</span></span>
-<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># For data wrangling and plotting</span></span>
-<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visreg) <span class="co"># For nice visualisations of model results</span></span>
-<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select</span>
-<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>filter <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>filter</span>
-<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r palette}</span></span>
-<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a><span class="in"># Colours used in Register Studies paper and included in Open Access plots published on Zenodo:</span></span>
-<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a><span class="in">#colours &lt;- suf_palette(name = "london", n = 6, type = "continuous") # Very nice, similar to OrRd palette</span></span>
-<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="in">#scales::show_col(colours)</span></span>
-<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a><span class="in">#colours &lt;- colours[6:1] </span></span>
-<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a><span class="in"># Colour scheme used in PhD thesis:</span></span>
-<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a><span class="in">colours = c("#F9B921", "#A18A33",  "#722672", "#BD241E", "#15274D", "#D54E1E") </span></span>
-<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a><span class="in"># scales::show_col(colours)</span></span>
-<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data import from MFTE outputs</span></span>
-<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a>The raw data used in this script comes from the matrices of mixed normalised frequencies as output by the <span class="co">[</span><span class="ot">MFTE Perl v. 3.1</span><span class="co">](https://github.com/mshakirDr/MultiFeatureTaggerEnglish)</span> <span class="co">[</span><span class="ot">@lefoll2021</span><span class="co">]</span>.</span>
-<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spoken BNC2014</span></span>
-<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r SpokenBNC2014}</span></span>
-<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014 &lt;- read.delim(here("data", "MFTE", "SpokenBNC2014_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)</span></span>
-<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Series &lt;- "Spoken BNC2014"</span></span>
-<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Level &lt;- "Ref."</span></span>
-<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Country &lt;- "Spoken BNC2014"</span></span>
-<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Register &lt;- "Spoken BNC2014"</span></span>
-<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a>These normalised frequencies were computed on the basis of my own "John and Jill in Ivybridge" version of the Spoken BNC2014 with added full stops at speaker turns (see Appendix B for details). This corpus comprises of <span class="in">`{r} nrow(SpokenBNC2014) |&gt; format(big.mark=",")`</span> texts, all of which were used in the following analyses.</span>
-<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(SpokenBNC2014,</span>
-<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">"top"</span>,) <span class="sc">|&gt;</span> </span>
-<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatRound</span>(<span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(SpokenBNC2014), <span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### Youth Fiction corpus</span></span>
-<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r YouthFiction}</span></span>
-<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction &lt;- read.delim(here("data", "MFTE", "YF_sampled_500_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)</span></span>
-<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Series &lt;- "Youth Fiction"</span></span>
-<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Level &lt;- "Ref."</span></span>
-<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Country &lt;- "Youth Fiction"</span></span>
-<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Register &lt;- "Youth Fiction"</span></span>
-<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a>These normalised frequencies were computed on the basis of the random samples of approximately 5,000 words of the books of the Youth Fiction corpus (for details of the works included in this corpus, see Appendix B). The sampling procedure is described in Section 4.3.2.4 of the book. This dataset consists of <span class="in">`{r} nrow(YouthFiction) |&gt; format(big.mark=",")`</span> files.</span>
-<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(YouthFiction,</span>
-<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">"top"</span>,) <span class="sc">|&gt;</span> </span>
-<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatRound</span>(<span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(YouthFiction), <span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a><span class="fu">### Informative Texts for Teens (InfoTeens) corpus</span></span>
-<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r InfoTeencounts}</span></span>
-<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen &lt;- read.delim(here("data", "MFTE", "InfoTeen_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)</span></span>
-<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a><span class="in"># Removes three outlier files which should not have been included in the corpus as they contain exam papers only</span></span>
-<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen &lt;- InfoTeen |&gt; </span></span>
-<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(Filename!=".DS_Store" &amp; Filename!="Revision_World_GCSE_10529068_wjec-level-law-past-papers.txt" &amp; Filename!="Revision_World_GCSE_10528474_wjec-level-history-past-papers.txt" &amp; Filename!="Revision_World_GCSE_10528472_edexcel-level-history-past-papers.txt")</span></span>
-<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Series &lt;- "Info Teens"</span></span>
-<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Level &lt;- "Ref."</span></span>
-<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Country &lt;- "Info Teens"</span></span>
-<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Register &lt;- "Info Teens"</span></span>
-<span id="cb36-123"><a href="#cb36-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-124"><a href="#cb36-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a>Details of the composition of the Info Teens corpus can be found in Section 4.3.2.5 of the book. The version used in the present study comprises <span class="in">`{r} nrow(InfoTeen) |&gt; format(big.mark=",")`</span> texts.</span>
-<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-130"><a href="#cb36-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-131"><a href="#cb36-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(InfoTeen,</span>
-<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">"top"</span>,) <span class="sc">|&gt;</span> </span>
-<span id="cb36-135"><a href="#cb36-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatRound</span>(<span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(InfoTeen), <span class="at">digits=</span><span class="dv">2</span>)</span>
-<span id="cb36-136"><a href="#cb36-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-139"><a href="#cb36-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-140"><a href="#cb36-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## Merging TEC and reference corpora data</span></span>
-<span id="cb36-141"><a href="#cb36-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-142"><a href="#cb36-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r DataMerging}</span></span>
-<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a><span class="in">TxBncounts &lt;- readRDS(here("data", "processed", "TxBcounts.rds"))</span></span>
-<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a><span class="in">All3Reg &lt;- c("Conversation", "Fiction", "Informative")</span></span>
-<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a><span class="in">TxBncounts3Reg &lt;- TxBncounts |&gt; </span></span>
-<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(Register %in% All3Reg) |&gt; </span></span>
-<span id="cb36-151"><a href="#cb36-151" aria-hidden="true" tabindex="-1"></a><span class="in">  droplevels()</span></span>
-<span id="cb36-152"><a href="#cb36-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-153"><a href="#cb36-153" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts &lt;- bind_rows(TxBncounts3Reg, InfoTeen, SpokenBNC2014, YouthFiction, .id = "Corpus")</span></span>
-<span id="cb36-154"><a href="#cb36-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-155"><a href="#cb36-155" aria-hidden="true" tabindex="-1"></a><span class="in"># Convert all character vectors to factors</span></span>
-<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts[sapply(ncounts, is.character)] &lt;- lapply(ncounts[sapply(ncounts, is.character)], as.factor)</span></span>
-<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a><span class="in"># Change all NAs to 0</span></span>
-<span id="cb36-159"><a href="#cb36-159" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts[is.na(ncounts)] &lt;- 0</span></span>
-<span id="cb36-160"><a href="#cb36-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a><span class="in">levels(ncounts$Corpus) &lt;- list(Textbook.English="1", Informative.Teens="2", Spoken.BNC2014="3", Youth.Fiction="4")</span></span>
-<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a><span class="in"># summary(ncounts$Corpus)</span></span>
-<span id="cb36-163"><a href="#cb36-163" aria-hidden="true" tabindex="-1"></a><span class="in"># summary(ncounts$Series)</span></span>
-<span id="cb36-164"><a href="#cb36-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a><span class="in"># Wrangle metadata variables</span></span>
-<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts$Subcorpus &lt;- ncounts$Register</span></span>
-<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a><span class="in">#levels(ncounts$Subcorpus)</span></span>
-<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a><span class="in">levels(ncounts$Subcorpus) &lt;- c("Textbook Conversation", "Textbook Fiction", "Info Teens Ref.", "Textbook Informative", "Spoken BNC2014 Ref.", "Youth Fiction Ref.")</span></span>
-<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a><span class="in"># Re-order registers</span></span>
-<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a><span class="in">levels(ncounts$Register) &lt;- c("Conversation", "Fiction", "Informative", "Informative", "Conversation", "Fiction")</span></span>
-<span id="cb36-172"><a href="#cb36-172" aria-hidden="true" tabindex="-1"></a><span class="in">#summary(ncounts$Register)</span></span>
-<span id="cb36-173"><a href="#cb36-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-174"><a href="#cb36-174" aria-hidden="true" tabindex="-1"></a><span class="in"># Re-order variables</span></span>
-<span id="cb36-175"><a href="#cb36-175" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts &lt;- select(ncounts, order(names(ncounts))) |&gt; </span></span>
-<span id="cb36-176"><a href="#cb36-176" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Filename, Register, Level, Series, Country, Corpus, Subcorpus, Words, everything()) # Then place the metadata variable at the front of the table</span></span>
-<span id="cb36-177"><a href="#cb36-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-178"><a href="#cb36-178" aria-hidden="true" tabindex="-1"></a><span class="in">#saveRDS(ncounts, here("data", "processed", "counts3Reg.rds")) # Last saved 6 March 2024</span></span>
-<span id="cb36-179"><a href="#cb36-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-180"><a href="#cb36-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-181"><a href="#cb36-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-182"><a href="#cb36-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Corpus size</span></span>
-<span id="cb36-183"><a href="#cb36-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-184"><a href="#cb36-184" aria-hidden="true" tabindex="-1"></a>These tables provide some summary statistics about the texts/files whose normalised feature frequencies were entered in the model of Textbook English vs. real-world English described in Chapter 7.</span>
-<span id="cb36-185"><a href="#cb36-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-188"><a href="#cb36-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-189"><a href="#cb36-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: corpora-summary-stats</span></span>
-<span id="cb36-190"><a href="#cb36-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-191"><a href="#cb36-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-192"><a href="#cb36-192" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ncounts<span class="sc">$</span>Subcorpus) <span class="sc">|&gt;</span> </span>
-<span id="cb36-193"><a href="#cb36-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"(Sub)corpus"</span>, <span class="st">"# texts"</span>),</span>
-<span id="cb36-194"><a href="#cb36-194" aria-hidden="true" tabindex="-1"></a>        <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">","</span>))</span>
-<span id="cb36-195"><a href="#cb36-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-196"><a href="#cb36-196" aria-hidden="true" tabindex="-1"></a>ncounts  <span class="sc">|&gt;</span>  </span>
-<span id="cb36-197"><a href="#cb36-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Register) <span class="sc">|&gt;</span>  </span>
-<span id="cb36-198"><a href="#cb36-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totaltexts =</span> <span class="fu">n</span>(), </span>
-<span id="cb36-199"><a href="#cb36-199" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalwords =</span> <span class="fu">sum</span>(Words), </span>
-<span id="cb36-200"><a href="#cb36-200" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">as.integer</span>(<span class="fu">mean</span>(Words)), </span>
-<span id="cb36-201"><a href="#cb36-201" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">as.integer</span>(<span class="fu">sd</span>(Words)), </span>
-<span id="cb36-202"><a href="#cb36-202" aria-hidden="true" tabindex="-1"></a>            <span class="at">TTRmean =</span> <span class="fu">mean</span>(TTR)) <span class="sc">|&gt;</span>  </span>
-<span id="cb36-203"><a href="#cb36-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>, </span>
-<span id="cb36-204"><a href="#cb36-204" aria-hidden="true" tabindex="-1"></a>        <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">","</span>),</span>
-<span id="cb36-205"><a href="#cb36-205" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Register"</span>, <span class="st">"# texts/files"</span>, <span class="st">"# words"</span>, <span class="st">"mean # words per text"</span>, <span class="st">"SD"</span>, <span class="st">"mean TTR"</span>))</span>
-<span id="cb36-206"><a href="#cb36-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-207"><a href="#cb36-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-208"><a href="#cb36-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-209"><a href="#cb36-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data preparation for PCA</span></span>
-<span id="cb36-210"><a href="#cb36-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-211"><a href="#cb36-211" aria-hidden="true" tabindex="-1"></a><span class="fu">### Feature distributions</span></span>
-<span id="cb36-212"><a href="#cb36-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-213"><a href="#cb36-213" aria-hidden="true" tabindex="-1"></a>The distributions of each linguistic features were examined by means of visualisation. As shown below, before transformation, many of the features displayed highly skewed distributions.</span>
-<span id="cb36-214"><a href="#cb36-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-217"><a href="#cb36-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-218"><a href="#cb36-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: distribution-viz</span></span>
-<span id="cb36-219"><a href="#cb36-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-220"><a href="#cb36-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 40</span></span>
-<span id="cb36-221"><a href="#cb36-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-222"><a href="#cb36-222" aria-hidden="true" tabindex="-1"></a><span class="co">#ncounts &lt;- readRDS(here("data", "processed", "counts3Reg.rds"))</span></span>
-<span id="cb36-223"><a href="#cb36-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-224"><a href="#cb36-224" aria-hidden="true" tabindex="-1"></a>ncounts <span class="sc">|&gt;</span></span>
-<span id="cb36-225"><a href="#cb36-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Words) <span class="sc">|&gt;</span> </span>
-<span id="cb36-226"><a href="#cb36-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(is.numeric) <span class="sc">|&gt;</span> </span>
-<span id="cb36-227"><a href="#cb36-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>() <span class="sc">|&gt;</span> <span class="co"># This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet_wrap function from ggplot2</span></span>
-<span id="cb36-228"><a href="#cb36-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
-<span id="cb36-229"><a href="#cb36-229" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb36-230"><a href="#cb36-230" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> key, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb36-231"><a href="#cb36-231" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb36-232"><a href="#cb36-232" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="cn">NA</span>)) <span class="sc">+</span></span>
-<span id="cb36-233"><a href="#cb36-233" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">colour=</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
-<span id="cb36-234"><a href="#cb36-234" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">colour =</span> <span class="st">"darkred"</span>, <span class="at">weight =</span> <span class="dv">2</span>, <span class="at">fill=</span><span class="st">"darkred"</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)</span>
-<span id="cb36-235"><a href="#cb36-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-236"><a href="#cb36-236" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "DensityPlotsAllVariables.svg"), width = 15, height = 49)</span></span>
-<span id="cb36-237"><a href="#cb36-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-238"><a href="#cb36-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-239"><a href="#cb36-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-240"><a href="#cb36-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### Feature removal</span></span>
-<span id="cb36-241"><a href="#cb36-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-242"><a href="#cb36-242" aria-hidden="true" tabindex="-1"></a>A number of features were removed from the dataset as they are not linguistically interpretable. In the case of the TEC, this included the variable CD because numbers spelt out as digits were removed from the textbooks before these were tagged with the MFTE. In addition, the variables LIKE and SO because these are "bin" features included in the output of the MFTE to ensure that the counts for these polysemous words do not inflate other categories due to mistags <span class="co">[</span><span class="ot">@lefoll2021a</span><span class="co">]</span>.</span>
-<span id="cb36-243"><a href="#cb36-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-244"><a href="#cb36-244" aria-hidden="true" tabindex="-1"></a>Whenever linguistically meaningful, very low-frequency features, features with low MSA or communalities (see chunks below) were merged. Finally, features absent from more than third of texts were also excluded. For the comparative analysis of TEC and the reference corpora, the following linguistic features were excluded from the analysis due to low dispersion:</span>
-<span id="cb36-245"><a href="#cb36-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-248"><a href="#cb36-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-249"><a href="#cb36-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: feature-removal</span></span>
-<span id="cb36-250"><a href="#cb36-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-251"><a href="#cb36-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-252"><a href="#cb36-252" aria-hidden="true" tabindex="-1"></a><span class="co"># Removal of meaningless feature: CD because numbers as digits were mostly removed from the textbooks, LIKE and SO because they are dustbin categories</span></span>
-<span id="cb36-253"><a href="#cb36-253" aria-hidden="true" tabindex="-1"></a>ncounts <span class="ot">&lt;-</span> ncounts <span class="sc">|&gt;</span> </span>
-<span id="cb36-254"><a href="#cb36-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(CD, LIKE, SO))</span>
-<span id="cb36-255"><a href="#cb36-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-256"><a href="#cb36-256" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine problematic features into meaningful groups whenever this makes linguistic sense</span></span>
-<span id="cb36-257"><a href="#cb36-257" aria-hidden="true" tabindex="-1"></a>ncounts <span class="ot">&lt;-</span> ncounts <span class="sc">|&gt;</span> </span>
-<span id="cb36-258"><a href="#cb36-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">JJPR =</span> JJPR <span class="sc">+</span> ABLE, <span class="at">ABLE =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb36-259"><a href="#cb36-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PASS =</span> PGET <span class="sc">+</span> PASS, <span class="at">PGET =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb36-260"><a href="#cb36-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TPP3 =</span> TPP3S <span class="sc">+</span> TPP3P, <span class="at">TPP3P =</span> <span class="cn">NULL</span>, <span class="at">TPP3S =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span> <span class="co"># Merged due to TTP3P having an individual MSA &lt; 0.5</span></span>
-<span id="cb36-261"><a href="#cb36-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FQTI =</span> FREQ <span class="sc">+</span> TIME, <span class="at">FREQ =</span> <span class="cn">NULL</span>, <span class="at">TIME =</span> <span class="cn">NULL</span>) <span class="co"># Merged due to TIME communality &lt; 0.2 (see below)</span></span>
-<span id="cb36-262"><a href="#cb36-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-263"><a href="#cb36-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to compute percentage of texts with occurrences meeting a condition</span></span>
-<span id="cb36-264"><a href="#cb36-264" aria-hidden="true" tabindex="-1"></a>compute_percentage <span class="ot">&lt;-</span> <span class="cf">function</span>(data, condition, threshold) {</span>
-<span id="cb36-265"><a href="#cb36-265" aria-hidden="true" tabindex="-1"></a>  numeric_data <span class="ot">&lt;-</span> <span class="fu">Filter</span>(is.numeric, data)</span>
-<span id="cb36-266"><a href="#cb36-266" aria-hidden="true" tabindex="-1"></a>  percentage <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">colSums</span>(condition[, <span class="fu">sapply</span>(numeric_data, is.numeric)])<span class="sc">/</span><span class="fu">nrow</span>(data) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>)</span>
-<span id="cb36-267"><a href="#cb36-267" aria-hidden="true" tabindex="-1"></a>  percentage <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(percentage)</span>
-<span id="cb36-268"><a href="#cb36-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(percentage) <span class="ot">&lt;-</span> <span class="st">"Percentage"</span></span>
-<span id="cb36-269"><a href="#cb36-269" aria-hidden="true" tabindex="-1"></a>  percentage <span class="ot">&lt;-</span> percentage <span class="sc">|&gt;</span> </span>
-<span id="cb36-270"><a href="#cb36-270" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Percentage)) <span class="sc">|&gt;</span></span>
-<span id="cb36-271"><a href="#cb36-271" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>() <span class="sc">|&gt;</span></span>
-<span id="cb36-272"><a href="#cb36-272" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(Percentage)</span>
-<span id="cb36-273"><a href="#cb36-273" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(threshold)) {</span>
-<span id="cb36-274"><a href="#cb36-274" aria-hidden="true" tabindex="-1"></a>    percentage <span class="ot">&lt;-</span> percentage <span class="sc">|&gt;</span> </span>
-<span id="cb36-275"><a href="#cb36-275" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(Percentage <span class="sc">&gt;</span> threshold)</span>
-<span id="cb36-276"><a href="#cb36-276" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb36-277"><a href="#cb36-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(percentage)</span>
-<span id="cb36-278"><a href="#cb36-278" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb36-279"><a href="#cb36-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-280"><a href="#cb36-280" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate percentage of texts with 0 occurrences of each feature</span></span>
-<span id="cb36-281"><a href="#cb36-281" aria-hidden="true" tabindex="-1"></a>zero_features <span class="ot">&lt;-</span> <span class="fu">compute_percentage</span>(ncounts, ncounts <span class="sc">==</span> <span class="dv">0</span>, <span class="fl">66.6</span>)</span>
-<span id="cb36-282"><a href="#cb36-282" aria-hidden="true" tabindex="-1"></a>zero_features <span class="sc">|&gt;</span> </span>
-<span id="cb36-283"><a href="#cb36-283" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Feature"</span>, <span class="st">"% texts with zero occurrences"</span>))</span>
-<span id="cb36-284"><a href="#cb36-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-285"><a href="#cb36-285" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop variables with low document frequency</span></span>
-<span id="cb36-286"><a href="#cb36-286" aria-hidden="true" tabindex="-1"></a>ncounts2 <span class="ot">&lt;-</span> <span class="fu">select</span>(ncounts, <span class="sc">-</span><span class="fu">one_of</span>(zero_features<span class="sc">$</span>rowname))</span>
-<span id="cb36-287"><a href="#cb36-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-288"><a href="#cb36-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-289"><a href="#cb36-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-290"><a href="#cb36-290" aria-hidden="true" tabindex="-1"></a>These feature removal operations resulted in a feature set of <span class="in">`{r} ncol(ncounts2)-8`</span> linguistic variables.</span>
-<span id="cb36-291"><a href="#cb36-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-292"><a href="#cb36-292" aria-hidden="true" tabindex="-1"></a><span class="fu">### Identifying outlier texts</span></span>
-<span id="cb36-293"><a href="#cb36-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-294"><a href="#cb36-294" aria-hidden="true" tabindex="-1"></a>All normalised frequencies were normalised to identify any potential outlier texts.</span>
-<span id="cb36-295"><a href="#cb36-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-298"><a href="#cb36-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-299"><a href="#cb36-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: z-standardisation-outliers</span></span>
-<span id="cb36-300"><a href="#cb36-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 15</span></span>
-<span id="cb36-301"><a href="#cb36-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
-<span id="cb36-302"><a href="#cb36-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-303"><a href="#cb36-303" aria-hidden="true" tabindex="-1"></a><span class="co"># First scale the normalised counts (z-standardisation) to be able to compare the various features</span></span>
-<span id="cb36-304"><a href="#cb36-304" aria-hidden="true" tabindex="-1"></a>zcounts <span class="ot">&lt;-</span> ncounts2 <span class="sc">|&gt;</span></span>
-<span id="cb36-305"><a href="#cb36-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Words) <span class="sc">|&gt;</span> </span>
-<span id="cb36-306"><a href="#cb36-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(is.numeric) <span class="sc">|&gt;</span> </span>
-<span id="cb36-307"><a href="#cb36-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale</span>()</span>
-<span id="cb36-308"><a href="#cb36-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-309"><a href="#cb36-309" aria-hidden="true" tabindex="-1"></a><span class="co"># If necessary, remove any outliers at this stage.</span></span>
-<span id="cb36-310"><a href="#cb36-310" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ncounts2[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="fu">as.data.frame</span>(zcounts))</span>
-<span id="cb36-311"><a href="#cb36-311" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
-<span id="cb36-312"><a href="#cb36-312" aria-hidden="true" tabindex="-1"></a> <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">where</span>(is.numeric) <span class="sc">&amp;</span> <span class="sc">!</span>Words,  <span class="at">.fns =</span> <span class="cf">function</span>(x){x <span class="sc">&gt;</span> <span class="dv">8</span>}))  <span class="sc">|&gt;</span></span>
-<span id="cb36-313"><a href="#cb36-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Filename, Corpus, Register, Words) </span>
-<span id="cb36-314"><a href="#cb36-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-315"><a href="#cb36-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-316"><a href="#cb36-316" aria-hidden="true" tabindex="-1"></a>The following outlier texts were identified according to the above conditions and excluded in subsequent analyses.</span>
-<span id="cb36-317"><a href="#cb36-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-320"><a href="#cb36-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-321"><a href="#cb36-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: list-outliers</span></span>
-<span id="cb36-322"><a href="#cb36-322" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-323"><a href="#cb36-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-324"><a href="#cb36-324" aria-hidden="true" tabindex="-1"></a><span class="co"># These are potential outlier texts :</span></span>
-<span id="cb36-325"><a href="#cb36-325" aria-hidden="true" tabindex="-1"></a>outliers <span class="sc">|&gt;</span> </span>
-<span id="cb36-326"><a href="#cb36-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Filename"</span>, <span class="st">"Corpus"</span>, <span class="st">"Register"</span>, <span class="st">"# words"</span>))</span>
-<span id="cb36-327"><a href="#cb36-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-328"><a href="#cb36-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-329"><a href="#cb36-329" aria-hidden="true" tabindex="-1"></a>We check that that outlier texts are not particularly long or short texts by looking at the distribution of text/file length of the outliers.</span>
-<span id="cb36-330"><a href="#cb36-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-333"><a href="#cb36-333" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-334"><a href="#cb36-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-335"><a href="#cb36-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-336"><a href="#cb36-336" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(outliers<span class="sc">$</span>Words)</span>
-<span id="cb36-337"><a href="#cb36-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-338"><a href="#cb36-338" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(outliers<span class="sc">$</span>Words, <span class="at">breaks =</span> <span class="dv">30</span>)</span>
-<span id="cb36-339"><a href="#cb36-339" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-340"><a href="#cb36-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-341"><a href="#cb36-341" aria-hidden="true" tabindex="-1"></a>We also check the distribution of outlier texts across the four corpora. The majority come from the Info Teens corpus, though quite a few are also from the TEC.</span>
-<span id="cb36-342"><a href="#cb36-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-345"><a href="#cb36-345" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-346"><a href="#cb36-346" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-347"><a href="#cb36-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-348"><a href="#cb36-348" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(outliers<span class="sc">$</span>Corpus) <span class="sc">|&gt;</span> </span>
-<span id="cb36-349"><a href="#cb36-349" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"(Sub)corpus"</span>, <span class="st">"# outlier texts"</span>))</span>
-<span id="cb36-350"><a href="#cb36-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-351"><a href="#cb36-351" aria-hidden="true" tabindex="-1"></a><span class="co"># Report on the manual check of a sample of these outliers:</span></span>
-<span id="cb36-352"><a href="#cb36-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-353"><a href="#cb36-353" aria-hidden="true" tabindex="-1"></a><span class="co"># Encyclopedia_Kinds_au_10085347_Nobel_Prize_in_Chemistry.txt is essentially a list of Nobel prize winners but with some additional information. In other words, not a bad representative of the type of texts of the Info Teen corpus.</span></span>
-<span id="cb36-354"><a href="#cb36-354" aria-hidden="true" tabindex="-1"></a><span class="co"># Solutions_Elementary_ELF_Spoken_0013 --&gt; Has a lot of "going to" constructions because they are learnt in this chapter but is otherwise a well-formed text.</span></span>
-<span id="cb36-355"><a href="#cb36-355" aria-hidden="true" tabindex="-1"></a><span class="co"># Teen_Kids_News_10403972_a-brief-history-of-white-house-weddings --&gt; No issues</span></span>
-<span id="cb36-356"><a href="#cb36-356" aria-hidden="true" tabindex="-1"></a><span class="co"># Teen_Kids_News_10403301_golden-globe-winners-2019-the-complete-list --&gt; Similar to the Nobel prize laureates text.</span></span>
-<span id="cb36-357"><a href="#cb36-357" aria-hidden="true" tabindex="-1"></a><span class="co"># Revision_World_GCSE_10528123_gender-written-textual-analysis-framework --&gt; Text includes bullet points tokenised as the letter "o" but otherwise a fairly typical informative text.</span></span>
-<span id="cb36-358"><a href="#cb36-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-359"><a href="#cb36-359" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing the outliers at the request of the reviewers (but comparisons of models including the outliers showed that the results are very similar):</span></span>
-<span id="cb36-360"><a href="#cb36-360" aria-hidden="true" tabindex="-1"></a>ncounts3 <span class="ot">&lt;-</span> ncounts2 <span class="sc">|&gt;</span> </span>
-<span id="cb36-361"><a href="#cb36-361" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Filename <span class="sc">%in%</span> outliers<span class="sc">$</span>Filename)</span>
-<span id="cb36-362"><a href="#cb36-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-363"><a href="#cb36-363" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(ncounts3, here("data", "processed", "ncounts3_3Reg.rds")) # Last saved 6 March 2024</span></span>
-<span id="cb36-364"><a href="#cb36-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-365"><a href="#cb36-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-366"><a href="#cb36-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-367"><a href="#cb36-367" aria-hidden="true" tabindex="-1"></a>This resulted in <span class="in">`{r} nrow(ncounts3) |&gt; format(big.mark=",")`</span> texts/files being included in the comparative model of Textbook English vs. 'real-world' English. These standardised feature frequencies were distributed as follows:</span>
-<span id="cb36-368"><a href="#cb36-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-371"><a href="#cb36-371" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-372"><a href="#cb36-372" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: z-transformed-distributions</span></span>
-<span id="cb36-373"><a href="#cb36-373" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 15</span></span>
-<span id="cb36-374"><a href="#cb36-374" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
-<span id="cb36-375"><a href="#cb36-375" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-376"><a href="#cb36-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-377"><a href="#cb36-377" aria-hidden="true" tabindex="-1"></a>zcounts3 <span class="ot">&lt;-</span> ncounts3 <span class="sc">|&gt;</span></span>
-<span id="cb36-378"><a href="#cb36-378" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Words) <span class="sc">|&gt;</span> </span>
-<span id="cb36-379"><a href="#cb36-379" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(is.numeric) <span class="sc">|&gt;</span> </span>
-<span id="cb36-380"><a href="#cb36-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale</span>()</span>
-<span id="cb36-381"><a href="#cb36-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-382"><a href="#cb36-382" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(zcounts3, <span class="at">las =</span> <span class="dv">3</span>, <span class="at">main =</span> <span class="st">"z-scores"</span>) <span class="co"># Slow</span></span>
-<span id="cb36-383"><a href="#cb36-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-384"><a href="#cb36-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-385"><a href="#cb36-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-386"><a href="#cb36-386" aria-hidden="true" tabindex="-1"></a><span class="fu">### Signed log transformation</span></span>
-<span id="cb36-387"><a href="#cb36-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-388"><a href="#cb36-388" aria-hidden="true" tabindex="-1"></a>A signed logarithmic transformation was applied to (further) deskew the feature distributions <span class="co">[</span><span class="ot">see @diwersy2014; @neumann2021</span><span class="co">]</span>.</span>
-<span id="cb36-389"><a href="#cb36-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-390"><a href="#cb36-390" aria-hidden="true" tabindex="-1"></a>The signed log transformation function was inspired by the SignedLog function proposed in <span class="ot">&lt;https://cran.r-project.org/web/packages/DataVisualizations/DataVisualizations.pdf&gt;</span>.</span>
-<span id="cb36-391"><a href="#cb36-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-394"><a href="#cb36-394" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-395"><a href="#cb36-395" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: signed.log.transformation</span></span>
-<span id="cb36-396"><a href="#cb36-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-397"><a href="#cb36-397" aria-hidden="true" tabindex="-1"></a>signed.log <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="fu">sign</span>(x)<span class="sc">*</span><span class="fu">log</span>(<span class="fu">abs</span>(x)<span class="sc">+</span><span class="dv">1</span>)}</span>
-<span id="cb36-398"><a href="#cb36-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-399"><a href="#cb36-399" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardise first, then sign log transform</span></span>
-<span id="cb36-400"><a href="#cb36-400" aria-hidden="true" tabindex="-1"></a>zlogcounts <span class="ot">&lt;-</span> <span class="fu">signed.log</span>(zcounts3) </span>
-<span id="cb36-401"><a href="#cb36-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-402"><a href="#cb36-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-403"><a href="#cb36-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-406"><a href="#cb36-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-407"><a href="#cb36-407" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb36-408"><a href="#cb36-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-409"><a href="#cb36-409" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(zlogcounts, here("data", "processed", "zlogcounts_3Reg.rds")) # Last saved 16 March 2024</span></span>
-<span id="cb36-410"><a href="#cb36-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-411"><a href="#cb36-411" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-412"><a href="#cb36-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-413"><a href="#cb36-413" aria-hidden="true" tabindex="-1"></a>The new feature distributions are visualised below.</span>
-<span id="cb36-414"><a href="#cb36-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-417"><a href="#cb36-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-418"><a href="#cb36-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: signed.log.transformation-distributions</span></span>
-<span id="cb36-419"><a href="#cb36-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 40</span></span>
-<span id="cb36-420"><a href="#cb36-420" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-421"><a href="#cb36-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-422"><a href="#cb36-422" aria-hidden="true" tabindex="-1"></a>zlogcounts <span class="sc">|&gt;</span></span>
-<span id="cb36-423"><a href="#cb36-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb36-424"><a href="#cb36-424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>() <span class="sc">|&gt;</span> <span class="co"># This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet_wrap function from ggplot2</span></span>
-<span id="cb36-425"><a href="#cb36-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
-<span id="cb36-426"><a href="#cb36-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb36-427"><a href="#cb36-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> key, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb36-428"><a href="#cb36-428" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb36-429"><a href="#cb36-429" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="cn">NA</span>)) <span class="sc">+</span></span>
-<span id="cb36-430"><a href="#cb36-430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">colour=</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
-<span id="cb36-431"><a href="#cb36-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour =</span> <span class="st">"darkred"</span>, <span class="at">weight =</span> <span class="dv">2</span>, <span class="at">fill=</span><span class="st">"darkred"</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)</span>
-<span id="cb36-432"><a href="#cb36-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-433"><a href="#cb36-433" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "DensityPlotsAllVariablesSignedLog.svg"), width = 15, height = 49)</span></span>
-<span id="cb36-434"><a href="#cb36-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-435"><a href="#cb36-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-436"><a href="#cb36-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-437"><a href="#cb36-437" aria-hidden="true" tabindex="-1"></a><span class="fu">### Merging of data for MDA</span></span>
-<span id="cb36-438"><a href="#cb36-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-441"><a href="#cb36-441" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-442"><a href="#cb36-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-443"><a href="#cb36-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-444"><a href="#cb36-444" aria-hidden="true" tabindex="-1"></a>zlogcounts <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"zlogcounts_3Reg.rds"</span>)) </span>
-<span id="cb36-445"><a href="#cb36-445" aria-hidden="true" tabindex="-1"></a><span class="co">#nrow(zlogcounts)</span></span>
-<span id="cb36-446"><a href="#cb36-446" aria-hidden="true" tabindex="-1"></a><span class="co">#colnames(zlogcounts)</span></span>
-<span id="cb36-447"><a href="#cb36-447" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-448"><a href="#cb36-448" aria-hidden="true" tabindex="-1"></a>ncounts3 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"ncounts3_3Reg.rds"</span>))</span>
-<span id="cb36-449"><a href="#cb36-449" aria-hidden="true" tabindex="-1"></a><span class="co">#nrow(ncounts3)</span></span>
-<span id="cb36-450"><a href="#cb36-450" aria-hidden="true" tabindex="-1"></a><span class="co">#colnames(ncounts3)</span></span>
-<span id="cb36-451"><a href="#cb36-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-452"><a href="#cb36-452" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ncounts3[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="fu">as.data.frame</span>(zlogcounts))</span>
-<span id="cb36-453"><a href="#cb36-453" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(data, here("data", "processed", "datazlogcounts_3Reg.rds")) # Last saved 16 March 2024</span></span>
-<span id="cb36-454"><a href="#cb36-454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-455"><a href="#cb36-455" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-456"><a href="#cb36-456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-457"><a href="#cb36-457" aria-hidden="true" tabindex="-1"></a>The final dataset comprises of <span class="in">`{r} nrow(data) |&gt; format(big.mark=",")`</span> texts/files, divided as follows:</span>
-<span id="cb36-458"><a href="#cb36-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-461"><a href="#cb36-461" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-462"><a href="#cb36-462" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb36-463"><a href="#cb36-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-464"><a href="#cb36-464" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>Subcorpus) <span class="sc">|&gt;</span> </span>
-<span id="cb36-465"><a href="#cb36-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"(Sub)corpus"</span>, <span class="st">"# texts/files"</span>))</span>
-<span id="cb36-466"><a href="#cb36-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-467"><a href="#cb36-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-468"><a href="#cb36-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-469"><a href="#cb36-469" aria-hidden="true" tabindex="-1"></a><span class="in">```{r prepare-data}</span></span>
-<span id="cb36-470"><a href="#cb36-470" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb36-471"><a href="#cb36-471" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-472"><a href="#cb36-472" aria-hidden="true" tabindex="-1"></a><span class="in"># Quick import</span></span>
-<span id="cb36-473"><a href="#cb36-473" aria-hidden="true" tabindex="-1"></a><span class="in">#data &lt;- readRDS(here("data", "processed", "datazlogcounts_3Reg.rds"))</span></span>
-<span id="cb36-474"><a href="#cb36-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-475"><a href="#cb36-475" aria-hidden="true" tabindex="-1"></a><span class="in"># This rearranges the levels in the desired order for the plot legends:</span></span>
-<span id="cb36-476"><a href="#cb36-476" aria-hidden="true" tabindex="-1"></a><span class="in">data &lt;- data |&gt; </span></span>
-<span id="cb36-477"><a href="#cb36-477" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(Subcorpus = fct_relevel(Subcorpus, "Info Teens Ref.", after = 9))</span></span>
-<span id="cb36-478"><a href="#cb36-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-479"><a href="#cb36-479" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-480"><a href="#cb36-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-481"><a href="#cb36-481" aria-hidden="true" tabindex="-1"></a><span class="fu">## Testing factorability of data</span></span>
-<span id="cb36-482"><a href="#cb36-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-483"><a href="#cb36-483" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualisation of feature correlations</span></span>
-<span id="cb36-484"><a href="#cb36-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-485"><a href="#cb36-485" aria-hidden="true" tabindex="-1"></a>We begin by visualising the correlations of the transformed feature frequencies using the <span class="in">`heatmap`</span> function of the <span class="in">`stats`</span> library. Negative correlations are rendered in blue; positive ones are in red.</span>
-<span id="cb36-486"><a href="#cb36-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-487"><a href="#cb36-487" aria-hidden="true" tabindex="-1"></a><span class="in">```{r heatmap}</span></span>
-<span id="cb36-488"><a href="#cb36-488" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb36-489"><a href="#cb36-489" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 15</span></span>
-<span id="cb36-490"><a href="#cb36-490" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-491"><a href="#cb36-491" aria-hidden="true" tabindex="-1"></a><span class="in"># Simple heatmap in base R (inspired by Stephanie Evert's SIGIL code)</span></span>
-<span id="cb36-492"><a href="#cb36-492" aria-hidden="true" tabindex="-1"></a><span class="in">cor.colours &lt;- c(</span></span>
-<span id="cb36-493"><a href="#cb36-493" aria-hidden="true" tabindex="-1"></a><span class="in">  hsv(h=2/3, v=1, s=(10:1)/10), # blue = negative correlation </span></span>
-<span id="cb36-494"><a href="#cb36-494" aria-hidden="true" tabindex="-1"></a><span class="in">  rgb(1,1,1), # white = no correlation </span></span>
-<span id="cb36-495"><a href="#cb36-495" aria-hidden="true" tabindex="-1"></a><span class="in">  hsv(h=0, v=1, s=(1:10/10))) # red = positive correlation</span></span>
-<span id="cb36-496"><a href="#cb36-496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-497"><a href="#cb36-497" aria-hidden="true" tabindex="-1"></a><span class="in">#png(here("plots", "heatmapzlogcounts.png"), width = 30, height= 30, units = "cm", res = 300)</span></span>
-<span id="cb36-498"><a href="#cb36-498" aria-hidden="true" tabindex="-1"></a><span class="in">heatmap(cor(zlogcounts), </span></span>
-<span id="cb36-499"><a href="#cb36-499" aria-hidden="true" tabindex="-1"></a><span class="in">        symm=TRUE, </span></span>
-<span id="cb36-500"><a href="#cb36-500" aria-hidden="true" tabindex="-1"></a><span class="in">        zlim=c(-1,1), </span></span>
-<span id="cb36-501"><a href="#cb36-501" aria-hidden="true" tabindex="-1"></a><span class="in">        col=cor.colours, </span></span>
-<span id="cb36-502"><a href="#cb36-502" aria-hidden="true" tabindex="-1"></a><span class="in">        margins=c(7,7))</span></span>
-<span id="cb36-503"><a href="#cb36-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-504"><a href="#cb36-504" aria-hidden="true" tabindex="-1"></a><span class="in">#dev.off()</span></span>
-<span id="cb36-505"><a href="#cb36-505" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-506"><a href="#cb36-506" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-507"><a href="#cb36-507" aria-hidden="true" tabindex="-1"></a><span class="fu">### Collinearity</span></span>
-<span id="cb36-508"><a href="#cb36-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-509"><a href="#cb36-509" aria-hidden="true" tabindex="-1"></a>As a result of the normalisation unit of finite verb phrases for verb-based features, the present tense (VPRT) and past tense (VBD) variables are correlated to a very high degree:</span>
-<span id="cb36-510"><a href="#cb36-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-511"><a href="#cb36-511" aria-hidden="true" tabindex="-1"></a><span class="in">```{r collinear}</span></span>
-<span id="cb36-512"><a href="#cb36-512" aria-hidden="true" tabindex="-1"></a><span class="in">cor(data$VPRT, data$VBD) |&gt; round(2)</span></span>
-<span id="cb36-513"><a href="#cb36-513" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-514"><a href="#cb36-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-515"><a href="#cb36-515" aria-hidden="true" tabindex="-1"></a>We therefore remove the least marked of the pair of collinear variables: VPRT.</span>
-<span id="cb36-516"><a href="#cb36-516" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-517"><a href="#cb36-517" aria-hidden="true" tabindex="-1"></a><span class="in">```{r collinear2}</span></span>
-<span id="cb36-518"><a href="#cb36-518" aria-hidden="true" tabindex="-1"></a><span class="in">data &lt;- data |&gt; </span></span>
-<span id="cb36-519"><a href="#cb36-519" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-c(VPRT))</span></span>
-<span id="cb36-520"><a href="#cb36-520" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-521"><a href="#cb36-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-522"><a href="#cb36-522" aria-hidden="true" tabindex="-1"></a><span class="fu">### MSA</span></span>
-<span id="cb36-523"><a href="#cb36-523" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-524"><a href="#cb36-524" aria-hidden="true" tabindex="-1"></a><span class="in">```{r factorability.TEC}</span></span>
-<span id="cb36-525"><a href="#cb36-525" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-526"><a href="#cb36-526" aria-hidden="true" tabindex="-1"></a><span class="in">kmo &lt;- KMO(data[,9:ncol(data)]) # The first eight columns contain metadata.</span></span>
-<span id="cb36-527"><a href="#cb36-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-528"><a href="#cb36-528" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-529"><a href="#cb36-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-530"><a href="#cb36-530" aria-hidden="true" tabindex="-1"></a>The overall MSA value of the dataset is <span class="in">`{r} kmo$MSA |&gt; round(2)`</span>. The features have the following individual MSA values (ordered from lowest to largest):</span>
-<span id="cb36-531"><a href="#cb36-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-534"><a href="#cb36-534" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-535"><a href="#cb36-535" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-536"><a href="#cb36-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-537"><a href="#cb36-537" aria-hidden="true" tabindex="-1"></a>kmo<span class="sc">$</span>MSAi[<span class="fu">order</span>(kmo<span class="sc">$</span>MSAi)] <span class="sc">|&gt;</span>  <span class="fu">round</span>(<span class="dv">2</span>)</span>
-<span id="cb36-538"><a href="#cb36-538" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-539"><a href="#cb36-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-540"><a href="#cb36-540" aria-hidden="true" tabindex="-1"></a>We aim to remove features with an individual MSA <span class="sc">\&lt;</span> 0.5. All features have individual MSAs of <span class="sc">\&gt;</span> 0.5 (but only because TPP3P was merged into a broader category in an earlier chunk).</span>
-<span id="cb36-541"><a href="#cb36-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-542"><a href="#cb36-542" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scree plot</span></span>
-<span id="cb36-543"><a href="#cb36-543" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-544"><a href="#cb36-544" aria-hidden="true" tabindex="-1"></a>Six components were originally retained on the basis of the following screeplot, though only the first four were found to be interpretable and were therefore included in the model.</span>
-<span id="cb36-545"><a href="#cb36-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-548"><a href="#cb36-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb36-549"><a href="#cb36-549" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb36-550"><a href="#cb36-550" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-551"><a href="#cb36-551" aria-hidden="true" tabindex="-1"></a><span class="co"># png(here("plots", "screeplot-TEC-Ref_3Reg.png"), width = 20, height= 12, units = "cm", res = 300)</span></span>
-<span id="cb36-552"><a href="#cb36-552" aria-hidden="true" tabindex="-1"></a><span class="fu">scree</span>(data[,<span class="dv">9</span><span class="sc">:</span><span class="fu">ncol</span>(data)], <span class="at">factors =</span> <span class="cn">FALSE</span>, <span class="at">pc =</span> <span class="cn">TRUE</span>) <span class="co"># </span></span>
-<span id="cb36-553"><a href="#cb36-553" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span>
-<span id="cb36-554"><a href="#cb36-554" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-555"><a href="#cb36-555" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA</span></span>
-<span id="cb36-556"><a href="#cb36-556" aria-hidden="true" tabindex="-1"></a>pca1 <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">principal</span>(data[<span class="dv">9</span><span class="sc">:</span><span class="fu">ncol</span>(data)], </span>
-<span id="cb36-557"><a href="#cb36-557" aria-hidden="true" tabindex="-1"></a>                         <span class="at">nfactors =</span> <span class="dv">6</span>)</span>
-<span id="cb36-558"><a href="#cb36-558" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-559"><a href="#cb36-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-560"><a href="#cb36-560" aria-hidden="true" tabindex="-1"></a><span class="fu">### Communalities</span></span>
-<span id="cb36-561"><a href="#cb36-561" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-562"><a href="#cb36-562" aria-hidden="true" tabindex="-1"></a>If features with final communalities of <span class="sc">\&lt;</span> 0.2 are removed, TIME would have to be removed. TIME was therefore merged with FREQ in an earlier chunk so that now all features have final communalities of <span class="sc">\&gt;</span> 0.2 (note that this is a very generous threshold!).</span>
-<span id="cb36-563"><a href="#cb36-563" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-564"><a href="#cb36-564" aria-hidden="true" tabindex="-1"></a><span class="in">```{r communalities}</span></span>
-<span id="cb36-565"><a href="#cb36-565" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
-<span id="cb36-566"><a href="#cb36-566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-567"><a href="#cb36-567" aria-hidden="true" tabindex="-1"></a><span class="in">pca1$communality |&gt; sort() |&gt; round(2)</span></span>
-<span id="cb36-568"><a href="#cb36-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-569"><a href="#cb36-569" aria-hidden="true" tabindex="-1"></a><span class="in">#saveRDS(data, here("data", "processed", "dataforPCA.rds")) # Last saved on 6 March 2024</span></span>
-<span id="cb36-570"><a href="#cb36-570" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-571"><a href="#cb36-571" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb36-572"><a href="#cb36-572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-573"><a href="#cb36-573" aria-hidden="true" tabindex="-1"></a>The final dataset entered in the analysis described in Chapter 7 therefore comprises <span class="in">`{r} nrow(data)  |&gt; format(big.mark=",")`</span> texts/files, each with logged standardised normalised frequencies for <span class="in">`{r} ncol(data)-8`</span> linguistic features.</span>
+<div class="sourceCode" id="cb37" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Preparation for the Model of Textbook English vs. ‘real-world’ English</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>This script documents the steps taken to pre-process the data extracted from the Textbook English Corpus (TEC) and the three reference corpora that were ultimately entered in the comparative multi-dimensional model of Textbook English as compared to English outside the EFL classroom (Chapter 7).</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Packages required</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>The following packages must be installed and loaded to process the data.</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: set-up</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co">#renv::restore() # Restore the project's dependencies from the lockfile to ensure that same package versions are used as in the original thesis.</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed) <span class="co"># For checking singularity issues </span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co"># For recoding data</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot) <span class="co"># For the feature correlation matrix</span></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot) <span class="co"># For nice plots</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT) <span class="co"># To display interactive HTML tables</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans) <span class="co"># Comparing group means of predicted values</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally) <span class="co"># For ggpairs</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra) <span class="co"># For making large faceted plots</span></span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) <span class="co"># For ease of sharing</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># Loaded to display the tables using the kable() function</span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4) <span class="co"># For mixed effects modelling</span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych) <span class="co"># For various useful stats function, including KMO()</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># For working with colours</span></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot) <span class="co"># For nice tabular display of regression models</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># For data wrangling and plotting</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visreg) <span class="co"># For nice visualisations of model results</span></span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>select <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>select</span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>filter <span class="ot">&lt;-</span> dplyr<span class="sc">::</span>filter</span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-36"><a href="#cb37-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r palette}</span></span>
+<span id="cb37-37"><a href="#cb37-37" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb37-38"><a href="#cb37-38" aria-hidden="true" tabindex="-1"></a><span class="in"># Colours used in Register Studies paper and included in Open Access plots published on Zenodo:</span></span>
+<span id="cb37-39"><a href="#cb37-39" aria-hidden="true" tabindex="-1"></a><span class="in">#colours &lt;- suf_palette(name = "london", n = 6, type = "continuous") # Very nice, similar to OrRd palette</span></span>
+<span id="cb37-40"><a href="#cb37-40" aria-hidden="true" tabindex="-1"></a><span class="in">#scales::show_col(colours)</span></span>
+<span id="cb37-41"><a href="#cb37-41" aria-hidden="true" tabindex="-1"></a><span class="in">#colours &lt;- colours[6:1] </span></span>
+<span id="cb37-42"><a href="#cb37-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-43"><a href="#cb37-43" aria-hidden="true" tabindex="-1"></a><span class="in"># Colour scheme used in PhD thesis:</span></span>
+<span id="cb37-44"><a href="#cb37-44" aria-hidden="true" tabindex="-1"></a><span class="in">colours = c("#F9B921", "#A18A33",  "#722672", "#BD241E", "#15274D", "#D54E1E") </span></span>
+<span id="cb37-45"><a href="#cb37-45" aria-hidden="true" tabindex="-1"></a><span class="in"># scales::show_col(colours)</span></span>
+<span id="cb37-46"><a href="#cb37-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-47"><a href="#cb37-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-48"><a href="#cb37-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-49"><a href="#cb37-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data import from MFTE outputs</span></span>
+<span id="cb37-50"><a href="#cb37-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-51"><a href="#cb37-51" aria-hidden="true" tabindex="-1"></a>The raw data used in this script comes from the matrices of mixed normalised frequencies as output by the <span class="co">[</span><span class="ot">MFTE Perl v. 3.1</span><span class="co">](https://github.com/mshakirDr/MultiFeatureTaggerEnglish)</span> <span class="co">[</span><span class="ot">@lefoll2021</span><span class="co">]</span>.</span>
+<span id="cb37-52"><a href="#cb37-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-53"><a href="#cb37-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spoken BNC2014</span></span>
+<span id="cb37-54"><a href="#cb37-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-55"><a href="#cb37-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r SpokenBNC2014}</span></span>
+<span id="cb37-56"><a href="#cb37-56" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb37-57"><a href="#cb37-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-58"><a href="#cb37-58" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014 &lt;- read.delim(here("data", "MFTE", "SpokenBNC2014_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)</span></span>
+<span id="cb37-59"><a href="#cb37-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-60"><a href="#cb37-60" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Series &lt;- "Spoken BNC2014"</span></span>
+<span id="cb37-61"><a href="#cb37-61" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Level &lt;- "Ref."</span></span>
+<span id="cb37-62"><a href="#cb37-62" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Country &lt;- "Spoken BNC2014"</span></span>
+<span id="cb37-63"><a href="#cb37-63" aria-hidden="true" tabindex="-1"></a><span class="in">SpokenBNC2014$Register &lt;- "Spoken BNC2014"</span></span>
+<span id="cb37-64"><a href="#cb37-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-65"><a href="#cb37-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-66"><a href="#cb37-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-67"><a href="#cb37-67" aria-hidden="true" tabindex="-1"></a>These normalised frequencies were computed on the basis of my own "John and Jill in Ivybridge" version of the Spoken BNC2014 with added full stops at speaker turns (see Appendix B for details). This corpus comprises of <span class="in">`{r} nrow(SpokenBNC2014) |&gt; format(big.mark=",")`</span> texts, all of which were used in the following analyses.</span>
+<span id="cb37-68"><a href="#cb37-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-71"><a href="#cb37-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-72"><a href="#cb37-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb37-73"><a href="#cb37-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-74"><a href="#cb37-74" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(SpokenBNC2014,</span>
+<span id="cb37-75"><a href="#cb37-75" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">"top"</span>,) <span class="sc">|&gt;</span> </span>
+<span id="cb37-76"><a href="#cb37-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatRound</span>(<span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(SpokenBNC2014), <span class="at">digits=</span><span class="dv">2</span>)</span>
+<span id="cb37-77"><a href="#cb37-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-78"><a href="#cb37-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-79"><a href="#cb37-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-80"><a href="#cb37-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-81"><a href="#cb37-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### Youth Fiction corpus</span></span>
+<span id="cb37-82"><a href="#cb37-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-83"><a href="#cb37-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r YouthFiction}</span></span>
+<span id="cb37-84"><a href="#cb37-84" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb37-85"><a href="#cb37-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-86"><a href="#cb37-86" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction &lt;- read.delim(here("data", "MFTE", "YF_sampled_500_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)</span></span>
+<span id="cb37-87"><a href="#cb37-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-88"><a href="#cb37-88" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Series &lt;- "Youth Fiction"</span></span>
+<span id="cb37-89"><a href="#cb37-89" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Level &lt;- "Ref."</span></span>
+<span id="cb37-90"><a href="#cb37-90" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Country &lt;- "Youth Fiction"</span></span>
+<span id="cb37-91"><a href="#cb37-91" aria-hidden="true" tabindex="-1"></a><span class="in">YouthFiction$Register &lt;- "Youth Fiction"</span></span>
+<span id="cb37-92"><a href="#cb37-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-93"><a href="#cb37-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-94"><a href="#cb37-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-95"><a href="#cb37-95" aria-hidden="true" tabindex="-1"></a>These normalised frequencies were computed on the basis of the random samples of approximately 5,000 words of the books of the Youth Fiction corpus (for details of the works included in this corpus, see Appendix B). The sampling procedure is described in Section 4.3.2.4 of the book. This dataset consists of <span class="in">`{r} nrow(YouthFiction) |&gt; format(big.mark=",")`</span> files.</span>
+<span id="cb37-96"><a href="#cb37-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-99"><a href="#cb37-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-100"><a href="#cb37-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb37-101"><a href="#cb37-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-102"><a href="#cb37-102" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(YouthFiction,</span>
+<span id="cb37-103"><a href="#cb37-103" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">"top"</span>,) <span class="sc">|&gt;</span> </span>
+<span id="cb37-104"><a href="#cb37-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatRound</span>(<span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(YouthFiction), <span class="at">digits=</span><span class="dv">2</span>)</span>
+<span id="cb37-105"><a href="#cb37-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-106"><a href="#cb37-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-107"><a href="#cb37-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-108"><a href="#cb37-108" aria-hidden="true" tabindex="-1"></a><span class="fu">### Informative Texts for Teens (InfoTeens) corpus</span></span>
+<span id="cb37-109"><a href="#cb37-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-110"><a href="#cb37-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r InfoTeencounts}</span></span>
+<span id="cb37-111"><a href="#cb37-111" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb37-112"><a href="#cb37-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-113"><a href="#cb37-113" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen &lt;- read.delim(here("data", "MFTE", "InfoTeen_3.1_normed_complex_counts.tsv"), header = TRUE, stringsAsFactors = TRUE)</span></span>
+<span id="cb37-114"><a href="#cb37-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-115"><a href="#cb37-115" aria-hidden="true" tabindex="-1"></a><span class="in"># Removes three outlier files which should not have been included in the corpus as they contain exam papers only</span></span>
+<span id="cb37-116"><a href="#cb37-116" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen &lt;- InfoTeen |&gt; </span></span>
+<span id="cb37-117"><a href="#cb37-117" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(Filename!=".DS_Store" &amp; Filename!="Revision_World_GCSE_10529068_wjec-level-law-past-papers.txt" &amp; Filename!="Revision_World_GCSE_10528474_wjec-level-history-past-papers.txt" &amp; Filename!="Revision_World_GCSE_10528472_edexcel-level-history-past-papers.txt")</span></span>
+<span id="cb37-118"><a href="#cb37-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-119"><a href="#cb37-119" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Series &lt;- "Info Teens"</span></span>
+<span id="cb37-120"><a href="#cb37-120" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Level &lt;- "Ref."</span></span>
+<span id="cb37-121"><a href="#cb37-121" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Country &lt;- "Info Teens"</span></span>
+<span id="cb37-122"><a href="#cb37-122" aria-hidden="true" tabindex="-1"></a><span class="in">InfoTeen$Register &lt;- "Info Teens"</span></span>
+<span id="cb37-123"><a href="#cb37-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-124"><a href="#cb37-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-125"><a href="#cb37-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-126"><a href="#cb37-126" aria-hidden="true" tabindex="-1"></a>Details of the composition of the Info Teens corpus can be found in Section 4.3.2.5 of the book. The version used in the present study comprises <span class="in">`{r} nrow(InfoTeen) |&gt; format(big.mark=",")`</span> texts.</span>
+<span id="cb37-127"><a href="#cb37-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-130"><a href="#cb37-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-131"><a href="#cb37-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb37-132"><a href="#cb37-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-133"><a href="#cb37-133" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(InfoTeen,</span>
+<span id="cb37-134"><a href="#cb37-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">"top"</span>,) <span class="sc">|&gt;</span> </span>
+<span id="cb37-135"><a href="#cb37-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatRound</span>(<span class="dv">3</span><span class="sc">:</span><span class="fu">ncol</span>(InfoTeen), <span class="at">digits=</span><span class="dv">2</span>)</span>
+<span id="cb37-136"><a href="#cb37-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-137"><a href="#cb37-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-138"><a href="#cb37-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-139"><a href="#cb37-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-140"><a href="#cb37-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## Merging TEC and reference corpora data</span></span>
+<span id="cb37-141"><a href="#cb37-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-142"><a href="#cb37-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r DataMerging}</span></span>
+<span id="cb37-143"><a href="#cb37-143" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb37-144"><a href="#cb37-144" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb37-145"><a href="#cb37-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-146"><a href="#cb37-146" aria-hidden="true" tabindex="-1"></a><span class="in">TxBncounts &lt;- readRDS(here("data", "processed", "TxBcounts.rds"))</span></span>
+<span id="cb37-147"><a href="#cb37-147" aria-hidden="true" tabindex="-1"></a><span class="in">All3Reg &lt;- c("Conversation", "Fiction", "Informative")</span></span>
+<span id="cb37-148"><a href="#cb37-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-149"><a href="#cb37-149" aria-hidden="true" tabindex="-1"></a><span class="in">TxBncounts3Reg &lt;- TxBncounts |&gt; </span></span>
+<span id="cb37-150"><a href="#cb37-150" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(Register %in% All3Reg) |&gt; </span></span>
+<span id="cb37-151"><a href="#cb37-151" aria-hidden="true" tabindex="-1"></a><span class="in">  droplevels()</span></span>
+<span id="cb37-152"><a href="#cb37-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-153"><a href="#cb37-153" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts &lt;- bind_rows(TxBncounts3Reg, InfoTeen, SpokenBNC2014, YouthFiction, .id = "Corpus")</span></span>
+<span id="cb37-154"><a href="#cb37-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-155"><a href="#cb37-155" aria-hidden="true" tabindex="-1"></a><span class="in"># Convert all character vectors to factors</span></span>
+<span id="cb37-156"><a href="#cb37-156" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts[sapply(ncounts, is.character)] &lt;- lapply(ncounts[sapply(ncounts, is.character)], as.factor)</span></span>
+<span id="cb37-157"><a href="#cb37-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-158"><a href="#cb37-158" aria-hidden="true" tabindex="-1"></a><span class="in"># Change all NAs to 0</span></span>
+<span id="cb37-159"><a href="#cb37-159" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts[is.na(ncounts)] &lt;- 0</span></span>
+<span id="cb37-160"><a href="#cb37-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-161"><a href="#cb37-161" aria-hidden="true" tabindex="-1"></a><span class="in">levels(ncounts$Corpus) &lt;- list(Textbook.English="1", Informative.Teens="2", Spoken.BNC2014="3", Youth.Fiction="4")</span></span>
+<span id="cb37-162"><a href="#cb37-162" aria-hidden="true" tabindex="-1"></a><span class="in"># summary(ncounts$Corpus)</span></span>
+<span id="cb37-163"><a href="#cb37-163" aria-hidden="true" tabindex="-1"></a><span class="in"># summary(ncounts$Series)</span></span>
+<span id="cb37-164"><a href="#cb37-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-165"><a href="#cb37-165" aria-hidden="true" tabindex="-1"></a><span class="in"># Wrangle metadata variables</span></span>
+<span id="cb37-166"><a href="#cb37-166" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts$Subcorpus &lt;- ncounts$Register</span></span>
+<span id="cb37-167"><a href="#cb37-167" aria-hidden="true" tabindex="-1"></a><span class="in">#levels(ncounts$Subcorpus)</span></span>
+<span id="cb37-168"><a href="#cb37-168" aria-hidden="true" tabindex="-1"></a><span class="in">levels(ncounts$Subcorpus) &lt;- c("Textbook Conversation", "Textbook Fiction", "Info Teens Ref.", "Textbook Informative", "Spoken BNC2014 Ref.", "Youth Fiction Ref.")</span></span>
+<span id="cb37-169"><a href="#cb37-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-170"><a href="#cb37-170" aria-hidden="true" tabindex="-1"></a><span class="in"># Re-order registers</span></span>
+<span id="cb37-171"><a href="#cb37-171" aria-hidden="true" tabindex="-1"></a><span class="in">levels(ncounts$Register) &lt;- c("Conversation", "Fiction", "Informative", "Informative", "Conversation", "Fiction")</span></span>
+<span id="cb37-172"><a href="#cb37-172" aria-hidden="true" tabindex="-1"></a><span class="in">#summary(ncounts$Register)</span></span>
+<span id="cb37-173"><a href="#cb37-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-174"><a href="#cb37-174" aria-hidden="true" tabindex="-1"></a><span class="in"># Re-order variables</span></span>
+<span id="cb37-175"><a href="#cb37-175" aria-hidden="true" tabindex="-1"></a><span class="in">ncounts &lt;- select(ncounts, order(names(ncounts))) |&gt; </span></span>
+<span id="cb37-176"><a href="#cb37-176" aria-hidden="true" tabindex="-1"></a><span class="in">  select(Filename, Register, Level, Series, Country, Corpus, Subcorpus, Words, everything()) # Then place the metadata variable at the front of the table</span></span>
+<span id="cb37-177"><a href="#cb37-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-178"><a href="#cb37-178" aria-hidden="true" tabindex="-1"></a><span class="in">#saveRDS(ncounts, here("data", "processed", "counts3Reg.rds")) # Last saved 6 March 2024</span></span>
+<span id="cb37-179"><a href="#cb37-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-180"><a href="#cb37-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-181"><a href="#cb37-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-182"><a href="#cb37-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Corpus size</span></span>
+<span id="cb37-183"><a href="#cb37-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-184"><a href="#cb37-184" aria-hidden="true" tabindex="-1"></a>These tables provide some summary statistics about the texts/files whose normalised feature frequencies were entered in the model of Textbook English vs. real-world English described in Chapter 7.</span>
+<span id="cb37-185"><a href="#cb37-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-188"><a href="#cb37-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-189"><a href="#cb37-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: corpora-summary-stats</span></span>
+<span id="cb37-190"><a href="#cb37-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-191"><a href="#cb37-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-192"><a href="#cb37-192" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ncounts<span class="sc">$</span>Subcorpus) <span class="sc">|&gt;</span> </span>
+<span id="cb37-193"><a href="#cb37-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"(Sub)corpus"</span>, <span class="st">"# texts"</span>),</span>
+<span id="cb37-194"><a href="#cb37-194" aria-hidden="true" tabindex="-1"></a>        <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">","</span>))</span>
+<span id="cb37-195"><a href="#cb37-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-196"><a href="#cb37-196" aria-hidden="true" tabindex="-1"></a>ncounts  <span class="sc">|&gt;</span>  </span>
+<span id="cb37-197"><a href="#cb37-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Register) <span class="sc">|&gt;</span>  </span>
+<span id="cb37-198"><a href="#cb37-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totaltexts =</span> <span class="fu">n</span>(), </span>
+<span id="cb37-199"><a href="#cb37-199" aria-hidden="true" tabindex="-1"></a>            <span class="at">totalwords =</span> <span class="fu">sum</span>(Words), </span>
+<span id="cb37-200"><a href="#cb37-200" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">as.integer</span>(<span class="fu">mean</span>(Words)), </span>
+<span id="cb37-201"><a href="#cb37-201" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">as.integer</span>(<span class="fu">sd</span>(Words)), </span>
+<span id="cb37-202"><a href="#cb37-202" aria-hidden="true" tabindex="-1"></a>            <span class="at">TTRmean =</span> <span class="fu">mean</span>(TTR)) <span class="sc">|&gt;</span>  </span>
+<span id="cb37-203"><a href="#cb37-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>, </span>
+<span id="cb37-204"><a href="#cb37-204" aria-hidden="true" tabindex="-1"></a>        <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">big.mark =</span> <span class="st">","</span>),</span>
+<span id="cb37-205"><a href="#cb37-205" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Register"</span>, <span class="st">"# texts/files"</span>, <span class="st">"# words"</span>, <span class="st">"mean # words per text"</span>, <span class="st">"SD"</span>, <span class="st">"mean TTR"</span>))</span>
+<span id="cb37-206"><a href="#cb37-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-207"><a href="#cb37-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-208"><a href="#cb37-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-209"><a href="#cb37-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data preparation for PCA</span></span>
+<span id="cb37-210"><a href="#cb37-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-211"><a href="#cb37-211" aria-hidden="true" tabindex="-1"></a><span class="fu">### Feature distributions</span></span>
+<span id="cb37-212"><a href="#cb37-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-213"><a href="#cb37-213" aria-hidden="true" tabindex="-1"></a>The distributions of each linguistic features were examined by means of visualisation. As shown below, before transformation, many of the features displayed highly skewed distributions.</span>
+<span id="cb37-214"><a href="#cb37-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-217"><a href="#cb37-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-218"><a href="#cb37-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: distribution-viz</span></span>
+<span id="cb37-219"><a href="#cb37-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-220"><a href="#cb37-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 40</span></span>
+<span id="cb37-221"><a href="#cb37-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-222"><a href="#cb37-222" aria-hidden="true" tabindex="-1"></a><span class="co">#ncounts &lt;- readRDS(here("data", "processed", "counts3Reg.rds"))</span></span>
+<span id="cb37-223"><a href="#cb37-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-224"><a href="#cb37-224" aria-hidden="true" tabindex="-1"></a>ncounts <span class="sc">|&gt;</span></span>
+<span id="cb37-225"><a href="#cb37-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Words) <span class="sc">|&gt;</span> </span>
+<span id="cb37-226"><a href="#cb37-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(is.numeric) <span class="sc">|&gt;</span> </span>
+<span id="cb37-227"><a href="#cb37-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>() <span class="sc">|&gt;</span> <span class="co"># This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet_wrap function from ggplot2</span></span>
+<span id="cb37-228"><a href="#cb37-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb37-229"><a href="#cb37-229" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb37-230"><a href="#cb37-230" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> key, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb37-231"><a href="#cb37-231" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb37-232"><a href="#cb37-232" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb37-233"><a href="#cb37-233" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">colour=</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb37-234"><a href="#cb37-234" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">colour =</span> <span class="st">"darkred"</span>, <span class="at">weight =</span> <span class="dv">2</span>, <span class="at">fill=</span><span class="st">"darkred"</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)</span>
+<span id="cb37-235"><a href="#cb37-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-236"><a href="#cb37-236" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "DensityPlotsAllVariables.svg"), width = 15, height = 49)</span></span>
+<span id="cb37-237"><a href="#cb37-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-238"><a href="#cb37-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-239"><a href="#cb37-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-240"><a href="#cb37-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### Feature removal</span></span>
+<span id="cb37-241"><a href="#cb37-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-242"><a href="#cb37-242" aria-hidden="true" tabindex="-1"></a>A number of features were removed from the dataset as they are not linguistically interpretable. In the case of the TEC, this included the variable CD because numbers spelt out as digits were removed from the textbooks before these were tagged with the MFTE. In addition, the variables LIKE and SO because these are "bin" features included in the output of the MFTE to ensure that the counts for these polysemous words do not inflate other categories due to mistags <span class="co">[</span><span class="ot">@lefoll2021a</span><span class="co">]</span>.</span>
+<span id="cb37-243"><a href="#cb37-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-244"><a href="#cb37-244" aria-hidden="true" tabindex="-1"></a>Whenever linguistically meaningful, very low-frequency features, features with low MSA or communalities (see chunks below) were merged. Finally, features absent from more than third of texts were also excluded. For the comparative analysis of TEC and the reference corpora, the following linguistic features were excluded from the analysis due to low dispersion:</span>
+<span id="cb37-245"><a href="#cb37-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-248"><a href="#cb37-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-249"><a href="#cb37-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: feature-removal</span></span>
+<span id="cb37-250"><a href="#cb37-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-251"><a href="#cb37-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-252"><a href="#cb37-252" aria-hidden="true" tabindex="-1"></a><span class="co"># Removal of meaningless feature: CD because numbers as digits were mostly removed from the textbooks, LIKE and SO because they are dustbin categories</span></span>
+<span id="cb37-253"><a href="#cb37-253" aria-hidden="true" tabindex="-1"></a>ncounts <span class="ot">&lt;-</span> ncounts <span class="sc">|&gt;</span> </span>
+<span id="cb37-254"><a href="#cb37-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(CD, LIKE, SO))</span>
+<span id="cb37-255"><a href="#cb37-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-256"><a href="#cb37-256" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine problematic features into meaningful groups whenever this makes linguistic sense</span></span>
+<span id="cb37-257"><a href="#cb37-257" aria-hidden="true" tabindex="-1"></a>ncounts <span class="ot">&lt;-</span> ncounts <span class="sc">|&gt;</span> </span>
+<span id="cb37-258"><a href="#cb37-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">JJPR =</span> JJPR <span class="sc">+</span> ABLE, <span class="at">ABLE =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb37-259"><a href="#cb37-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PASS =</span> PGET <span class="sc">+</span> PASS, <span class="at">PGET =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb37-260"><a href="#cb37-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TPP3 =</span> TPP3S <span class="sc">+</span> TPP3P, <span class="at">TPP3P =</span> <span class="cn">NULL</span>, <span class="at">TPP3S =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span> <span class="co"># Merged due to TTP3P having an individual MSA &lt; 0.5</span></span>
+<span id="cb37-261"><a href="#cb37-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FQTI =</span> FREQ <span class="sc">+</span> TIME, <span class="at">FREQ =</span> <span class="cn">NULL</span>, <span class="at">TIME =</span> <span class="cn">NULL</span>) <span class="co"># Merged due to TIME communality &lt; 0.2 (see below)</span></span>
+<span id="cb37-262"><a href="#cb37-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-263"><a href="#cb37-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to compute percentage of texts with occurrences meeting a condition</span></span>
+<span id="cb37-264"><a href="#cb37-264" aria-hidden="true" tabindex="-1"></a>compute_percentage <span class="ot">&lt;-</span> <span class="cf">function</span>(data, condition, threshold) {</span>
+<span id="cb37-265"><a href="#cb37-265" aria-hidden="true" tabindex="-1"></a>  numeric_data <span class="ot">&lt;-</span> <span class="fu">Filter</span>(is.numeric, data)</span>
+<span id="cb37-266"><a href="#cb37-266" aria-hidden="true" tabindex="-1"></a>  percentage <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">colSums</span>(condition[, <span class="fu">sapply</span>(numeric_data, is.numeric)])<span class="sc">/</span><span class="fu">nrow</span>(data) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb37-267"><a href="#cb37-267" aria-hidden="true" tabindex="-1"></a>  percentage <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(percentage)</span>
+<span id="cb37-268"><a href="#cb37-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(percentage) <span class="ot">&lt;-</span> <span class="st">"Percentage"</span></span>
+<span id="cb37-269"><a href="#cb37-269" aria-hidden="true" tabindex="-1"></a>  percentage <span class="ot">&lt;-</span> percentage <span class="sc">|&gt;</span> </span>
+<span id="cb37-270"><a href="#cb37-270" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Percentage)) <span class="sc">|&gt;</span></span>
+<span id="cb37-271"><a href="#cb37-271" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>() <span class="sc">|&gt;</span></span>
+<span id="cb37-272"><a href="#cb37-272" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(Percentage)</span>
+<span id="cb37-273"><a href="#cb37-273" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(threshold)) {</span>
+<span id="cb37-274"><a href="#cb37-274" aria-hidden="true" tabindex="-1"></a>    percentage <span class="ot">&lt;-</span> percentage <span class="sc">|&gt;</span> </span>
+<span id="cb37-275"><a href="#cb37-275" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(Percentage <span class="sc">&gt;</span> threshold)</span>
+<span id="cb37-276"><a href="#cb37-276" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb37-277"><a href="#cb37-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(percentage)</span>
+<span id="cb37-278"><a href="#cb37-278" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-279"><a href="#cb37-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-280"><a href="#cb37-280" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate percentage of texts with 0 occurrences of each feature</span></span>
+<span id="cb37-281"><a href="#cb37-281" aria-hidden="true" tabindex="-1"></a>zero_features <span class="ot">&lt;-</span> <span class="fu">compute_percentage</span>(ncounts, ncounts <span class="sc">==</span> <span class="dv">0</span>, <span class="fl">66.6</span>)</span>
+<span id="cb37-282"><a href="#cb37-282" aria-hidden="true" tabindex="-1"></a>zero_features <span class="sc">|&gt;</span> </span>
+<span id="cb37-283"><a href="#cb37-283" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Feature"</span>, <span class="st">"% texts with zero occurrences"</span>))</span>
+<span id="cb37-284"><a href="#cb37-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-285"><a href="#cb37-285" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop variables with low document frequency</span></span>
+<span id="cb37-286"><a href="#cb37-286" aria-hidden="true" tabindex="-1"></a>ncounts2 <span class="ot">&lt;-</span> <span class="fu">select</span>(ncounts, <span class="sc">-</span><span class="fu">one_of</span>(zero_features<span class="sc">$</span>rowname))</span>
+<span id="cb37-287"><a href="#cb37-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-288"><a href="#cb37-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-289"><a href="#cb37-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-290"><a href="#cb37-290" aria-hidden="true" tabindex="-1"></a>These feature removal operations resulted in a feature set of <span class="in">`{r} ncol(ncounts2)-8`</span> linguistic variables.</span>
+<span id="cb37-291"><a href="#cb37-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-292"><a href="#cb37-292" aria-hidden="true" tabindex="-1"></a><span class="fu">### Identifying outlier texts</span></span>
+<span id="cb37-293"><a href="#cb37-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-294"><a href="#cb37-294" aria-hidden="true" tabindex="-1"></a>All normalised frequencies were normalised to identify any potential outlier texts.</span>
+<span id="cb37-295"><a href="#cb37-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-298"><a href="#cb37-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-299"><a href="#cb37-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: z-standardisation-outliers</span></span>
+<span id="cb37-300"><a href="#cb37-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 15</span></span>
+<span id="cb37-301"><a href="#cb37-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
+<span id="cb37-302"><a href="#cb37-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-303"><a href="#cb37-303" aria-hidden="true" tabindex="-1"></a><span class="co"># First scale the normalised counts (z-standardisation) to be able to compare the various features</span></span>
+<span id="cb37-304"><a href="#cb37-304" aria-hidden="true" tabindex="-1"></a>zcounts <span class="ot">&lt;-</span> ncounts2 <span class="sc">|&gt;</span></span>
+<span id="cb37-305"><a href="#cb37-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Words) <span class="sc">|&gt;</span> </span>
+<span id="cb37-306"><a href="#cb37-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(is.numeric) <span class="sc">|&gt;</span> </span>
+<span id="cb37-307"><a href="#cb37-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale</span>()</span>
+<span id="cb37-308"><a href="#cb37-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-309"><a href="#cb37-309" aria-hidden="true" tabindex="-1"></a><span class="co"># If necessary, remove any outliers at this stage.</span></span>
+<span id="cb37-310"><a href="#cb37-310" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ncounts2[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="fu">as.data.frame</span>(zcounts))</span>
+<span id="cb37-311"><a href="#cb37-311" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
+<span id="cb37-312"><a href="#cb37-312" aria-hidden="true" tabindex="-1"></a> <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">where</span>(is.numeric) <span class="sc">&amp;</span> <span class="sc">!</span>Words,  <span class="at">.fns =</span> <span class="cf">function</span>(x){x <span class="sc">&gt;</span> <span class="dv">8</span>}))  <span class="sc">|&gt;</span></span>
+<span id="cb37-313"><a href="#cb37-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Filename, Corpus, Register, Words) </span>
+<span id="cb37-314"><a href="#cb37-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-315"><a href="#cb37-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-316"><a href="#cb37-316" aria-hidden="true" tabindex="-1"></a>The following outlier texts were identified according to the above conditions and excluded in subsequent analyses.</span>
+<span id="cb37-317"><a href="#cb37-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-320"><a href="#cb37-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-321"><a href="#cb37-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: list-outliers</span></span>
+<span id="cb37-322"><a href="#cb37-322" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-323"><a href="#cb37-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-324"><a href="#cb37-324" aria-hidden="true" tabindex="-1"></a><span class="co"># These are potential outlier texts :</span></span>
+<span id="cb37-325"><a href="#cb37-325" aria-hidden="true" tabindex="-1"></a>outliers <span class="sc">|&gt;</span> </span>
+<span id="cb37-326"><a href="#cb37-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Filename"</span>, <span class="st">"Corpus"</span>, <span class="st">"Register"</span>, <span class="st">"# words"</span>))</span>
+<span id="cb37-327"><a href="#cb37-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-328"><a href="#cb37-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-329"><a href="#cb37-329" aria-hidden="true" tabindex="-1"></a>We check that that outlier texts are not particularly long or short texts by looking at the distribution of text/file length of the outliers.</span>
+<span id="cb37-330"><a href="#cb37-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-333"><a href="#cb37-333" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-334"><a href="#cb37-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-335"><a href="#cb37-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-336"><a href="#cb37-336" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(outliers<span class="sc">$</span>Words)</span>
+<span id="cb37-337"><a href="#cb37-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-338"><a href="#cb37-338" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(outliers<span class="sc">$</span>Words, <span class="at">breaks =</span> <span class="dv">30</span>)</span>
+<span id="cb37-339"><a href="#cb37-339" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-340"><a href="#cb37-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-341"><a href="#cb37-341" aria-hidden="true" tabindex="-1"></a>We also check the distribution of outlier texts across the four corpora. The majority come from the Info Teens corpus, though quite a few are also from the TEC.</span>
+<span id="cb37-342"><a href="#cb37-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-345"><a href="#cb37-345" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-346"><a href="#cb37-346" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-347"><a href="#cb37-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-348"><a href="#cb37-348" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(outliers<span class="sc">$</span>Corpus) <span class="sc">|&gt;</span> </span>
+<span id="cb37-349"><a href="#cb37-349" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"(Sub)corpus"</span>, <span class="st">"# outlier texts"</span>))</span>
+<span id="cb37-350"><a href="#cb37-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-351"><a href="#cb37-351" aria-hidden="true" tabindex="-1"></a><span class="co"># Report on the manual check of a sample of these outliers:</span></span>
+<span id="cb37-352"><a href="#cb37-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-353"><a href="#cb37-353" aria-hidden="true" tabindex="-1"></a><span class="co"># Encyclopedia_Kinds_au_10085347_Nobel_Prize_in_Chemistry.txt is essentially a list of Nobel prize winners but with some additional information. In other words, not a bad representative of the type of texts of the Info Teen corpus.</span></span>
+<span id="cb37-354"><a href="#cb37-354" aria-hidden="true" tabindex="-1"></a><span class="co"># Solutions_Elementary_ELF_Spoken_0013 --&gt; Has a lot of "going to" constructions because they are learnt in this chapter but is otherwise a well-formed text.</span></span>
+<span id="cb37-355"><a href="#cb37-355" aria-hidden="true" tabindex="-1"></a><span class="co"># Teen_Kids_News_10403972_a-brief-history-of-white-house-weddings --&gt; No issues</span></span>
+<span id="cb37-356"><a href="#cb37-356" aria-hidden="true" tabindex="-1"></a><span class="co"># Teen_Kids_News_10403301_golden-globe-winners-2019-the-complete-list --&gt; Similar to the Nobel prize laureates text.</span></span>
+<span id="cb37-357"><a href="#cb37-357" aria-hidden="true" tabindex="-1"></a><span class="co"># Revision_World_GCSE_10528123_gender-written-textual-analysis-framework --&gt; Text includes bullet points tokenised as the letter "o" but otherwise a fairly typical informative text.</span></span>
+<span id="cb37-358"><a href="#cb37-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-359"><a href="#cb37-359" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing the outliers at the request of the reviewers (but comparisons of models including the outliers showed that the results are very similar):</span></span>
+<span id="cb37-360"><a href="#cb37-360" aria-hidden="true" tabindex="-1"></a>ncounts3 <span class="ot">&lt;-</span> ncounts2 <span class="sc">|&gt;</span> </span>
+<span id="cb37-361"><a href="#cb37-361" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Filename <span class="sc">%in%</span> outliers<span class="sc">$</span>Filename)</span>
+<span id="cb37-362"><a href="#cb37-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-363"><a href="#cb37-363" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(ncounts3, here("data", "processed", "ncounts3_3Reg.rds")) # Last saved 6 March 2024</span></span>
+<span id="cb37-364"><a href="#cb37-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-365"><a href="#cb37-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-366"><a href="#cb37-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-367"><a href="#cb37-367" aria-hidden="true" tabindex="-1"></a>This resulted in <span class="in">`{r} nrow(ncounts3) |&gt; format(big.mark=",")`</span> texts/files being included in the comparative model of Textbook English vs. 'real-world' English. These standardised feature frequencies were distributed as follows:</span>
+<span id="cb37-368"><a href="#cb37-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-371"><a href="#cb37-371" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-372"><a href="#cb37-372" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: z-transformed-distributions</span></span>
+<span id="cb37-373"><a href="#cb37-373" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 15</span></span>
+<span id="cb37-374"><a href="#cb37-374" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 10</span></span>
+<span id="cb37-375"><a href="#cb37-375" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-376"><a href="#cb37-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-377"><a href="#cb37-377" aria-hidden="true" tabindex="-1"></a>zcounts3 <span class="ot">&lt;-</span> ncounts3 <span class="sc">|&gt;</span></span>
+<span id="cb37-378"><a href="#cb37-378" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Words) <span class="sc">|&gt;</span> </span>
+<span id="cb37-379"><a href="#cb37-379" aria-hidden="true" tabindex="-1"></a>  <span class="fu">keep</span>(is.numeric) <span class="sc">|&gt;</span> </span>
+<span id="cb37-380"><a href="#cb37-380" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale</span>()</span>
+<span id="cb37-381"><a href="#cb37-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-382"><a href="#cb37-382" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(zcounts3, <span class="at">las =</span> <span class="dv">3</span>, <span class="at">main =</span> <span class="st">"z-scores"</span>) <span class="co"># Slow</span></span>
+<span id="cb37-383"><a href="#cb37-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-384"><a href="#cb37-384" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-385"><a href="#cb37-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-386"><a href="#cb37-386" aria-hidden="true" tabindex="-1"></a><span class="fu">### Signed log transformation</span></span>
+<span id="cb37-387"><a href="#cb37-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-388"><a href="#cb37-388" aria-hidden="true" tabindex="-1"></a>A signed logarithmic transformation was applied to (further) deskew the feature distributions <span class="co">[</span><span class="ot">see @diwersy2014; @neumann2021</span><span class="co">]</span>.</span>
+<span id="cb37-389"><a href="#cb37-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-390"><a href="#cb37-390" aria-hidden="true" tabindex="-1"></a>The signed log transformation function was inspired by the SignedLog function proposed in <span class="ot">&lt;https://cran.r-project.org/web/packages/DataVisualizations/DataVisualizations.pdf&gt;</span>.</span>
+<span id="cb37-391"><a href="#cb37-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-394"><a href="#cb37-394" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-395"><a href="#cb37-395" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: signed.log.transformation</span></span>
+<span id="cb37-396"><a href="#cb37-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-397"><a href="#cb37-397" aria-hidden="true" tabindex="-1"></a>signed.log <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {<span class="fu">sign</span>(x)<span class="sc">*</span><span class="fu">log</span>(<span class="fu">abs</span>(x)<span class="sc">+</span><span class="dv">1</span>)}</span>
+<span id="cb37-398"><a href="#cb37-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-399"><a href="#cb37-399" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardise first, then sign log transform</span></span>
+<span id="cb37-400"><a href="#cb37-400" aria-hidden="true" tabindex="-1"></a>zlogcounts <span class="ot">&lt;-</span> <span class="fu">signed.log</span>(zcounts3) </span>
+<span id="cb37-401"><a href="#cb37-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-402"><a href="#cb37-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-403"><a href="#cb37-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-406"><a href="#cb37-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-407"><a href="#cb37-407" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb37-408"><a href="#cb37-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-409"><a href="#cb37-409" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(zlogcounts, here("data", "processed", "zlogcounts_3Reg.rds")) # Last saved 16 March 2024</span></span>
+<span id="cb37-410"><a href="#cb37-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-411"><a href="#cb37-411" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-412"><a href="#cb37-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-413"><a href="#cb37-413" aria-hidden="true" tabindex="-1"></a>The new feature distributions are visualised below.</span>
+<span id="cb37-414"><a href="#cb37-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-417"><a href="#cb37-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-418"><a href="#cb37-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: signed.log.transformation-distributions</span></span>
+<span id="cb37-419"><a href="#cb37-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 40</span></span>
+<span id="cb37-420"><a href="#cb37-420" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-421"><a href="#cb37-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-422"><a href="#cb37-422" aria-hidden="true" tabindex="-1"></a>zlogcounts <span class="sc">|&gt;</span></span>
+<span id="cb37-423"><a href="#cb37-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb37-424"><a href="#cb37-424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>() <span class="sc">|&gt;</span> <span class="co"># This function from tidyr converts a selection of variables into two variables: a key and a value. The key contains the names of the original variable and the value the data. This means we can then use the facet_wrap function from ggplot2</span></span>
+<span id="cb37-425"><a href="#cb37-425" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb37-426"><a href="#cb37-426" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb37-427"><a href="#cb37-427" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> key, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb37-428"><a href="#cb37-428" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb37-429"><a href="#cb37-429" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb37-430"><a href="#cb37-430" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">colour=</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb37-431"><a href="#cb37-431" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour =</span> <span class="st">"darkred"</span>, <span class="at">weight =</span> <span class="dv">2</span>, <span class="at">fill=</span><span class="st">"darkred"</span>, <span class="at">alpha =</span> .<span class="dv">4</span>)</span>
+<span id="cb37-432"><a href="#cb37-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-433"><a href="#cb37-433" aria-hidden="true" tabindex="-1"></a><span class="co">#ggsave(here("plots", "DensityPlotsAllVariablesSignedLog.svg"), width = 15, height = 49)</span></span>
+<span id="cb37-434"><a href="#cb37-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-435"><a href="#cb37-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-436"><a href="#cb37-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-437"><a href="#cb37-437" aria-hidden="true" tabindex="-1"></a><span class="fu">### Merging of data for MDA</span></span>
+<span id="cb37-438"><a href="#cb37-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-441"><a href="#cb37-441" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-442"><a href="#cb37-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-443"><a href="#cb37-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-444"><a href="#cb37-444" aria-hidden="true" tabindex="-1"></a>zlogcounts <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"zlogcounts_3Reg.rds"</span>)) </span>
+<span id="cb37-445"><a href="#cb37-445" aria-hidden="true" tabindex="-1"></a><span class="co">#nrow(zlogcounts)</span></span>
+<span id="cb37-446"><a href="#cb37-446" aria-hidden="true" tabindex="-1"></a><span class="co">#colnames(zlogcounts)</span></span>
+<span id="cb37-447"><a href="#cb37-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-448"><a href="#cb37-448" aria-hidden="true" tabindex="-1"></a>ncounts3 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"processed"</span>, <span class="st">"ncounts3_3Reg.rds"</span>))</span>
+<span id="cb37-449"><a href="#cb37-449" aria-hidden="true" tabindex="-1"></a><span class="co">#nrow(ncounts3)</span></span>
+<span id="cb37-450"><a href="#cb37-450" aria-hidden="true" tabindex="-1"></a><span class="co">#colnames(ncounts3)</span></span>
+<span id="cb37-451"><a href="#cb37-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-452"><a href="#cb37-452" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ncounts3[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], <span class="fu">as.data.frame</span>(zlogcounts))</span>
+<span id="cb37-453"><a href="#cb37-453" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(data, here("data", "processed", "datazlogcounts_3Reg.rds")) # Last saved 16 March 2024</span></span>
+<span id="cb37-454"><a href="#cb37-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-455"><a href="#cb37-455" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-456"><a href="#cb37-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-457"><a href="#cb37-457" aria-hidden="true" tabindex="-1"></a>The final dataset comprises of <span class="in">`{r} nrow(data) |&gt; format(big.mark=",")`</span> texts/files, divided as follows:</span>
+<span id="cb37-458"><a href="#cb37-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-461"><a href="#cb37-461" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-462"><a href="#cb37-462" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb37-463"><a href="#cb37-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-464"><a href="#cb37-464" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>Subcorpus) <span class="sc">|&gt;</span> </span>
+<span id="cb37-465"><a href="#cb37-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"(Sub)corpus"</span>, <span class="st">"# texts/files"</span>))</span>
+<span id="cb37-466"><a href="#cb37-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-467"><a href="#cb37-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-468"><a href="#cb37-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-469"><a href="#cb37-469" aria-hidden="true" tabindex="-1"></a><span class="in">```{r prepare-data}</span></span>
+<span id="cb37-470"><a href="#cb37-470" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb37-471"><a href="#cb37-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-472"><a href="#cb37-472" aria-hidden="true" tabindex="-1"></a><span class="in"># Quick import</span></span>
+<span id="cb37-473"><a href="#cb37-473" aria-hidden="true" tabindex="-1"></a><span class="in">#data &lt;- readRDS(here("data", "processed", "datazlogcounts_3Reg.rds"))</span></span>
+<span id="cb37-474"><a href="#cb37-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-475"><a href="#cb37-475" aria-hidden="true" tabindex="-1"></a><span class="in"># This rearranges the levels in the desired order for the plot legends:</span></span>
+<span id="cb37-476"><a href="#cb37-476" aria-hidden="true" tabindex="-1"></a><span class="in">data &lt;- data |&gt; </span></span>
+<span id="cb37-477"><a href="#cb37-477" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(Subcorpus = fct_relevel(Subcorpus, "Info Teens Ref.", after = 9))</span></span>
+<span id="cb37-478"><a href="#cb37-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-479"><a href="#cb37-479" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-480"><a href="#cb37-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-481"><a href="#cb37-481" aria-hidden="true" tabindex="-1"></a><span class="fu">## Testing factorability of data</span></span>
+<span id="cb37-482"><a href="#cb37-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-483"><a href="#cb37-483" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualisation of feature correlations</span></span>
+<span id="cb37-484"><a href="#cb37-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-485"><a href="#cb37-485" aria-hidden="true" tabindex="-1"></a>We begin by visualising the correlations of the transformed feature frequencies using the <span class="in">`heatmap`</span> function of the <span class="in">`stats`</span> library. Negative correlations are rendered in blue; positive ones are in red.</span>
+<span id="cb37-486"><a href="#cb37-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-487"><a href="#cb37-487" aria-hidden="true" tabindex="-1"></a><span class="in">```{r heatmap}</span></span>
+<span id="cb37-488"><a href="#cb37-488" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb37-489"><a href="#cb37-489" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 15</span></span>
+<span id="cb37-490"><a href="#cb37-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-491"><a href="#cb37-491" aria-hidden="true" tabindex="-1"></a><span class="in"># Simple heatmap in base R (inspired by Stephanie Evert's SIGIL code)</span></span>
+<span id="cb37-492"><a href="#cb37-492" aria-hidden="true" tabindex="-1"></a><span class="in">cor.colours &lt;- c(</span></span>
+<span id="cb37-493"><a href="#cb37-493" aria-hidden="true" tabindex="-1"></a><span class="in">  hsv(h=2/3, v=1, s=(10:1)/10), # blue = negative correlation </span></span>
+<span id="cb37-494"><a href="#cb37-494" aria-hidden="true" tabindex="-1"></a><span class="in">  rgb(1,1,1), # white = no correlation </span></span>
+<span id="cb37-495"><a href="#cb37-495" aria-hidden="true" tabindex="-1"></a><span class="in">  hsv(h=0, v=1, s=(1:10/10))) # red = positive correlation</span></span>
+<span id="cb37-496"><a href="#cb37-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-497"><a href="#cb37-497" aria-hidden="true" tabindex="-1"></a><span class="in">#png(here("plots", "heatmapzlogcounts.png"), width = 30, height= 30, units = "cm", res = 300)</span></span>
+<span id="cb37-498"><a href="#cb37-498" aria-hidden="true" tabindex="-1"></a><span class="in">heatmap(cor(zlogcounts), </span></span>
+<span id="cb37-499"><a href="#cb37-499" aria-hidden="true" tabindex="-1"></a><span class="in">        symm=TRUE, </span></span>
+<span id="cb37-500"><a href="#cb37-500" aria-hidden="true" tabindex="-1"></a><span class="in">        zlim=c(-1,1), </span></span>
+<span id="cb37-501"><a href="#cb37-501" aria-hidden="true" tabindex="-1"></a><span class="in">        col=cor.colours, </span></span>
+<span id="cb37-502"><a href="#cb37-502" aria-hidden="true" tabindex="-1"></a><span class="in">        margins=c(7,7))</span></span>
+<span id="cb37-503"><a href="#cb37-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-504"><a href="#cb37-504" aria-hidden="true" tabindex="-1"></a><span class="in">#dev.off()</span></span>
+<span id="cb37-505"><a href="#cb37-505" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-506"><a href="#cb37-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-507"><a href="#cb37-507" aria-hidden="true" tabindex="-1"></a><span class="fu">### Collinearity</span></span>
+<span id="cb37-508"><a href="#cb37-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-509"><a href="#cb37-509" aria-hidden="true" tabindex="-1"></a>As a result of the normalisation unit of finite verb phrases for verb-based features, the present tense (VPRT) and past tense (VBD) variables are correlated to a very high degree:</span>
+<span id="cb37-510"><a href="#cb37-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-511"><a href="#cb37-511" aria-hidden="true" tabindex="-1"></a><span class="in">```{r collinear}</span></span>
+<span id="cb37-512"><a href="#cb37-512" aria-hidden="true" tabindex="-1"></a><span class="in">cor(data$VPRT, data$VBD) |&gt; round(2)</span></span>
+<span id="cb37-513"><a href="#cb37-513" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-514"><a href="#cb37-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-515"><a href="#cb37-515" aria-hidden="true" tabindex="-1"></a>We therefore remove the least marked of the pair of collinear variables: VPRT.</span>
+<span id="cb37-516"><a href="#cb37-516" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-517"><a href="#cb37-517" aria-hidden="true" tabindex="-1"></a><span class="in">```{r collinear2}</span></span>
+<span id="cb37-518"><a href="#cb37-518" aria-hidden="true" tabindex="-1"></a><span class="in">data &lt;- data |&gt; </span></span>
+<span id="cb37-519"><a href="#cb37-519" aria-hidden="true" tabindex="-1"></a><span class="in">  select(-c(VPRT))</span></span>
+<span id="cb37-520"><a href="#cb37-520" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-521"><a href="#cb37-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-522"><a href="#cb37-522" aria-hidden="true" tabindex="-1"></a><span class="fu">### MSA</span></span>
+<span id="cb37-523"><a href="#cb37-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-524"><a href="#cb37-524" aria-hidden="true" tabindex="-1"></a><span class="in">```{r factorability.TEC}</span></span>
+<span id="cb37-525"><a href="#cb37-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-526"><a href="#cb37-526" aria-hidden="true" tabindex="-1"></a><span class="in">kmo &lt;- KMO(data[,9:ncol(data)]) # The first eight columns contain metadata.</span></span>
+<span id="cb37-527"><a href="#cb37-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-528"><a href="#cb37-528" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-529"><a href="#cb37-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-530"><a href="#cb37-530" aria-hidden="true" tabindex="-1"></a>The overall MSA value of the dataset is <span class="in">`{r} kmo$MSA |&gt; round(2)`</span>. The features have the following individual MSA values (ordered from lowest to largest):</span>
+<span id="cb37-531"><a href="#cb37-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-534"><a href="#cb37-534" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-535"><a href="#cb37-535" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-536"><a href="#cb37-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-537"><a href="#cb37-537" aria-hidden="true" tabindex="-1"></a>kmo<span class="sc">$</span>MSAi[<span class="fu">order</span>(kmo<span class="sc">$</span>MSAi)] <span class="sc">|&gt;</span>  <span class="fu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb37-538"><a href="#cb37-538" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-539"><a href="#cb37-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-540"><a href="#cb37-540" aria-hidden="true" tabindex="-1"></a>We aim to remove features with an individual MSA <span class="sc">\&lt;</span> 0.5. All features have individual MSAs of <span class="sc">\&gt;</span> 0.5 (but only because TPP3P was merged into a broader category in an earlier chunk).</span>
+<span id="cb37-541"><a href="#cb37-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-542"><a href="#cb37-542" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scree plot</span></span>
+<span id="cb37-543"><a href="#cb37-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-544"><a href="#cb37-544" aria-hidden="true" tabindex="-1"></a>Six components were originally retained on the basis of the following screeplot, though only the first four were found to be interpretable and were therefore included in the model.</span>
+<span id="cb37-545"><a href="#cb37-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-548"><a href="#cb37-548" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb37-549"><a href="#cb37-549" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb37-550"><a href="#cb37-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-551"><a href="#cb37-551" aria-hidden="true" tabindex="-1"></a><span class="co"># png(here("plots", "screeplot-TEC-Ref_3Reg.png"), width = 20, height= 12, units = "cm", res = 300)</span></span>
+<span id="cb37-552"><a href="#cb37-552" aria-hidden="true" tabindex="-1"></a><span class="fu">scree</span>(data[,<span class="dv">9</span><span class="sc">:</span><span class="fu">ncol</span>(data)], <span class="at">factors =</span> <span class="cn">FALSE</span>, <span class="at">pc =</span> <span class="cn">TRUE</span>) <span class="co"># </span></span>
+<span id="cb37-553"><a href="#cb37-553" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span>
+<span id="cb37-554"><a href="#cb37-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-555"><a href="#cb37-555" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform PCA</span></span>
+<span id="cb37-556"><a href="#cb37-556" aria-hidden="true" tabindex="-1"></a>pca1 <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">principal</span>(data[<span class="dv">9</span><span class="sc">:</span><span class="fu">ncol</span>(data)], </span>
+<span id="cb37-557"><a href="#cb37-557" aria-hidden="true" tabindex="-1"></a>                         <span class="at">nfactors =</span> <span class="dv">6</span>)</span>
+<span id="cb37-558"><a href="#cb37-558" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-559"><a href="#cb37-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-560"><a href="#cb37-560" aria-hidden="true" tabindex="-1"></a><span class="fu">### Communalities</span></span>
+<span id="cb37-561"><a href="#cb37-561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-562"><a href="#cb37-562" aria-hidden="true" tabindex="-1"></a>If features with final communalities of <span class="sc">\&lt;</span> 0.2 are removed, TIME would have to be removed. TIME was therefore merged with FREQ in an earlier chunk so that now all features have final communalities of <span class="sc">\&gt;</span> 0.2 (note that this is a very generous threshold!).</span>
+<span id="cb37-563"><a href="#cb37-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-564"><a href="#cb37-564" aria-hidden="true" tabindex="-1"></a><span class="in">```{r communalities}</span></span>
+<span id="cb37-565"><a href="#cb37-565" aria-hidden="true" tabindex="-1"></a><span class="in">#| code-fold: true</span></span>
+<span id="cb37-566"><a href="#cb37-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-567"><a href="#cb37-567" aria-hidden="true" tabindex="-1"></a><span class="in">pca1$communality |&gt; sort() |&gt; round(2)</span></span>
+<span id="cb37-568"><a href="#cb37-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-569"><a href="#cb37-569" aria-hidden="true" tabindex="-1"></a><span class="in">#saveRDS(data, here("data", "processed", "dataforPCA.rds")) # Last saved on 6 March 2024</span></span>
+<span id="cb37-570"><a href="#cb37-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-571"><a href="#cb37-571" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-572"><a href="#cb37-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-573"><a href="#cb37-573" aria-hidden="true" tabindex="-1"></a>The final dataset entered in the analysis described in Chapter 7 therefore comprises <span class="in">`{r} nrow(data)  |&gt; format(big.mark=",")`</span> texts/files, each with logged standardised normalised frequencies for <span class="in">`{r} ncol(data)-8`</span> linguistic features.</span>
+<span id="cb37-574"><a href="#cb37-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-575"><a href="#cb37-575" aria-hidden="true" tabindex="-1"></a><span class="fu">## Packages used in this script</span></span>
+<span id="cb37-576"><a href="#cb37-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-577"><a href="#cb37-577" aria-hidden="true" tabindex="-1"></a><span class="fu">### Package names and versions</span></span>
+<span id="cb37-578"><a href="#cb37-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-579"><a href="#cb37-579" aria-hidden="true" tabindex="-1"></a><span class="in">```{r package-versions, echo=FALSE}</span></span>
+<span id="cb37-580"><a href="#cb37-580" aria-hidden="true" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
+<span id="cb37-581"><a href="#cb37-581" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb37-582"><a href="#cb37-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-583"><a href="#cb37-583" aria-hidden="true" tabindex="-1"></a><span class="fu">### Package references</span></span>
+<span id="cb37-584"><a href="#cb37-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-585"><a href="#cb37-585" aria-hidden="true" tabindex="-1"></a><span class="in">```{r generateBibliography, results="asis", echo=FALSE}</span></span>
+<span id="cb37-586"><a href="#cb37-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-587"><a href="#cb37-587" aria-hidden="true" tabindex="-1"></a><span class="in"># AppendixG_packages.bib &lt;- sapply(1:length(loadedNamespaces()), function(i) toBibtex(citation(loadedNamespaces()[i])))</span></span>
+<span id="cb37-588"><a href="#cb37-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-589"><a href="#cb37-589" aria-hidden="true" tabindex="-1"></a><span class="in"># knitr::write_bib(c(.packages(), "knitr"), "AppendixG_packages.bib")</span></span>
+<span id="cb37-590"><a href="#cb37-590" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-591"><a href="#cb37-591" aria-hidden="true" tabindex="-1"></a><span class="in">require("knitcitations")</span></span>
+<span id="cb37-592"><a href="#cb37-592" aria-hidden="true" tabindex="-1"></a><span class="in">cleanbib()</span></span>
+<span id="cb37-593"><a href="#cb37-593" aria-hidden="true" tabindex="-1"></a><span class="in">options("citation_format" = "pandoc")</span></span>
+<span id="cb37-594"><a href="#cb37-594" aria-hidden="true" tabindex="-1"></a><span class="in">read.bibtex(file = "AppendixG_packages.bib")</span></span>
+<span id="cb37-595"><a href="#cb37-595" aria-hidden="true" tabindex="-1"></a><span class="in">```</span> </span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
@@ -2646,7 +2775,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <p><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a></p>
 </div>
   </div>
-</footer><script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
+</footer><script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

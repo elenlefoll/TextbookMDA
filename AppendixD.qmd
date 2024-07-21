@@ -8,9 +8,11 @@ For more information on the tagger itself, as well as the evaluation data and me
 The Multi-Feature Tagger of English (MFTE) Perl is free to use and was released under an Open Source licence. If you are interested in using the MFTE for your own project, I recommend using the latest version of the MFTE Python, which is much easier to use, can tag many more features, and also underwent a thorough evaluation. Note also that all future developments of the tool will be made on the MFTE Python. To find out more, see Le Foll & Shakir [-@lefoll2023] and <https://github.com/mshakirDr/MFTE>.
 :::
 
-## Packages required
+## Set-up
 
 The following packages must be installed and loaded to process the evaluation data.
+
+*Built with R `r getRversion()`*  
 
 ```{r setup}
 
@@ -517,3 +519,25 @@ errors |>
 ```
 
 For more information on the MFTE evaluation, see [@lefoll2021] and <https://github.com/elenlefoll/MultiFeatureTaggerEnglish>.
+
+## Packages used in this script
+
+### Package names and versions
+
+```{r package-versions, echo=FALSE}
+sessionInfo()
+```
+
+### Package references
+
+```{r generateBibliography, results="asis", echo=FALSE}
+
+#AppendixD_packages.bib <- sapply(1:length(loadedNamespaces()), function(i) toBibtex(citation(loadedNamespaces()[i])))
+
+#knitr::write_bib(c(.packages(), "knitr"), "AppendixD_packages.bib")
+
+require("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "AppendixD_packages.bib")
+``` 

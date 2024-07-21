@@ -407,7 +407,8 @@ PCAtools::biplot(p,
 ```{r}
 #| eval: false
 #| echo: false
-###
+### This allows for the interactive examination of individual data points (i.e., texts):
+
 library(plotly)
 
 plot <- PCAtools::biplot(p,
@@ -841,9 +842,6 @@ visreg(md2, xvar = "Level", by="Register", type = "conditional",
 # dev.off()
 
 # Textbook Series-Register interactions
-visreg::visreg(md2, "Register", by="Series", re.form=~(1|Series),
-               ylab="PC2", line=list(col="darkred"))
-
 visreg(md2, xvar = "Series", by="Level", type = "conditional", re.form=~(1|Series), 
        line=list(col="darkred"), xlab = "Textbook Series", ylab = "PC2",
        layout=c(1,5))
@@ -1013,3 +1011,25 @@ plot(model2test,
 lattice::qqmath(model2test)
 
 ```
+
+## Packages used in this script
+
+### Package names and versions
+
+```{r package-versions, echo=FALSE}
+sessionInfo()
+```
+
+### Package references
+
+```{r generateBibliography, results="asis", echo=FALSE}
+
+#AppendixF_packages.bib <- sapply(1:length(loadedNamespaces()), function(i) toBibtex(citation(loadedNamespaces()[i])))
+
+#knitr::write_bib(c(.packages(), "knitr"), "AppendixF_packages.bib")
+
+require("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "AppendixF_packages.bib")
+``` 

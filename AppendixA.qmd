@@ -2,6 +2,7 @@
 format: 
   html:
     page-layout: full
+  pdf: default
 ---
 
 # Literature Review Data
@@ -12,7 +13,13 @@ It presents the results of this non-exhaustive survey of Textbook English studie
 
 This list is intended to be a dynamic resource that will grow over time. If you would like to contribute any studies to the table, please either fork [the corresponding CSV file in the repository](https://github.com/elenlefoll/TextbookEnglish/blob/main/LitReviewTable.csv) or send me an [e-mail](mailto:elefoll@uni-koeln.de?subject=%5BLitReviewTable%5D%20Suggestions) with the corresponding details of the studies that you would like to add.
 
-**This page was last updated on `r format(Sys.time(), '%d %B %Y')`.**
+```{r date, include=FALSE}
+
+file <- here("data", "LitReviewTable.csv")
+
+```
+
+**This data displayed on this page was last updated on `r format(file.info(file)$ctime, '%d %B %Y')`.**
 
 ```{r setup, include=FALSE}
 library(dplyr)
@@ -45,6 +52,8 @@ html.table <- table %>%
 ```
 
 ```{r display, echo=FALSE}
+
+library(webshot)
 
 reactable(html.table, 
           filterable = TRUE, searchable = TRUE, bordered = FALSE, 

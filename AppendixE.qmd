@@ -550,3 +550,25 @@ wordcount |>
         format.args = list(big.mark = ","))
 
 ```
+
+## Packages used in this script
+
+### Package names and versions
+
+```{r package-versions, echo=FALSE}
+sessionInfo()
+```
+
+### Package references
+
+```{r generateBibliography, results="asis", echo=FALSE}
+
+#AppendixE_packages.bib <- sapply(1:length(loadedNamespaces()), function(i) toBibtex(citation(loadedNamespaces()[i])))
+
+#knitr::write_bib(c(.packages(), "knitr"), "AppendixE_packages.bib")
+
+require("knitcitations")
+cleanbib()
+options("citation_format" = "pandoc")
+read.bibtex(file = "AppendixE_packages.bib")
+``` 
