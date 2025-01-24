@@ -370,6 +370,8 @@ PCAtools::pairsplot(p,
 
 Then, biplots of the most important dimensions are generated to examine components more carefully.
 
+The following biplot displays the distribution of the texts of the TEC along the first and second dimensions of the intra-textbook  model.
+
 ```{r}
 #| code-fold: true
 #| label: PCAtools-biplots-TxB
@@ -403,11 +405,11 @@ PCAtools::biplot(p,
 #ggsave(here("plots", "PCA_TxB_BiplotPC1_PC2.svg"), width = 12, height = 10)
 ```
 
+The following code chunk can be used for the interactive examination of individual data points (i.e., texts).
 
 ```{r}
 #| eval: false
-#| echo: false
-### This allows for the interactive examination of individual data points (i.e., texts):
+#| echo: true
 
 library(plotly)
 
@@ -434,14 +436,11 @@ ggplotly(plot) # tooltip
 ###
 ```
 
+For the fourth to sixth dimensions of the model, it is worth comparing the effet of text register with that of textbook proficiency level. Hence, the following two chunks generate biplots with colour and ellipses representing a) text register (as above) and b) textbook level (A = first year of EFL tuition at secondary school, E = fifth year).
 
 ```{r}
 #| code-fold: true
-#| label: PCAtools-biplots-TxB2
-#| fig-height: 10
-#| fig-width: 13
 
-# Biplots to examine components more carefully
 pRegisters <- PCAtools::biplot(p,
                  x = "PC3",
                  y = "PC4",
@@ -461,7 +460,6 @@ pRegisters <- PCAtools::biplot(p,
 
 #ggsave(here("plots", "PCA_TxB_BiplotPC3_PC4.svg"), width = 12, height = 10)
 
-# Biplots to examine components more carefully
 pRegisters2 <- PCAtools::biplot(p,
                  x = "PC5",
                  y = "PC6",
@@ -483,13 +481,9 @@ pRegisters2 <- PCAtools::biplot(p,
 
 ```
 
-Changing the colour of the points and the ellipses to represent the texts' target proficiency levels instead of the register allows for a different interpretation of the model.
 
 ```{r}
 #| code-fold: true
-#| label: PCAtools-biplots-TxB-Levels
-#| fig-height: 10
-#| fig-width: 13
 
 # Inverted keys for the biplots with ellipses for Level rather than Register
 colkeyLevels = c(A="#F9B921", B="#A18A33", C="#BD241E", D="#722672", E="#15274D")
@@ -534,14 +528,33 @@ pLevels2 <- PCAtools::biplot(p,
                  legendIconSize = 7) +
   theme(plot.margin = unit(c(0,0,0,0.2), "cm"))
 #ggsave(here("plots", "PCA_TxB_BiplotPC5_PC6_Level.svg"), width = 12, height = 10)
+```
 
+The following biplots display the distribution of the texts of the TEC along the third and fourth dimensions of the intra-textbook  model.
+
+```{r}
+#| label: PCAtools-biplots-TxB-PC3-4
+#| echo: false
+#| fig-height: 20
+#| fig-width: 13
 
 # Display and save the two different representations of data points on PC2 and PC3 using the {patchwork} package
 pRegisters / pLevels
+
 #ggsave(here("plots", "PCA_TxB_BiplotPC3_PC4_Register_vs_Level.svg"), width = 14, height = 20)
+```
+
+The following biplots display the distribution of the texts of the TEC along the fifth and sixth dimensions of the intra-textbook  model.
+
+```{r}
+#| label: PCAtools-biplots-TxB-PC5-6
+#| echo: false
+#| fig-height: 20
+#| fig-width: 13
 
 # Display and save the two different representations of data points on PC5 and PC6 using the {patchwork} package 
 pRegisters2 / pLevels2
+
 #ggsave(here("plots", "PCA_TxB_BiplotPC5_PC6_Register_vs_Level.svg"), width = 14, height = 20)
 
 ```
@@ -824,13 +837,13 @@ plot_model(md2country,
 
 ```
 
-The `visreg` function is used to visualise the distributions of the modelled Dim2 scores:
+The `visreg` function is used to visualise the distributions of the modelled Dim2 scores.
 
 ```{r}
 #| label: Dim2estimateplots
 #| code-fold: true
 #| fig-width: 10
-#| fig-height: 8
+#| fig-height: 10
 
 # svg(here("plots", "TxB_predicted_PC2_scores_interactions.svg"), height = 5, width = 8)
 visreg(md2, xvar = "Level", by="Register", type = "conditional",
@@ -839,14 +852,28 @@ visreg(md2, xvar = "Level", by="Register", type = "conditional",
        #,gg = TRUE
        ,layout=c(5,1)
 )
-# dev.off()
+#dev.off()
+```
 
-# Textbook Series-Register interactions
+We also examine potential interactions between textbook series, proficiency level, and Dim2 scores.
+
+```{r}
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 10
+
 visreg(md2, xvar = "Series", by="Level", type = "conditional", re.form=~(1|Series), 
        line=list(col="darkred"), xlab = "Textbook Series", ylab = "PC2",
        layout=c(1,5))
+```
 
-# Textbook Series-Register interactions
+Finally, we examine potential interactions between country of use of the textbook, register, and Dim2 scores.
+
+```{r}
+#| code-fold: true
+#| fig-width: 8
+#| fig-height: 6
+
 # svg(here("plots", "TxB_PCA2_lmer_randomeffects_country_register.svg"), height = 5, width = 8)
 visreg::visreg(md2country, "Country", by="Register", re.form=~(1|Country),
                ylab="PC2", line=list(col="darkred"))
@@ -963,6 +990,8 @@ plot_model(md4,
 ```
 
 ```{r}
+#| code-fold: true
+
 # Plot of random effects:
 plot_model(md4, 
            type = "re", # Option to visualise random effects
@@ -978,6 +1007,8 @@ plot_model(md4,
 ```
 
 ```{r}
+#| code-fold: true
+#| fig-width: 8
 #| fig-height: 10
 
 # svg(here("plots", "TxB_predicted_PC4_scores_interactions.svg"), height = 5, width = 8)
@@ -1033,3 +1064,4 @@ cleanbib()
 options("citation_format" = "pandoc")
 read.bibtex(file = "AppendixF_packages.bib")
 ``` 
+

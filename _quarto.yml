@@ -2,6 +2,10 @@ project:
   type: book
   output-dir: docs
 
+date-modified: last-modified
+language:
+  title-block-modified: "Last modifications on this page"
+
 book:
   title: "Textbook English"
   subtitle: "A Multi-Dimensional Approach"
@@ -9,8 +13,7 @@ book:
   - name: Elen Le Foll
     orcid: 0000-0002-5839-8010
     email: elefoll@uni-koeln.de
-  original-date: 2021-11-01
-  date: last-modified
+  date: 2024-06-22
   downloads: pdf
   license: "CC BY-SA"
   sidebar:

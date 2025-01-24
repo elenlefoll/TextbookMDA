@@ -328,7 +328,6 @@ PCAtools::biplot(p,
 #| code-fold: true
 #| label: loadings
 
-#data <- readRDS(here("processed_data", "dataforPCA.rds")) 
 pca <- prcomp(data[,9:ncol(data)], scale.=FALSE) # All quantitative variables to be included in the model
 
 # The rotated data that represents the observations / samples is stored in rotated, while the variable loadings are stored in loadings
@@ -497,9 +496,9 @@ res.ind |>
 
 ## Raincloud plots visualising dimension scores
 
-```{r rainplots}
+```{r rainplotsDim1}
 #| code-fold: true
-#| fig-height: 8
+#| fig-height: 6
 
 res.ind$Subcorpus <- fct_relevel(res.ind$Subcorpus, "Spoken BNC2014 Ref.", "Textbook Conversation", "Youth Fiction Ref.", "Textbook Fiction", "Info Teens Ref.", "Textbook Informative")
 
@@ -513,29 +512,58 @@ res.ind$Subcorpus <- fct_relevel(res.ind$Subcorpus, "Spoken BNC2014 Ref.", "Text
 palette <- c("#BD241E", "#A18A33", "#15274D", "#D54E1E", "#EA7E1E", "#4C4C4C", "#722672", "#F9B921", "#267226")
 colours <- c("#BD241E", "#F9B921", "#267226", "#A18A33", "#722672","#15274D")
 
-ggplot(res.ind, aes(x=Subcorpus,y=PC1, fill = Subcorpus, colour = Subcorpus))+ # Or leave out "colour = Register" to keep the dots in black
-  geom_flat_violin(position = position_nudge(x = .25, y = 0),adjust = 2, trim = FALSE)+
-  geom_point(position = position_jitter(width = .15), size = .25)+
-# note that here we need to set the x-variable to a numeric variable and bump it to get the boxplots to line up with the rainclouds. 
-  geom_boxplot(aes(x = as.numeric(Subcorpus)+0.25, y = PC1), outlier.shape = NA, alpha = 0.3, width = .15, colour = "BLACK") +
-  ylab('PC1')+ 
-  theme_cowplot()+
-  theme(axis.title.x=element_blank())+
-  guides(fill = "none", colour = "none") +
-  scale_colour_manual(values = colours)+
-  scale_fill_manual(values = colours) +
-  annotate(geom = "text", x = 1.5, y = -7, label = "Conversation", size = 5) +
-  annotate(geom = "segment", x = 0.7, xend = 2.5, y = -6.5, yend = -6.5) +
-  annotate(geom = "text", x = 3.5, y = -7, label = "Fiction", size = 5) +
-  annotate(geom = "segment", x = 2.7, xend = 4.5, y = -6.5, yend = -6.5) +
-  annotate(geom = "text", x = 5.7, y = -7, label = "Informative", size = 5) +
-  annotate(geom = "segment", x = 4.7, xend = 6.5, y = -6.5, yend = -6.5) +
-  scale_x_discrete(labels=rep(c("Reference", "Textbook"), 3))+
-  scale_y_continuous(sec.axis = dup_axis(name=NULL), breaks = seq(from = -6, to = 5, by = 1))
+raincloud <- function(data, pc_var, from, to) {
+  # Calculate the y-coordinates for the annotate() functions based on the bottom end of the y-axis ('from' argument)
+  offset <- from + 7
+  p <- ggplot(data, aes(x=Subcorpus, y=.data[[pc_var]], fill = Subcorpus, colour = Subcorpus))+
+    geom_flat_violin(position = position_nudge(x = .25, y = 0),adjust = 2, trim = FALSE)+
+    geom_point(position = position_jitter(width = .15), size = .25)+
+    geom_boxplot(aes(x = as.numeric(Subcorpus)+0.25, y = .data[[pc_var]]), outlier.shape = NA, alpha = 0.3, width = .15, colour = "BLACK") +
+    ylab(pc_var)+
+    theme_cowplot()+
+    theme(axis.title.x=element_blank())+
+    guides(fill = "none", colour = "none") +
+    scale_colour_manual(values = colours)+
+    scale_fill_manual(values = colours) +
+    annotate(geom = "text", x = 1.5, y = -7 + offset, label = "Conversation", size = 5) +
+    annotate(geom = "segment", x = 0.7, xend = 2.5, y = -6.5 + offset, yend = -6.5 + offset) +
+    annotate(geom = "text", x = 3.5, y = -7 + offset, label = "Fiction", size = 5) +
+    annotate(geom = "segment", x = 2.7, xend = 4.5, y = -6.5 + offset, yend = -6.5 + offset) +
+    annotate(geom = "text", x = 5.7, y = -7 + offset, label = "Informative", size = 5) +
+    annotate(geom = "segment", x = 4.7, xend = 6.5, y = -6.5 + offset, yend = -6.5 + offset) +
+    scale_x_discrete(labels=rep(c("Reference", "Textbook"), 3))+
+    scale_y_continuous(sec.axis = dup_axis(name=NULL), breaks = seq(from = from, to = to, by = 1))
+  return(p)
+}
+
+raincloud(res.ind, "PC1", -7, 5)
 
 #ggsave(here("plots", "PC1_3RegComparison.svg"), width = 13, height = 8)
 #ggsave(here("plots", "PC1_3RegComparison.png"), width = 20, height = 15, units = "cm", dpi = 300)
+```
 
+```{r rainplotsDim2}
+#| echo: false
+#| fig-height: 6
+
+raincloud(res.ind, "PC2", -6, 4)
+  
+```
+
+```{r rainplotsDim3}
+#| echo: false
+#| fig-height: 6
+
+raincloud(res.ind, "PC3", -5, 6)
+  
+```
+
+```{r rainplotsDim4}
+#| echo: false
+#| fig-height: 6
+
+raincloud(res.ind, "PC4", -5, 6)
+  
 ```
 
 ## Computing mixed-effects models of the dimension scores

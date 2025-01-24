@@ -120,15 +120,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -229,9 +231,7 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
+
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -246,6 +246,7 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
+
 \title{Textbook English}
 \usepackage{etoolbox}
 \makeatletter
@@ -255,7 +256,7 @@
 \makeatother
 \subtitle{A Multi-Dimensional Approach}
 \author{Elen Le Foll}
-\date{2024-07-21}
+\date{2024-06-22}
 
 \begin{document}
 \maketitle
@@ -266,6 +267,7 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+
 \bookmarksetup{startatroot}
 
 \chapter*{Online supplements}\label{online-supplements}
@@ -283,7 +285,7 @@ Linguistics}{]}. Amsterdam: John Benjamins. ISBN
 \end{quote}
 
 \href{https://benjamins.com/catalog/scl.116}{\begin{center}
-\includegraphics[width=2.86458in,height=\textheight]{images/scl116hb.png}
+\includegraphics[width=2.86458in,height=\textheight,keepaspectratio]{images/scl116hb.png}
 \end{center}
 }
 
@@ -303,7 +305,7 @@ thesis. \url{https://doi.org/10.48693/278}.
 
 \chapter{Introduction}\label{introduction}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, breakable, arc=.35mm, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, leftrule=.75mm, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, coltitle=black, rightrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, arc=.35mm, opacitybacktitle=0.6, toptitle=1mm, bottomtitle=1mm, leftrule=.75mm, left=2mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacityback=0, breakable]
 
 This page contains Chapter 1 from the Author Accepted Manuscript (AAA)
 version of the book: \url{https://osf.io/jpxae/}. Please cite the
@@ -462,7 +464,7 @@ from the study. It also points to promising future research avenues.
 
 \chapter{Open Science statement}\label{open-science-statement}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, breakable, arc=.35mm, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, leftrule=.75mm, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, coltitle=black, rightrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, arc=.35mm, opacitybacktitle=0.6, toptitle=1mm, bottomtitle=1mm, leftrule=.75mm, left=2mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacityback=0, breakable]
 
 This page displays Section 4.4.2 from the Author Accepted Manuscript
 (AAA) version of the book: \url{https://osf.io/jpxae/}. Please cite the
@@ -571,7 +573,7 @@ command to ensure that you are using the correct package versions (Ushey
 
 \chapter{Synthesis}\label{synthesis}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, breakable, arc=.35mm, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, leftrule=.75mm, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, coltitle=black, rightrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, arc=.35mm, opacitybacktitle=0.6, toptitle=1mm, bottomtitle=1mm, leftrule=.75mm, left=2mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacityback=0, breakable]
 
 This page displays Chapter 11 from the Author Accepted Manuscript (AAA)
 version of the book: \url{https://osf.io/jpxae/}. Please cite the
@@ -1262,7 +1264,7 @@ add.
 \textbf{This data displayed on this page was last updated on 25 March
 2024.}
 
-\includegraphics{AppendixA_files/figure-pdf/display-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixA_files/figure-pdf/display-1.pdf}}
 
 The raw data can be downloaded as a comma-separated file from
 \href{https://github.com/elenlefoll/TextbookMDA}{the project GitHub
@@ -1326,7 +1328,7 @@ For more information on the development of the tagger, see Le Foll
 (2021b) and
 \url{https://github.com/elenlefoll/MultiFeatureTaggerEnglish}.
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, colframe=quarto-callout-tip-color-frame, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, colback=white, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, breakable, arc=.35mm, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, leftrule=.75mm, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colback=white, arc=.35mm, opacitybacktitle=0.6, toptitle=1mm, bottomtitle=1mm, leftrule=.75mm, left=2mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, opacityback=0, breakable]
 
 The Multi-Feature Tagger of English (MFTE) Perl is free to use and was
 released under an Open Source licence. If you are interested in using
@@ -1451,7 +1453,7 @@ For more information on the tagger itself, as well as the evaluation
 data and methods, see Le Foll (2021b) and
 \url{https://github.com/elenlefoll/MultiFeatureTaggerEnglish}.
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, colframe=quarto-callout-tip-color-frame, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, colback=white, coltitle=black, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, breakable, arc=.35mm, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, leftrule=.75mm, opacitybacktitle=0.6]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, coltitle=black, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, colback=white, arc=.35mm, opacitybacktitle=0.6, toptitle=1mm, bottomtitle=1mm, leftrule=.75mm, left=2mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Using the MFTE}, opacityback=0, breakable]
 
 The Multi-Feature Tagger of English (MFTE) Perl is free to use and was
 released under an Open Source licence. If you are interested in using
@@ -2084,7 +2086,7 @@ SYM & NaN & 0.00 & NaN & 1 \\
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixD_files/figure-pdf/unnamed-chunk-10-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixD_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2476,7 +2478,7 @@ v. 3.1} (Le Foll 2021b).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/raw_data-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/raw_data-1.pdf}}
 
 Metadata was added on the basis of the filenames.
 
@@ -2742,7 +2744,7 @@ features displayed highly skewed distributions.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/distribution-viz-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/distribution-viz-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2857,7 +2859,7 @@ outlier texts.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/z-standardisation-outliers-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/z-standardisation-outliers-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2931,7 +2933,7 @@ feature distributions.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/z-transformed-distributions-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/z-transformed-distributions-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2979,7 +2981,7 @@ The new feature distributions are visualised below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/signed.log.transformation-distributions-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/signed.log.transformation-distributions-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3044,7 +3046,7 @@ Example feature distributions before transformations:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/example-correlation-plots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/example-correlation-plots-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3066,7 +3068,7 @@ Example feature distributions after transformations:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/example-correlation-plots2-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/example-correlation-plots2-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3097,7 +3099,7 @@ in blue, whereas positive ones are in red.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/heatmap-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/heatmap-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3184,7 +3186,7 @@ amounted to 1,693,650 words.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixE_files/figure-pdf/TEC-metadata-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixE_files/figure-pdf/TEC-metadata-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3230,10 +3232,10 @@ instructional language featured in each textbook series.
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2286}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1714}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2857}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3143}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2286}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1714}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3143}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Textbook Series
@@ -3588,7 +3590,7 @@ retained.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/screeplot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/screeplot-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3890,12 +3892,15 @@ correspond to the text registers.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/PCAtools-pairsplots-TxB-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/PCAtools-pairsplots-TxB-1.pdf}}
 
 \subsection{Bi-plots}\label{bi-plots}
 
 Then, biplots of the most important dimensions are generated to examine
 components more carefully.
+
+The following biplot displays the distribution of the texts of the TEC
+along the first and second dimensions of the intra-textbook model.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3925,7 +3930,7 @@ components more carefully.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/PCAtools-biplots-TxB-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/PCAtools-biplots-TxB-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3934,9 +3939,45 @@ components more carefully.
 \end{Highlighting}
 \end{Shaded}
 
+The following code chunk can be used for the interactive examination of
+individual data points (i.e., texts).
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Biplots to examine components more carefully}
+\FunctionTok{library}\NormalTok{(plotly)}
+
+\NormalTok{plot }\OtherTok{\textless{}{-}}\NormalTok{ PCAtools}\SpecialCharTok{::}\FunctionTok{biplot}\NormalTok{(p,}
+                 \AttributeTok{x =} \StringTok{"PC1"}\NormalTok{,}
+                 \AttributeTok{y =} \StringTok{"PC2"}\NormalTok{,}
+                 \AttributeTok{lab =} \ConstantTok{NULL}\NormalTok{, }\CommentTok{\# Otherwise will try to label each data point!}
+                 \AttributeTok{colby =} \StringTok{"Register"}\NormalTok{,}
+                 \AttributeTok{pointSize =} \DecValTok{2}\NormalTok{,}
+                 \AttributeTok{colkey =}\NormalTok{ colkey,}
+                 \AttributeTok{shape =} \StringTok{"Level"}\NormalTok{,}
+                 \AttributeTok{shapekey =}\NormalTok{ shapekey,}
+                 \AttributeTok{showLoadings =} \ConstantTok{FALSE}\NormalTok{,}
+                 \AttributeTok{ellipse =} \ConstantTok{TRUE}\NormalTok{,}
+                 \AttributeTok{axisLabSize =} \DecValTok{22}\NormalTok{,}
+                 \AttributeTok{legendPosition =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{,}
+                 \AttributeTok{legendTitleSize =} \DecValTok{22}\NormalTok{,}
+                 \AttributeTok{legendLabSize =} \DecValTok{18}\NormalTok{, }
+                 \AttributeTok{legendIconSize =} \DecValTok{7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.margin =} \FunctionTok{unit}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.2}\NormalTok{), }\StringTok{"cm"}\NormalTok{))}
+
+\FunctionTok{ggplotly}\NormalTok{(plot) }\CommentTok{\# tooltip}
+
+\DocumentationTok{\#\#\#}
+\end{Highlighting}
+\end{Shaded}
+
+For the fourth to sixth dimensions of the model, it is worth comparing
+the effet of text register with that of textbook proficiency level.
+Hence, the following two chunks generate biplots with colour and
+ellipses representing a) text register (as above) and b) textbook level
+(A = first year of EFL tuition at secondary school, E = fifth year).
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{pRegisters }\OtherTok{\textless{}{-}}\NormalTok{ PCAtools}\SpecialCharTok{::}\FunctionTok{biplot}\NormalTok{(p,}
                  \AttributeTok{x =} \StringTok{"PC3"}\NormalTok{,}
                  \AttributeTok{y =} \StringTok{"PC4"}\NormalTok{,}
@@ -3956,7 +3997,6 @@ components more carefully.
 
 \CommentTok{\#ggsave(here("plots", "PCA\_TxB\_BiplotPC3\_PC4.svg"), width = 12, height = 10)}
 
-\CommentTok{\# Biplots to examine components more carefully}
 \NormalTok{pRegisters2 }\OtherTok{\textless{}{-}}\NormalTok{ PCAtools}\SpecialCharTok{::}\FunctionTok{biplot}\NormalTok{(p,}
                  \AttributeTok{x =} \StringTok{"PC5"}\NormalTok{,}
                  \AttributeTok{y =} \StringTok{"PC6"}\NormalTok{,}
@@ -3977,10 +4017,6 @@ components more carefully.
 \CommentTok{\#ggsave(here("plots", "PCA\_TxB\_BiplotPC5\_PC6.svg"), width = 12, height = 10)}
 \end{Highlighting}
 \end{Shaded}
-
-Changing the colour of the points and the ellipses to represent the
-texts' target proficiency levels instead of the register allows for a
-different interpretation of the model.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4027,31 +4063,18 @@ different interpretation of the model.
                  \AttributeTok{legendIconSize =} \DecValTok{7}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.margin =} \FunctionTok{unit}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.2}\NormalTok{), }\StringTok{"cm"}\NormalTok{))}
 \CommentTok{\#ggsave(here("plots", "PCA\_TxB\_BiplotPC5\_PC6\_Level.svg"), width = 12, height = 10)}
-
-
-\CommentTok{\# Display and save the two different representations of data points on PC2 and PC3 using the \{patchwork\} package}
-\NormalTok{pRegisters }\SpecialCharTok{/}\NormalTok{ pLevels}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/PCAtools-biplots-TxB-Levels-1.pdf}
+The following biplots display the distribution of the texts of the TEC
+along the third and fourth dimensions of the intra-textbook model.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#ggsave(here("plots", "PCA\_TxB\_BiplotPC3\_PC4\_Register\_vs\_Level.svg"), width = 14, height = 20)}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/PCAtools-biplots-TxB-PC3-4-1.pdf}}
 
-\CommentTok{\# Display and save the two different representations of data points on PC5 and PC6 using the \{patchwork\} package }
-\NormalTok{pRegisters2 }\SpecialCharTok{/}\NormalTok{ pLevels2}
-\end{Highlighting}
-\end{Shaded}
+The following biplots display the distribution of the texts of the TEC
+along the fifth and sixth dimensions of the intra-textbook model.
 
-\includegraphics{AppendixF_files/figure-pdf/PCAtools-biplots-TxB-Levels-2.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#ggsave(here("plots", "PCA\_TxB\_BiplotPC5\_PC6\_Register\_vs\_Level.svg"), width = 14, height = 20)}
-\end{Highlighting}
-\end{Shaded}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/PCAtools-biplots-TxB-PC5-6-1.pdf}}
 
 \section{Feature contributions (loadings) on each
 component}\label{feature-contributions-loadings-on-each-component}
@@ -4204,7 +4227,7 @@ created using the \texttt{factoextra::fviz\_pca\_var} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/graphs-of-variables-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/graphs-of-variables-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4221,7 +4244,7 @@ created using the \texttt{factoextra::fviz\_pca\_var} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/graphs-of-variables-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/graphs-of-variables-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4238,7 +4261,7 @@ created using the \texttt{factoextra::fviz\_pca\_var} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/graphs-of-variables-3.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/graphs-of-variables-3.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4423,7 +4446,7 @@ Its estimated coefficients are visualised in the plot below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim1fixed-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim1fixed-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4527,7 +4550,7 @@ series, which is modelled here as a random effect.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim1random-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim1random-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4594,7 +4617,7 @@ Estimated coefficients of fixed effects on Dim2 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim2fixed-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim2fixed-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4620,7 +4643,7 @@ Estimated coefficients of random effects on Dim2 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim2random-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim2random-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4642,7 +4665,7 @@ Estimated coefficients of random effects on Dim2 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim2random-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim2random-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4651,7 +4674,7 @@ Estimated coefficients of random effects on Dim2 scores:
 \end{Shaded}
 
 The \texttt{visreg} function is used to visualise the distributions of
-the modelled Dim2 scores:
+the modelled Dim2 scores.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4665,31 +4688,39 @@ the modelled Dim2 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim2estimateplots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim2estimateplots-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# dev.off()}
+\CommentTok{\#dev.off()}
+\end{Highlighting}
+\end{Shaded}
 
-\CommentTok{\# Textbook Series{-}Register interactions}
+We also examine potential interactions between textbook series,
+proficiency level, and Dim2 scores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{visreg}\NormalTok{(md2, }\AttributeTok{xvar =} \StringTok{"Series"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Level"}\NormalTok{, }\AttributeTok{type =} \StringTok{"conditional"}\NormalTok{, }\AttributeTok{re.form=}\SpecialCharTok{\textasciitilde{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{Series), }
        \AttributeTok{line=}\FunctionTok{list}\NormalTok{(}\AttributeTok{col=}\StringTok{"darkred"}\NormalTok{), }\AttributeTok{xlab =} \StringTok{"Textbook Series"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"PC2"}\NormalTok{,}
        \AttributeTok{layout=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim2estimateplots-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/unnamed-chunk-31-1.pdf}}
+
+Finally, we examine potential interactions between country of use of the
+textbook, register, and Dim2 scores.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Textbook Series{-}Register interactions}
 \CommentTok{\# svg(here("plots", "TxB\_PCA2\_lmer\_randomeffects\_country\_register.svg"), height = 5, width = 8)}
 \NormalTok{visreg}\SpecialCharTok{::}\FunctionTok{visreg}\NormalTok{(md2country, }\StringTok{"Country"}\NormalTok{, }\AttributeTok{by=}\StringTok{"Register"}\NormalTok{, }\AttributeTok{re.form=}\SpecialCharTok{\textasciitilde{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{Country),}
                \AttributeTok{ylab=}\StringTok{"PC2"}\NormalTok{, }\AttributeTok{line=}\FunctionTok{list}\NormalTok{(}\AttributeTok{col=}\StringTok{"darkred"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim2estimateplots-3.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/unnamed-chunk-32-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4752,7 +4783,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim3model-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim3model-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4776,7 +4807,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/unnamed-chunk-30-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/unnamed-chunk-34-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4796,7 +4827,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim3comparisons-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim3comparisons-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4808,7 +4839,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim3comparisons-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim3comparisons-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4817,7 +4848,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim3comparisons-3.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim3comparisons-3.pdf}}
 
 \subsection{Dimension 4: `Informational compression
 vs.~elaboration'}\label{dimension-4-informational-compression-vs.-elaboration}
@@ -4874,7 +4905,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/Dim4model-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/Dim4model-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4898,7 +4929,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/unnamed-chunk-33-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/unnamed-chunk-37-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4918,7 +4949,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/unnamed-chunk-34-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/unnamed-chunk-38-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4941,7 +4972,7 @@ selected to predict Dim2 scores.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/lmer-diagnostics-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/lmer-diagnostics-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4952,7 +4983,7 @@ selected to predict Dim2 scores.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/lmer-diagnostics-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/lmer-diagnostics-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4961,7 +4992,7 @@ selected to predict Dim2 scores.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixF_files/figure-pdf/lmer-diagnostics-3.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixF_files/figure-pdf/lmer-diagnostics-3.pdf}}
 
 \section{Packages used in this
 script}\label{packages-used-in-this-script-2}
@@ -5268,7 +5299,7 @@ stops at speaker turns (see Appendix B for details). This corpus
 comprises of 1,251 texts, all of which were used in the following
 analyses.
 
-\includegraphics{AppendixG_files/figure-pdf/unnamed-chunk-2-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/unnamed-chunk-2-1.pdf}}
 
 \subsection{Youth Fiction corpus}\label{youth-fiction-corpus-1}
 
@@ -5289,7 +5320,7 @@ corpus (for details of the works included in this corpus, see Appendix
 B). The sampling procedure is described in Section 4.3.2.4 of the book.
 This dataset consists of 1,191 files.
 
-\includegraphics{AppendixG_files/figure-pdf/unnamed-chunk-3-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/unnamed-chunk-3-1.pdf}}
 
 \subsection{Informative Texts for Teens (InfoTeens)
 corpus}\label{informative-texts-for-teens-infoteens-corpus}
@@ -5313,7 +5344,7 @@ Details of the composition of the Info Teens corpus can be found in
 Section 4.3.2.5 of the book. The version used in the present study
 comprises 1,411 texts.
 
-\includegraphics{AppendixG_files/figure-pdf/unnamed-chunk-4-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/unnamed-chunk-4-1.pdf}}
 
 \section{Merging TEC and reference corpora
 data}\label{merging-tec-and-reference-corpora-data}
@@ -5363,12 +5394,12 @@ Youth Fiction Ref. & 1,191 \\
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1733}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1867}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1467}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2933}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0800}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1200}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1733}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1867}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1467}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2933}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0800}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1200}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Register
@@ -5418,7 +5449,7 @@ features displayed highly skewed distributions.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixG_files/figure-pdf/distribution-viz-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/distribution-viz-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5536,10 +5567,10 @@ conditions and excluded in subsequent analyses.
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.7045}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1364}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0985}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0606}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.7045}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1364}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0985}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.0606}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Filename
@@ -5790,7 +5821,7 @@ outliers.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixG_files/figure-pdf/unnamed-chunk-10-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
 We also check the distribution of outlier texts across the four corpora.
 The majority come from the Info Teens corpus, though quite a few are
@@ -5849,7 +5880,7 @@ feature frequencies were distributed as follows:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixG_files/figure-pdf/z-transformed-distributions-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/z-transformed-distributions-1.pdf}}
 
 \subsection{Signed log
 transformation}\label{signed-log-transformation-1}
@@ -5888,7 +5919,7 @@ The new feature distributions are visualised below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixG_files/figure-pdf/signed.log.transformation-distributions-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/signed.log.transformation-distributions-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5958,7 +5989,7 @@ in red.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixG_files/figure-pdf/heatmap-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/heatmap-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6043,7 +6074,7 @@ were therefore included in the model.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixG_files/figure-pdf/unnamed-chunk-19-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixG_files/figure-pdf/unnamed-chunk-19-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6538,7 +6569,7 @@ The colours correspond to the text registers.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/PCAtools-pairsplots-TxB-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/PCAtools-pairsplots-TxB-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6580,7 +6611,7 @@ two dimensions.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/PCAtools-biplots-TxB-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/PCAtools-biplots-TxB-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6609,7 +6640,7 @@ two dimensions.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/PCAtools-biplots-TxB-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/PCAtools-biplots-TxB-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6651,7 +6682,7 @@ interpretation of the model.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/PCAtools-biplots-TxB-Levels-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/PCAtools-biplots-TxB-Levels-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6664,7 +6695,6 @@ component}\label{feature-contributions-loadings-on-each-component-1}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\#data \textless{}{-} readRDS(here("processed\_data", "dataforPCA.rds")) }
 \NormalTok{pca }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(data[,}\DecValTok{9}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(data)], }\AttributeTok{scale.=}\ConstantTok{FALSE}\NormalTok{) }\CommentTok{\# All quantitative variables to be included in the model}
 
 \CommentTok{\# The rotated data that represents the observations / samples is stored in rotated, while the variable loadings are stored in loadings}
@@ -6782,7 +6812,7 @@ created using the \texttt{factoextra::fviz\_pca\_var} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/graphs-of-variables-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/graphs-of-variables-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6799,7 +6829,7 @@ created using the \texttt{factoextra::fviz\_pca\_var} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/graphs-of-variables-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/graphs-of-variables-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6816,7 +6846,7 @@ created using the \texttt{factoextra::fviz\_pca\_var} function.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/graphs-of-variables-3.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/graphs-of-variables-3.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6894,7 +6924,7 @@ as they were extracted using the MFTE Perl (see Appendices C and F).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/boxplots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/boxplots-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6926,18 +6956,18 @@ We begin with some descriptive statistics of the dimension scores.
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.1964}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0536}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0982}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0804}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0804}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0804}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0804}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0804}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0625}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0625}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0625}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 22\tabcolsep) * \real{0.0625}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.1964}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0536}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0982}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0804}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0804}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0804}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0804}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0804}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0625}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0625}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0625}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 22\tabcolsep) * \real{0.0625}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 Subcorpus
@@ -7021,13 +7051,13 @@ Info Teens Ref. & Ref. & 805.41 & -3.06 & -0.96 & -0.23 & -0.15 & 193.31
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.0696}}
-  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1685}}
-  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1612}}
-  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1612}}
-  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
-  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1575}}
-  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1392}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0696}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1685}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1612}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1612}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1575}}
+  >{\centering\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1392}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \textbf{Characteristic}
@@ -7145,29 +7175,35 @@ scores}\label{raincloud-plots-visualising-dimension-scores}
 \NormalTok{palette }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\#BD241E"}\NormalTok{, }\StringTok{"\#A18A33"}\NormalTok{, }\StringTok{"\#15274D"}\NormalTok{, }\StringTok{"\#D54E1E"}\NormalTok{, }\StringTok{"\#EA7E1E"}\NormalTok{, }\StringTok{"\#4C4C4C"}\NormalTok{, }\StringTok{"\#722672"}\NormalTok{, }\StringTok{"\#F9B921"}\NormalTok{, }\StringTok{"\#267226"}\NormalTok{)}
 \NormalTok{colours }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\#BD241E"}\NormalTok{, }\StringTok{"\#F9B921"}\NormalTok{, }\StringTok{"\#267226"}\NormalTok{, }\StringTok{"\#A18A33"}\NormalTok{, }\StringTok{"\#722672"}\NormalTok{,}\StringTok{"\#15274D"}\NormalTok{)}
 
-\FunctionTok{ggplot}\NormalTok{(res.ind, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Subcorpus,}\AttributeTok{y=}\NormalTok{PC1, }\AttributeTok{fill =}\NormalTok{ Subcorpus, }\AttributeTok{colour =}\NormalTok{ Subcorpus))}\SpecialCharTok{+} \CommentTok{\# Or leave out "colour = Register" to keep the dots in black}
-  \FunctionTok{geom\_flat\_violin}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_nudge}\NormalTok{(}\AttributeTok{x =}\NormalTok{ .}\DecValTok{25}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{),}\AttributeTok{adjust =} \DecValTok{2}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{width =}\NormalTok{ .}\DecValTok{15}\NormalTok{), }\AttributeTok{size =}\NormalTok{ .}\DecValTok{25}\NormalTok{)}\SpecialCharTok{+}
-\CommentTok{\# note that here we need to set the x{-}variable to a numeric variable and bump it to get the boxplots to line up with the rainclouds. }
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.numeric}\NormalTok{(Subcorpus)}\SpecialCharTok{+}\FloatTok{0.25}\NormalTok{, }\AttributeTok{y =}\NormalTok{ PC1), }\AttributeTok{outlier.shape =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{width =}\NormalTok{ .}\DecValTok{15}\NormalTok{, }\AttributeTok{colour =} \StringTok{"BLACK"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}PC1\textquotesingle{}}\NormalTok{)}\SpecialCharTok{+} 
-  \FunctionTok{theme\_cowplot}\NormalTok{()}\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.title.x=}\FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}
-  \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \StringTok{"none"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{x =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\AttributeTok{label =} \StringTok{"Conversation"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"segment"}\NormalTok{, }\AttributeTok{x =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{xend =} \FloatTok{2.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\FloatTok{6.5}\NormalTok{, }\AttributeTok{yend =} \SpecialCharTok{{-}}\FloatTok{6.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{x =} \FloatTok{3.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\AttributeTok{label =} \StringTok{"Fiction"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"segment"}\NormalTok{, }\AttributeTok{x =} \FloatTok{2.7}\NormalTok{, }\AttributeTok{xend =} \FloatTok{4.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\FloatTok{6.5}\NormalTok{, }\AttributeTok{yend =} \SpecialCharTok{{-}}\FloatTok{6.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{x =} \FloatTok{5.7}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\AttributeTok{label =} \StringTok{"Informative"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"segment"}\NormalTok{, }\AttributeTok{x =} \FloatTok{4.7}\NormalTok{, }\AttributeTok{xend =} \FloatTok{6.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\FloatTok{6.5}\NormalTok{, }\AttributeTok{yend =} \SpecialCharTok{{-}}\FloatTok{6.5}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Reference"}\NormalTok{, }\StringTok{"Textbook"}\NormalTok{), }\DecValTok{3}\NormalTok{))}\SpecialCharTok{+}
-  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{sec.axis =} \FunctionTok{dup\_axis}\NormalTok{(}\AttributeTok{name=}\ConstantTok{NULL}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\AttributeTok{to =} \DecValTok{5}\NormalTok{, }\AttributeTok{by =} \DecValTok{1}\NormalTok{))}
+\NormalTok{raincloud }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, pc\_var, from, to) \{}
+  \CommentTok{\# Calculate the y{-}coordinates for the annotate() functions based on the bottom end of the y{-}axis (\textquotesingle{}from\textquotesingle{} argument)}
+\NormalTok{  offset }\OtherTok{\textless{}{-}}\NormalTok{ from }\SpecialCharTok{+} \DecValTok{7}
+\NormalTok{  p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Subcorpus, }\AttributeTok{y=}\NormalTok{.data[[pc\_var]], }\AttributeTok{fill =}\NormalTok{ Subcorpus, }\AttributeTok{colour =}\NormalTok{ Subcorpus))}\SpecialCharTok{+}
+    \FunctionTok{geom\_flat\_violin}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_nudge}\NormalTok{(}\AttributeTok{x =}\NormalTok{ .}\DecValTok{25}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{),}\AttributeTok{adjust =} \DecValTok{2}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{width =}\NormalTok{ .}\DecValTok{15}\NormalTok{), }\AttributeTok{size =}\NormalTok{ .}\DecValTok{25}\NormalTok{)}\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.numeric}\NormalTok{(Subcorpus)}\SpecialCharTok{+}\FloatTok{0.25}\NormalTok{, }\AttributeTok{y =}\NormalTok{ .data[[pc\_var]]), }\AttributeTok{outlier.shape =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{width =}\NormalTok{ .}\DecValTok{15}\NormalTok{, }\AttributeTok{colour =} \StringTok{"BLACK"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{ylab}\NormalTok{(pc\_var)}\SpecialCharTok{+}
+    \FunctionTok{theme\_cowplot}\NormalTok{()}\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.title.x=}\FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}
+    \FunctionTok{guides}\NormalTok{(}\AttributeTok{fill =} \StringTok{"none"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours)}\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ colours) }\SpecialCharTok{+}
+    \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{x =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\DecValTok{7} \SpecialCharTok{+}\NormalTok{ offset, }\AttributeTok{label =} \StringTok{"Conversation"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"segment"}\NormalTok{, }\AttributeTok{x =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{xend =} \FloatTok{2.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\FloatTok{6.5} \SpecialCharTok{+}\NormalTok{ offset, }\AttributeTok{yend =} \SpecialCharTok{{-}}\FloatTok{6.5} \SpecialCharTok{+}\NormalTok{ offset) }\SpecialCharTok{+}
+    \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{x =} \FloatTok{3.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\DecValTok{7} \SpecialCharTok{+}\NormalTok{ offset, }\AttributeTok{label =} \StringTok{"Fiction"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"segment"}\NormalTok{, }\AttributeTok{x =} \FloatTok{2.7}\NormalTok{, }\AttributeTok{xend =} \FloatTok{4.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\FloatTok{6.5} \SpecialCharTok{+}\NormalTok{ offset, }\AttributeTok{yend =} \SpecialCharTok{{-}}\FloatTok{6.5} \SpecialCharTok{+}\NormalTok{ offset) }\SpecialCharTok{+}
+    \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"text"}\NormalTok{, }\AttributeTok{x =} \FloatTok{5.7}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\DecValTok{7} \SpecialCharTok{+}\NormalTok{ offset, }\AttributeTok{label =} \StringTok{"Informative"}\NormalTok{, }\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{annotate}\NormalTok{(}\AttributeTok{geom =} \StringTok{"segment"}\NormalTok{, }\AttributeTok{x =} \FloatTok{4.7}\NormalTok{, }\AttributeTok{xend =} \FloatTok{6.5}\NormalTok{, }\AttributeTok{y =} \SpecialCharTok{{-}}\FloatTok{6.5} \SpecialCharTok{+}\NormalTok{ offset, }\AttributeTok{yend =} \SpecialCharTok{{-}}\FloatTok{6.5} \SpecialCharTok{+}\NormalTok{ offset) }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Reference"}\NormalTok{, }\StringTok{"Textbook"}\NormalTok{), }\DecValTok{3}\NormalTok{))}\SpecialCharTok{+}
+    \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{sec.axis =} \FunctionTok{dup\_axis}\NormalTok{(}\AttributeTok{name=}\ConstantTok{NULL}\NormalTok{), }\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =}\NormalTok{ from, }\AttributeTok{to =}\NormalTok{ to, }\AttributeTok{by =} \DecValTok{1}\NormalTok{))}
+  \FunctionTok{return}\NormalTok{(p)}
+\NormalTok{\}}
+
+\FunctionTok{raincloud}\NormalTok{(res.ind, }\StringTok{"PC1"}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\DecValTok{5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/rainplots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/rainplotsDim1-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7175,6 +7211,12 @@ scores}\label{raincloud-plots-visualising-dimension-scores}
 \CommentTok{\#ggsave(here("plots", "PC1\_3RegComparison.png"), width = 20, height = 15, units = "cm", dpi = 300)}
 \end{Highlighting}
 \end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/rainplotsDim2-1.pdf}}
+
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/rainplotsDim3-1.pdf}}
+
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/rainplotsDim4-1.pdf}}
 
 \section{Computing mixed-effects models of the dimension
 scores}\label{computing-mixed-effects-models-of-the-dimension-scores-1}
@@ -7285,7 +7327,7 @@ Its estimated coefficients are visualised in the plot below.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim1fixed-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim1fixed-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7310,7 +7352,7 @@ the modelled Dim1 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim1estimateplots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim1estimateplots-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7406,7 +7448,7 @@ Visualisation of the coefficient estimates of the fixed effects:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim2fixed-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim2fixed-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7430,7 +7472,7 @@ Visualisation of the predicted Dim2 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim2estimateplots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim2estimateplots-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7454,7 +7496,7 @@ We can also explore the random effect structure.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/unnamed-chunk-14-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/unnamed-chunk-14-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7467,7 +7509,7 @@ We can also explore the random effect structure.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/unnamed-chunk-14-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/unnamed-chunk-14-2.pdf}}
 
 \subsection{Dimension 3: `Pedagogically adapted
 vs.~Natural'}\label{dimension-3-pedagogically-adapted-vs.-natural}
@@ -7525,7 +7567,7 @@ Visualisation of the coefficient estimates of the fixed effects:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim3fixed-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim3fixed-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7549,7 +7591,7 @@ Visualisation of the predicted Dim3 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim3estimateplots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim3estimateplots-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7573,7 +7615,7 @@ We can also explore the random effect structure.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/unnamed-chunk-17-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/unnamed-chunk-17-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7586,7 +7628,7 @@ We can also explore the random effect structure.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/unnamed-chunk-17-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/unnamed-chunk-17-2.pdf}}
 
 \subsection{Dimension 4: `Factual vs.~Speculative' / `Simple vs.~complex
 verb
@@ -7645,7 +7687,7 @@ Visualisation of the coefficient estimates of the fixed effects:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim4fixed-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim4fixed-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7669,7 +7711,7 @@ Visualisation of the predicted Dim4 scores:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/Dim4estimateplots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/Dim4estimateplots-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7693,7 +7735,7 @@ We can also explore the random effect structure.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/unnamed-chunk-20-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/unnamed-chunk-20-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7706,7 +7748,7 @@ We can also explore the random effect structure.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/unnamed-chunk-20-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/unnamed-chunk-20-2.pdf}}
 
 \subsection{Testing model
 assumptions}\label{testing-model-assumptions-1}
@@ -7724,7 +7766,7 @@ selected to predict Dim2 scores.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/lmer-diagnostics-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/lmer-diagnostics-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7735,7 +7777,7 @@ selected to predict Dim2 scores.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/lmer-diagnostics-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/lmer-diagnostics-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7744,7 +7786,7 @@ selected to predict Dim2 scores.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AppendixH_files/figure-pdf/lmer-diagnostics-3.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{AppendixH_files/figure-pdf/lmer-diagnostics-3.pdf}}
 
 \section{Packages used in this
 script}\label{packages-used-in-this-script-4}
@@ -7998,6 +8040,7 @@ and Hall/CRC, 2014.
 {[}40{]} Y. Xie. \emph{knitr: A General-Purpose Package for Dynamic
 Report Generation in R}. R package version 1.48. 2024.
 \url{https://yihui.org/knitr/}.
+
 
 
 
