@@ -5,7 +5,8 @@
 .RData
 .Ruserdata
 *_cache
-*_files
+**/libs/
+**/figure-pdf/
 /site_libs/
 zzz.qmd
 _extensions/*
